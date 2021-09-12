@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.asus.httpcallbacklistener">
+
+    <!--
+    解决Cleartext HTTP traffic to XXX not permitted问题，
+    为保证用户数据和设备的安全，Google针对下一代 Android 系统(Android P) 的应用程序，将要求默认使用加密连接，这意味着 Android P 将禁止 App 使用所有未加密的连接，因此运行 Android P 系统的安卓设备无论是接收或者发送流量，未来都不能明码传输，需要使用下一代(Transport Layer Security)传输层安全协议，而 Android Nougat 和 Oreo 则不受影响。
+
+作者：周大侠侠侠侠侠侠侠侠侠侠侠侠侠
+链接：https://www.jianshu.com/p/fd0b0fd0e34c
+来源：简书
+简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。
+    -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!--android:usesCleartextTraffic="true" 解决  java.net.SocketException: socket failed: EACCES (Permission denied)
+
+       因为使用okhttp需要获取网络权限，所以需要在manifest中加入网络权限
+    -->
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+
+
+        android:usesCleartextTraffic="true"
+
+
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
