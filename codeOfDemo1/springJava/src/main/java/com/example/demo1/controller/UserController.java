@@ -20,20 +20,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-//    @RequestMapping("/save")
-//    @ResponseBody
-//    public User save() {
-//        User user = new User();
-//        int id = new Random().nextInt(10000);
-//        user.setId(id);
-//        user.setUsername("张三" + id);
-//        user.setPassword("zhangsan" + id);
-//
-//        int result = this.userService.insert(user);
-//        System.out.println(result);
-//        return user;
-//    }
-
     @RequestMapping("/insert")
     @ResponseBody
     public User insert(long id,String password) {
@@ -48,9 +34,9 @@ public class UserController {
         return user;
     }
 
-    @RequestMapping("/deleteById")
-    public void deleteById(Integer id) {
-        int result = this.userService.deleteById(id);
+    @RequestMapping("/deleteByPhone")
+    public void deleteByPhone(String username) {
+        int result = this.userService.deleteByPhone(username);
         System.out.println(result);
     }
 
@@ -62,19 +48,50 @@ public class UserController {
         this.userService.update(user);
     }
 
-    @RequestMapping("/getById")
+    @RequestMapping("/getByPhone")
     @ResponseBody
-    public User getById(Integer id) {
-        User user = this.userService.getById(id);
+    public User getByPhone(String username) {
+        User user = this.userService.getByPhone(username);
         System.out.println(user.getUsername());
         return user;
     }
 
     @RequestMapping("/login")
     @ResponseBody
-    public User login(int id, String password){
-        User user = this.userService.login(id, password);
+    public User login(String username, String password){
+        User user = this.userService.login( username, password);
         System.out.println(user.toString());
         return user;
     }
+
+    //    @RequestMapping("/save")
+    //    @ResponseBody
+    //    public User save() {
+    //        User user = new User();
+    //        int id = new Random().nextInt(10000);
+    //        user.setId(id);
+    //        user.setUsername("张三" + id);
+    //        user.setPassword("zhangsan" + id);
+    //
+    //        int result = this.userService.insert(user);
+    //        System.out.println(result);
+    //        return user;
+    //    }
+
+    //    @RequestMapping("/deleteById")
+    //    public void deleteById(Integer id) {
+    //        int result = this.userService.deleteById(id);
+    //        System.out.println(result);
+    //    }
+
+    //    @RequestMapping("/getById")
+    //    @ResponseBody
+    //    public User getById(Integer id) {
+    //        User user = this.userService.getById(id);
+    //        System.out.println(user.getUsername());
+    //        return user;
+    //    }
+
+
 }
+

@@ -11,11 +11,14 @@ public interface UserDao {
     int insert(User user);
     /**删**/
     int deleteById(long id);
+    int deleteByPhone(String username);
     /**改**/
     int update(User user);
     /**查**/
     User getById(long id);
+
+    User getByPhone(String username);
     /**登录**/
-    User login(long id, String password);
+    User login(String username, String password);
 
 }
