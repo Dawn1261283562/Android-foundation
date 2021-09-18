@@ -26,6 +26,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int deleteByPhone(String username) {
+        return userDao.deleteByPhone(username);
+    }
+
+    @Override
     public int update(User user) {
         return userDao.update(user);
     }
@@ -36,8 +41,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User login(long id, String password) {
-        return userDao.login(id, password);
+    public User getByPhone(String username){return userDao.getByPhone(username);}
+    @Override
+    public User login(String username, String password) {
+        return userDao.login(username, password);
     }
 }
 

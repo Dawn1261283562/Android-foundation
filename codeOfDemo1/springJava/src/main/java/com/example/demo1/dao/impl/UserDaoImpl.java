@@ -38,6 +38,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public int deleteByPhone(String username) {
+        String sql = "delete from m_user where username = ?";
+        return this.jdbcTemplate.update(sql, username);
+    }
+
+    @Override
     public int update(User user) {
         String sql = "update m_user set password = ? where id = ?";
         return this.jdbcTemplate.update(
@@ -63,16 +69,43 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User login(long id, String password) {
-        String sql = "select * from m_user where id=? and password=?";
+    public User getByPhone(String username) {
+        String sql = "select * from m_user where username = ?";
+        return this.jdbcTemplate.queryForObject(sql, new RowMapper<User>() {
+            @Override
+            public User mapRow(ResultSet resultSet, int i) throws SQLException {
+                User user = new User();
+                user.setId(resultSet.getLong("id"));
+                user.setUsername(resultSet.getString("username"));
+                user.setPassword(resultSet.getString("password"));
+                return user;
+            }
+        }, username);
+    }
+
+
+    @Override
+    public User login(String username, String password) {
+        String sql = "select * from m_user where username=? and password=?";
         return this.jdbcTemplate.queryForObject(sql, (resultSet, i) -> {
             User user = new User();
             user.setId(resultSet.getLong("id"));
             user.setUsername(resultSet.getString("username"));
             user.setPassword(resultSet.getString("password"));
             return user;
-        }, id,password);
+        }, username,password);
     }
+//    @Override
+//    public User login(long id, String password) {
+//        String sql = "select * from m_user where id=? and password=?";
+//        return this.jdbcTemplate.queryForObject(sql, (resultSet, i) -> {
+//            User user = new User();
+//            user.setId(resultSet.getLong("id"));
+//            user.setUsername(resultSet.getString("username"));
+//            user.setPassword(resultSet.getString("password"));
+//            return user;
+//        }, id,password);
+//    }
 }
 
 

@@ -10,11 +10,15 @@ public interface UserService {
 
     int insert(User user);
 
-    int deleteById(long id);
+    int deleteByPhone(String username);
 
     int update(User user);
 
-    User getById(long id);
+    User getByPhone(String username);
 
-    User login(long id, String password);
+    User login(String username, String password);
+
+    //int deleteById(long id);
+
+    //User getById(long id);
 }
