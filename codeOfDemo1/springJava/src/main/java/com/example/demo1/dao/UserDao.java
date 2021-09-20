@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface UserDao {
 
+    //void UserDao();
     /**增**/
     int insert(User user);
     /**删**/

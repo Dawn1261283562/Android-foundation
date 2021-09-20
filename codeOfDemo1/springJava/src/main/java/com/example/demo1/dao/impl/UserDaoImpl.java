@@ -20,6 +20,11 @@ public class UserDaoImpl implements UserDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+//    @Override
+//    public void UserDao(){
+//        ;
+//    }
+
     @Override
     public int insert(User user) {
         String sql = "insert into m_user(id,username,password) values(?,?,?)";
@@ -86,8 +91,8 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> getListByPhone(String username) {
 
-        String sql = "select * from m_user where username LIKE  '%'|| ? ||'%'";
-
+        String sql = "select * from m_user where username LIKE  concat('%',?,'%')";
+        //select * from d_menu where name like concat('%',?,'%')
         List<User> users1 = jdbcTemplate.query(sql, new RowMapper<User>() {
             @Override
             public User mapRow(ResultSet resultSet, int i) throws SQLException {
