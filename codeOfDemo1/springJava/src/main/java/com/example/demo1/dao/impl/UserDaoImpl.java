@@ -24,7 +24,9 @@ public class UserDaoImpl implements UserDao {
 //    public void UserDao(){
 //        ;
 //    }
-
+    public UserDao UserDao(){
+        return UserDao();
+    }
     @Override
     public int insert(User user) {
         String sql = "insert into m_user(id,username,password) values(?,?,?)";
