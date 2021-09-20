@@ -3,6 +3,8 @@ package com.example.demo1.service;
 
 import com.example.demo1.entity.User;
 
+import java.util.List;
+
 /**
  * @date 2021/5/21 12:12
  */
@@ -15,6 +17,9 @@ public interface UserService {
     int update(User user);
 
     User getByPhone(String username);
+
+
+    List<User> getListByPhone(String username);
 
     User login(String username, String password);
 

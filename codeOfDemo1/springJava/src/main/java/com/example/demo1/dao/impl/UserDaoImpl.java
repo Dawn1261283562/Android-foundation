@@ -3,13 +3,13 @@ package com.example.demo1.dao.impl;
 import com.example.demo1.dao.UserDao;
 import com.example.demo1.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @date 2021/5/21 9:26
@@ -83,6 +83,27 @@ public class UserDaoImpl implements UserDao {
         }, username);
     }
 
+    @Override
+    public List<User> getListByPhone(String username) {
+
+        String sql = "select * from m_user where username LIKE  '%'|| ? ||'%'";
+
+        List<User> users1 = jdbcTemplate.query(sql, new RowMapper<User>() {
+            @Override
+            public User mapRow(ResultSet resultSet, int i) throws SQLException {
+                User user = new User();
+                user.setId(resultSet.getLong("id"));
+                user.setUsername(resultSet.getString("username"));
+                user.setPassword(resultSet.getString("password"));
+                //User user = new User(id, name, psw);
+                return user;
+            }
+        },username);
+
+        return users1;
+
+
+    }
 
     @Override
     public User login(String username, String password) {
