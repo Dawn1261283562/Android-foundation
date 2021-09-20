@@ -2,6 +2,8 @@ package com.example.demo1.dao;
 
 import com.example.demo1.entity.User;
 
+import java.util.List;
+
 /**
  * @date 2021/5/21 9:21
  */
@@ -18,6 +20,8 @@ public interface UserDao {
     User getById(long id);
 
     User getByPhone(String username);
+
+    List<User> getListByPhone(String username);
     /**登录**/
     User login(String username, String password);
 

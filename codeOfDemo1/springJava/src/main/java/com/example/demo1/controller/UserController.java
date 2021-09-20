@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -54,6 +55,14 @@ public class UserController {
         User user = this.userService.getByPhone(username);
         System.out.println(user.getUsername());
         return user;
+    }
+
+    @RequestMapping("/getListByPhone")
+    @ResponseBody
+    public List<User> getListByPhone(String username) {
+        List<User> w = this.userService.getListByPhone(username);
+        //System.out.println(user.getUsername());
+        return w;
     }
 
     @RequestMapping("/login")
