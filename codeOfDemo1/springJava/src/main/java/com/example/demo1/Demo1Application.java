@@ -1,16 +1,12 @@
 package com.example.demo1;
-import com.example.demo1.dao.UserDao;
 import com.example.demo1.entity.User;
 
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 @SpringBootApplication
 public class Demo1Application {
@@ -18,6 +14,16 @@ public class Demo1Application {
     @Autowired
     static JdbcTemplate jdbcTemplate;
     public static void main(String[] args) throws Exception {
+
+        String beanXml = "D:/fund/codeOfDemo1/springJava/src/main/java/com/example/demo1/bean.xml";
+//"com/example/demo1/bean.xml"
+        //2.创建ClassPathXmlApplicationContext容器，给容器指定需要加载的bean配置文件
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
+        HelloWorld helloWorld = context.getBean("helloWorld", HelloWorld.class);
+
+        //4.使用对象
+        helloWorld.say();
+
 
         User user1 = new User();
         user1.setId(3);
@@ -45,6 +51,10 @@ public class Demo1Application {
 //            }
 //        }, username);
 //        System.out.print( o.toString());
+
+//        ClassPathXmlApplicationContext context1 = new ClassPathXmlApplicationContext("bean.xml");
+//        User me = context1.getBean("User_1", User.class);
+//        System.out.print( me.getUsername()+"asdasdasdasdasdasdasd");
 
     }
 

@@ -3,6 +3,7 @@ package com.example.demo1.dao.impl;
 import com.example.demo1.dao.UserDao;
 import com.example.demo1.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -78,6 +79,10 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getByPhone(String username) {
         String sql = "select * from m_user where username = ?";
+//        ClassPathXmlApplicationContext context1 = new ClassPathXmlApplicationContext("bean.xml");
+//        User me = context1.getBean("User_1", User.class);
+//        me.setUsername("sdsd");
+//        System.out.print( me.getUsername()+"asdasdasdasdasdasdasd");
         return this.jdbcTemplate.queryForObject(sql, new RowMapper<User>() {
             @Override
             public User mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -95,6 +100,7 @@ public class UserDaoImpl implements UserDao {
 
         String sql = "select * from m_user where username LIKE  concat('%',?,'%')";
         //select * from d_menu where name like concat('%',?,'%')
+
         List<User> users1 = jdbcTemplate.query(sql, new RowMapper<User>() {
             @Override
             public User mapRow(ResultSet resultSet, int i) throws SQLException {
