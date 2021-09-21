@@ -3,6 +3,7 @@ package com.example.demo1.controller;
 import com.example.demo1.entity.User;
 import com.example.demo1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
+    @Autowired
+    User user_1;
     @RequestMapping("/insert")
     @ResponseBody
     public User insert(long id,String password) {
@@ -54,6 +56,9 @@ public class UserController {
     public User getByPhone(String username) {
         User user = this.userService.getByPhone(username);
         System.out.println(user.getUsername());
+        //ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
+
+        System.out.println( "this"+user_1.getUsername());
         return user;
     }
 

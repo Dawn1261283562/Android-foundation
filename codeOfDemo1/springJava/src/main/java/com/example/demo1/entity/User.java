@@ -1,11 +1,15 @@
 package com.example.demo1.entity;
 
+import org.springframework.context.annotation.Bean;
+
+
 public class User {
     private long id;
 
     private String username;
 
     private String password;
+
 
     public long getId() {
         return id;
