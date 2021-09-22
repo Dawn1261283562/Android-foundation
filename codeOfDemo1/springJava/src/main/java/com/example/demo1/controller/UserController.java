@@ -3,10 +3,12 @@ package com.example.demo1.controller;
 import com.example.demo1.entity.User;
 import com.example.demo1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -19,21 +21,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-//    @RequestMapping("/save")
-//    @ResponseBody
-//    public User save() {
-//        User user = new User();
-//        int id = new Random().nextInt(10000);
-//        user.setId(id);
-//        user.setUsername("张三" + id);
-//        user.setPassword("zhangsan" + id);
-//
-//        int result = this.userService.insert(user);
-//        System.out.println(result);
-//        return user;
-//    }
-
+    @Autowired
+    User user_1;
     @RequestMapping("/insert")
     @ResponseBody
     public User insert(long id,String password) {
@@ -48,9 +37,9 @@ public class UserController {
         return user;
     }
 
-    @RequestMapping("/deleteById")
-    public void deleteById(Integer id) {
-        int result = this.userService.deleteById(id);
+    @RequestMapping("/deleteByPhone")
+    public void deleteByPhone(String username) {
+        int result = this.userService.deleteByPhone(username);
         System.out.println(result);
     }
 
@@ -62,19 +51,61 @@ public class UserController {
         this.userService.update(user);
     }
 
-    @RequestMapping("/getById")
+    @RequestMapping("/getByPhone")
     @ResponseBody
-    public User getById(Integer id) {
-        User user = this.userService.getById(id);
+    public User getByPhone(String username) {
+        User user = this.userService.getByPhone(username);
         System.out.println(user.getUsername());
+        //ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
+
+        System.out.println( "this"+user_1.getUsername());
         return user;
+    }
+
+    @RequestMapping("/getListByPhone")
+    @ResponseBody
+    public List<User> getListByPhone(String username) {
+        List<User> w = this.userService.getListByPhone(username);
+        //System.out.println(user.getUsername());
+        return w;
     }
 
     @RequestMapping("/login")
     @ResponseBody
-    public User login(int id, String password){
-        User user = this.userService.login(id, password);
+    public User login(String username, String password){
+        User user = this.userService.login( username, password);
         System.out.println(user.toString());
         return user;
     }
+
+    //    @RequestMapping("/save")
+    //    @ResponseBody
+    //    public User save() {
+    //        User user = new User();
+    //        int id = new Random().nextInt(10000);
+    //        user.setId(id);
+    //        user.setUsername("张三" + id);
+    //        user.setPassword("zhangsan" + id);
+    //
+    //        int result = this.userService.insert(user);
+    //        System.out.println(result);
+    //        return user;
+    //    }
+
+    //    @RequestMapping("/deleteById")
+    //    public void deleteById(Integer id) {
+    //        int result = this.userService.deleteById(id);
+    //        System.out.println(result);
+    //    }
+
+    //    @RequestMapping("/getById")
+    //    @ResponseBody
+    //    public User getById(Integer id) {
+    //        User user = this.userService.getById(id);
+    //        System.out.println(user.getUsername());
+    //        return user;
+    //    }
+
+
 }
+

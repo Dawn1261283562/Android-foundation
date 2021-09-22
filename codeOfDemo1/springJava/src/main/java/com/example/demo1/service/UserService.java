@@ -3,6 +3,8 @@ package com.example.demo1.service;
 
 import com.example.demo1.entity.User;
 
+import java.util.List;
+
 /**
  * @date 2021/5/21 12:12
  */
@@ -10,11 +12,18 @@ public interface UserService {
 
     int insert(User user);
 
-    int deleteById(long id);
+    int deleteByPhone(String username);
 
     int update(User user);
 
-    User getById(long id);
+    User getByPhone(String username);
 
-    User login(long id, String password);
+
+    List<User> getListByPhone(String username);
+
+    User login(String username, String password);
+
+    //int deleteById(long id);
+
+    //User getById(long id);
 }
