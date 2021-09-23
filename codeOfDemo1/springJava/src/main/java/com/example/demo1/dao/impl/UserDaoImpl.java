@@ -21,13 +21,11 @@ public class UserDaoImpl implements UserDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-//    @Override
-//    public void UserDao(){
-//        ;
-//    }
+
     public UserDao UserDao(){
         return UserDao();
     }
+
     @Override
     public int insert(User user) {
         String sql = "insert into m_user(id,username,password) values(?,?,?)";
@@ -79,10 +77,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getByPhone(String username) {
         String sql = "select * from m_user where username = ?";
-//        ClassPathXmlApplicationContext context1 = new ClassPathXmlApplicationContext("bean.xml");
-//        User me = context1.getBean("User_1", User.class);
-//        me.setUsername("sdsd");
-//        System.out.print( me.getUsername()+"asdasdasdasdasdasdasd");
+
         return this.jdbcTemplate.queryForObject(sql, new RowMapper<User>() {
             @Override
             public User mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -118,6 +113,8 @@ public class UserDaoImpl implements UserDao {
 
     }
 
+
+    /////////////////////////////////////////以下不用看
     @Override
     public User login(String username, String password) {
         String sql = "select * from m_user where username=? and password=?";

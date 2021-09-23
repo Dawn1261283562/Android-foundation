@@ -1,41 +1,118 @@
 package com.example.demo1.entity;
 
-public class FundHeavy {
+public class FundHeavy implements Comparable<FundHeavy>{
+
+    public double score=0;//用于评分的临时变量
     public String id;
-    private String name;
-    private String stock_id_1 ;
-    private String stock_name_1 ;
-    private String stock_ratio_1 ;
-    private String stock_id_2 ;
-    private String stock_name_2 ;
-    private String stock_ratio_2 ;
-    private String stock_id_3 ;
-    private String stock_name_3 ;
-    private String stock_ratio_3 ;
-    private String stock_id_4 ;
-    private String stock_name_4 ;
-    private String stock_ratio_4 ;
-    private String stock_id_5 ;
-    private String stock_name_5 ;
-    private String stock_ratio_5 ;
-    private String stock_id_6 ;
-    private String stock_name_6 ;
-    private String stock_ratio_6 ;
-    private String stock_id_7 ;
-    private String stock_name_7 ;
-    private String stock_ratio_7 ;
-    private String stock_id_8 ;
-    private String stock_name_8 ;
-    private String stock_ratio_8 ;
-    private String stock_id_9 ;
-    private String stock_name_9 ;
-    private String stock_ratio_9 ;
-    private String stock_id_10 ;
-    private String stock_name_10 ;
-    private String stock_ratio_10 ;
+    public String name;
+    private static final int size=10;//数组固定大小
+
+    private String[] stock_id =new String[size];;
+    private String[] stock_name =new String[size];
+    private String[] stock_ratio =new String[size];
+
 
 
     public void setId(String id) {
         this.id=id;
     }
+    public void setName(String name) {this.name=name;}
+    public String[] getStock_id(){return stock_id;}
+    public String[] getStock_name(){return stock_name;}
+    public String[] getStock_ratio(){return stock_ratio;}
+
+    //
+    public void set_stock_id( String stock_id_1,String stock_id_2,String stock_id_3,
+                              String stock_id_4,String stock_id_5,String stock_id_6,
+                              String stock_id_7,String stock_id_8,String stock_id_9,
+                              String stock_id_10){
+        int n=0;
+        this.stock_id[n++]=stock_id_1;
+        this.stock_id[n++]=stock_id_2;
+        this.stock_id[n++]=stock_id_3;
+        this.stock_id[n++]=stock_id_4;
+        this.stock_id[n++]=stock_id_5;
+        this.stock_id[n++]=stock_id_6;
+        this.stock_id[n++]=stock_id_7;
+        this.stock_id[n++]=stock_id_8;
+        this.stock_id[n++]=stock_id_9;
+        this.stock_id[n++]=stock_id_10;
+    }
+
+    //
+    public void set_stock_name( String stock_name_1,String stock_name_2,String stock_name_3,
+                              String stock_name_4,String stock_name_5,String stock_name_6,
+                              String stock_name_7,String stock_name_8,String stock_name_9,
+                              String stock_name_10){
+        int n=0;
+        this.stock_name[n++]=stock_name_1;
+        this.stock_name[n++]=stock_name_2;
+        this.stock_name[n++]=stock_name_3;
+        this.stock_name[n++]=stock_name_4;
+        this.stock_name[n++]=stock_name_5;
+        this.stock_name[n++]=stock_name_6;
+        this.stock_name[n++]=stock_name_7;
+        this.stock_name[n++]=stock_name_8;
+        this.stock_name[n++]=stock_name_9;
+        this.stock_name[n++]=stock_name_10;
+    }
+
+    //
+    public void set_stock_ratio( String stock_ratio_1,String stock_ratio_2,String stock_ratio_3,
+                                 String stock_ratio_4,String stock_ratio_5,String stock_ratio_6,
+                                 String stock_ratio_7,String stock_ratio_8,String stock_ratio_9,
+                                 String stock_ratio_10){
+        int n=0;
+        this.stock_ratio[n++]=stock_ratio_1;
+        this.stock_ratio[n++]=stock_ratio_2;
+        this.stock_ratio[n++]=stock_ratio_3;
+        this.stock_ratio[n++]=stock_ratio_4;
+        this.stock_ratio[n++]=stock_ratio_5;
+        this.stock_ratio[n++]=stock_ratio_6;
+        this.stock_ratio[n++]=stock_ratio_7;
+        this.stock_ratio[n++]=stock_ratio_8;
+        this.stock_ratio[n++]=stock_ratio_9;
+        this.stock_ratio[n++]=stock_ratio_10;
+    }
+
+    /*
+        通过 score 分数来比较
+     */
+    @Override
+    public int compareTo(FundHeavy o) {
+        return (int ) (o.score - this.score );
+    }
+
 }
+
+//    废弃
+//
+//    private String stock_name_1 ;
+//    private String stock_ratio_1 ;
+//    private String stock_id_2 ;
+//    private String stock_name_2 ;
+//    private String stock_ratio_2 ;
+//    private String stock_id_3 ;
+//    private String stock_name_3 ;
+//    private String stock_ratio_3 ;
+//    private String stock_id_4 ;
+//    private String stock_name_4 ;
+//    private String stock_ratio_4 ;
+//    private String stock_id_5 ;
+//    private String stock_name_5 ;
+//    private String stock_ratio_5 ;
+//    private String stock_id_6 ;
+//    private String stock_name_6 ;
+//    private String stock_ratio_6 ;
+//    private String stock_id_7 ;
+//    private String stock_name_7 ;
+//    private String stock_ratio_7 ;
+//    private String stock_id_8 ;
+//    private String stock_name_8 ;
+//    private String stock_ratio_8 ;
+//    private String stock_id_9 ;
+//    private String stock_name_9 ;
+//    private String stock_ratio_9 ;
+//    private String stock_id_10 ;
+//    private String stock_name_10 ;
+//    private String stock_ratio_10 ;
