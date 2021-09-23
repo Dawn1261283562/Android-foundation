@@ -22,11 +22,6 @@ public class UserServiceImpl implements UserService {
         return userDao.insert(user);
     }
 
-//    @Override
-//    public int deleteById(long id) {
-//        return userDao.deleteById(id);
-//    }
-
     @Override
     public int deleteByPhone(String username) {
         return userDao.deleteByPhone(username);
@@ -37,17 +32,14 @@ public class UserServiceImpl implements UserService {
         return userDao.update(user);
     }
 
-//    @Override
-//    public User getById(long id) {
-//        return userDao.getById(id);
-//    }
-
     @Override
     public User getByPhone(String username){return userDao.getByPhone(username);}
-//userDao.getByPhone(username)
+
     @Override
     public List<User> getListByPhone(String username){return userDao.getListByPhone(username);}
 
+
+    //不看
     @Override
     public User login(String username, String password) {
         return userDao.login(username, password);

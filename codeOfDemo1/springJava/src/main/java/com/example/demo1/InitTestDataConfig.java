@@ -21,7 +21,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
+/*
+    //////////////////////////注意： 这里是spring的初始化配置，我自己也在调研 ，可不看///////////////////////////////////
+ */
 @Configuration
 public class InitTestDataConfig implements InitializingBean, ServletContextAware {
     /**
@@ -85,19 +87,21 @@ public class InitTestDataConfig implements InitializingBean, ServletContextAware
         System.out.println("我也可以初始化，选一个就可以啦"+user_1.getUsername());
         //where id  =?or id =?or id =?or id =?
         String sql1 = "select * from m_fund_heavy ";
+        //以下sql like 技巧
         //select * from d_menu where name like concat('%',?,'%')or id =?,s2or id =?
-        String s1="000001.OF";String s2="000309.OF";String s3="000513.OF";String s4="000893.OF";
+
+        //测试string
+        //String s1="000001.OF";String s2="000309.OF";String s3="000513.OF";String s4="000893.OF";
+
         List<FundHeavy> fundHeavy1 = jdbcTemplate.query(sql1, new RowMapper<FundHeavy>() {
             @Override
             public FundHeavy mapRow(ResultSet resultSet, int i) throws SQLException {
                 FundHeavy fundHeavy = new FundHeavy();
                 fundHeavy.setId(resultSet.getString("id"));
 
-                //User user = new User(id, name, psw);
                 return fundHeavy;
             }
         });//,s1,s2,s3,s4
 
-        //System.out.println("我也可以初始化，选一个就可以啦hhhsssss"+fundHeavy1);
     }
 }
