@@ -38,8 +38,8 @@ public class UserController {
     }
 
     @RequestMapping("/deleteByPhone")
-    public void deleteByPhone(String username) {
-        int result = this.userService.deleteByPhone(username);
+    public void deleteByPhone(String userName) {
+        int result = this.userService.deleteByPhone(userName);
         System.out.println(result);
     }
 
@@ -53,8 +53,8 @@ public class UserController {
 
     @RequestMapping("/getByPhone")
     @ResponseBody
-    public User getByPhone(String username) {
-        User user = this.userService.getByPhone(username);
+    public User getByPhone(String userName) {
+        User user = this.userService.getByPhone(userName);
         System.out.println(user.getUsername());
         //ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
 
@@ -64,17 +64,17 @@ public class UserController {
 
     @RequestMapping("/getListByPhone")
     @ResponseBody
-    public List<User> getListByPhone(String username) {
-        List<User> w = this.userService.getListByPhone(username);
+    public List<User> getListByPhone(String userName) {
+        List<User> w = this.userService.getListByPhone(userName);
         //System.out.println(user.getUsername());
         return w;
     }
 
     @RequestMapping("/login")
     @ResponseBody
-    public User login(String username, String password){
-        User user = this.userService.login( username, password);
-        System.out.println(user.toString());
+    public boolean login(String userName, String passWord){
+        boolean user = this.userService.login( userName, passWord);
+        //System.out.println(user.toString());
         return user;
     }
 

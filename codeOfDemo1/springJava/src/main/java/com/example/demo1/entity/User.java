@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 
 
 public class User {
-    private long id;
+    private long id;//自增无用属性
 
     private String username;
 

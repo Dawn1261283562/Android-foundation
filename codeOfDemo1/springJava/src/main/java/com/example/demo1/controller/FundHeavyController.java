@@ -10,30 +10,76 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 @RestController
-@RequestMapping("/fundheavy")
+@RequestMapping("/fundHeavy")
 public class FundHeavyController {
     @Autowired
     private FundHeavyService fundHeavyService;
 
-    @RequestMapping("/getfundheavy")
+    //注意，开销极大
+    @RequestMapping("/getListAll")
     @ResponseBody
-    public String getFundHeavy() {
+    public List<FundHeavy> getListAll() {
 
 
-        FundHeavy result = this.fundHeavyService.getFundHeavy();
-        System.out.println(result.id);
-
-        return result.id;
-    }
-
-    @RequestMapping("/getlist")
-    @ResponseBody
-    public List<FundHeavy> getList() {
-
-
-        List<FundHeavy> result = this.fundHeavyService.getList();
+        List<FundHeavy> result = this.fundHeavyService.getListAll();
         //System.out.println(result.id);
 
         return result;
     }
+
+
+    //模式一
+    @RequestMapping("/getListByStockList")
+    @ResponseBody
+    public List<FundHeavy> getListByStockList(int num,String[] stockIdList) {
+
+        List<FundHeavy> result = this.fundHeavyService.getListByStockList( num, stockIdList);
+        return result;
+    }
+
+    //模式二
+    @RequestMapping("/getListByStockScore")
+    @ResponseBody
+    public List<FundHeavy>  getListByStockScore(int num,String[] stockIdList,String[] stockRadioList) {
+
+
+        List<FundHeavy> result = this.fundHeavyService.getListByStockScore(num,stockIdList,stockRadioList);
+        //System.out.println(result.id);
+        //result=null;
+        return result;
+    }
+
+
+//    @RequestMapping("/getListByStock")
+//    @ResponseBody
+//    public List<FundHeavy>  getListByStock() {
+//
+//
+//        List<FundHeavy> result = this.fundHeavyService.getListAll();
+//        //System.out.println(result.id);
+//
+//        return result;
+//    }
+
+    //    @RequestMapping("/getFundHeavy")
+//    @ResponseBody
+//    public String getFundHeavy() {
+//
+//
+//        FundHeavy result = this.fundHeavyService.getFundHeavy();
+//        System.out.println(result.id);
+//
+//        return result.id;
+//    }
+
+    //    @RequestMapping("/getList")
+//    @ResponseBody
+//    public int getList() {
+//
+//
+//        List<FundHeavy> result = this.fundHeavyService.getList();
+//        //System.out.println(result.id);
+//
+//        return 123;
+//    }
 }
