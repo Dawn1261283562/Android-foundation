@@ -28,7 +28,7 @@ public interface UserService {
 
 
     //无用实现目前
-    User login(String username, String password);
+    boolean login(String username, String password);
 
     //int deleteById(long id);
 
