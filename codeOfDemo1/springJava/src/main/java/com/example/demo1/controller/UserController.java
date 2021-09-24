@@ -72,9 +72,9 @@ public class UserController {
 
     @RequestMapping("/login")
     @ResponseBody
-    public User login(String userName, String passWord){
-        User user = this.userService.login( userName, passWord);
-        System.out.println(user.toString());
+    public boolean login(String userName, String passWord){
+        boolean user = this.userService.login( userName, passWord);
+        //System.out.println(user.toString());
         return user;
     }
 

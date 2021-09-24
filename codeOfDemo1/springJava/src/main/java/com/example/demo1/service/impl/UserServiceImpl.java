@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @date 2021/5/21 12:13
@@ -41,8 +42,15 @@ public class UserServiceImpl implements UserService {
 
     //不看
     @Override
-    public User login(String username, String password) {
-        return userDao.login(username, password);
+    public boolean login(String username, String password) {
+
+        User who= getByPhone( username);
+        //System.out.print(who.getUsername()+who.getPassword()+username+password);
+        if(Objects.equals(username, who.getUsername())){
+            if(Objects.equals(password, who.getPassword()))return true;
+        }
+        return false;
+        //return userDao.login(username, password);
     }
 }
 
