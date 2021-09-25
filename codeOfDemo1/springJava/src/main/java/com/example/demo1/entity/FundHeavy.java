@@ -1,5 +1,8 @@
 package com.example.demo1.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class FundHeavy implements Comparable<FundHeavy> {
 
     public double score = 0;//用于评分的临时变量
@@ -8,13 +11,21 @@ public class FundHeavy implements Comparable<FundHeavy> {
     private static final int size = 10;//数组固定大小
 
     private String[] stock_id = new String[size];
-    ;
     private String[] stock_name = new String[size];
     private String[] stock_ratio = new String[size];
-
+    //因为每只基金有10只股票，可能两只股票有相同的板块，所以用HashSet自动去重
+    private Set<String> stock_type = new HashSet<String>();
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Set<String> getStock_type() {
+        return stock_type;
+    }
+
+    public void setStock_type(Set<String> stock_type) {
+        this.stock_type = stock_type;
     }
 
     public void setName(String name) {
@@ -41,6 +52,9 @@ public class FundHeavy implements Comparable<FundHeavy> {
     }
     public void set_stock_ratio(int i,String stock_ratio){
         this.stock_ratio[i]=stock_ratio;
+    }
+    public void set_stock_type(String stock_type){
+        if(!this.stock_type.contains(stock_type))this.stock_type.add(stock_type);
     }
     //下面注释这样写太多了
 //    public void set_stock_id( String stock_id_1,String stock_id_2,String stock_id_3,

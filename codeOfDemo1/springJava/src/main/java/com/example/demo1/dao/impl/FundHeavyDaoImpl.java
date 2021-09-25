@@ -22,7 +22,8 @@ import java.util.List;
 public class FundHeavyDaoImpl implements FundHeavyDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
+    @Autowired
+    private StockDaoImpl stockDaoImpl;
     private List<FundHeavy> fundHeavyAll;
 
 //    private List<FundHeavy> globalFundHeavy;
@@ -50,8 +51,10 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
                 //fundHeavy.set_stock_id_1(resultSet.getString("id"));
                 for (int k = 1; k <= 10; k++) {
                     fundHeavy.set_stock_id(k - 1, resultSet.getString("stock_id_" + k));
+                    //这里存名字感觉没什么必要，数据库要不要删名字列有待讨论,删名字列能减少m_fund_heavy的字段数量，当时增加查询的次数
                     fundHeavy.set_stock_name(k - 1, resultSet.getString("stock_name_" + k));
                     fundHeavy.set_stock_ratio(k - 1, resultSet.getString("stock_ratio_" + k));
+                    fundHeavy.set_stock_type(stockDaoImpl.getById(resultSet.getString("stock_id_" + k)).getType());
                 }
                 return fundHeavy;
             }

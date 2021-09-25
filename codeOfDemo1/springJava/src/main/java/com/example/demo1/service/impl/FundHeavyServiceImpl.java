@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import java.math.BigDecimal;
 
@@ -142,6 +139,31 @@ public class FundHeavyServiceImpl implements FundHeavyService {
         }
 
         return m_m_fund;
+    }
+
+    //下面大致是模式三的逻辑，不过实际上只是比较数量，再相同数量的板块还未比较大小，这个后面再写
+    @Override
+    public List<FundHeavy> getListByStockType(int num, String[] TypeList) {
+        //全部元组
+        List<FundHeavy> all_fund=fundHeavyDao.getListAll();
+        for(FundHeavy fundHeavy:all_fund){
+            fundHeavy.score=0;//注意这里的fundHeavy是单例，所以要清零。
+            Set<String> set=fundHeavy.getStock_type();
+            for(int j=0;j<TypeList.length;j++){
+                if(set.contains(TypeList[j]))fundHeavy.score++;
+            }
+        }
+        Collections.sort(all_fund, new Comparator<FundHeavy>() {
+            @Override
+            public int compare(FundHeavy o1, FundHeavy o2) {
+                return (int)o2.score-(int)o1.score;
+            }
+        });
+        List<FundHeavy> ans=new ArrayList<>();
+        for(int i=0;i<num;i++){
+            ans.add(all_fund.get(i));
+        }
+        return ans;
     }
 
     //测试用
