@@ -69,7 +69,8 @@ public class InitTestDataConfig implements InitializingBean, ServletContextAware
 
         System.out.println("我也可以初始化，选一个就可以啦");
         String sql = "select * from m_user where username = ?";
-        String username="15361022832";
+//        String username="15361022832";
+        String username="ccj";
         User user= this.jdbcTemplate.queryForObject(sql, new RowMapper<User>() {
             @Override
             public User mapRow(ResultSet resultSet, int i) throws SQLException {
