@@ -21,8 +21,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    User user_1;
+//    @Autowired
+//    User user_1;
     @RequestMapping("/insert")
     @ResponseBody
     public User insert(long id,String password) {
@@ -58,7 +58,7 @@ public class UserController {
         System.out.println(user.getUsername());
         //ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
 
-        System.out.println( "this"+user_1.getUsername());
+//        System.out.println( "this"+user_1.getUsername());
         return user;
     }
 
