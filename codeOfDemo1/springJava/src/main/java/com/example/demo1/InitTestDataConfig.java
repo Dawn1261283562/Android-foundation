@@ -1,5 +1,6 @@
 package com.example.demo1;
 
+import com.example.demo1.dao.FundHeavyDao;
 import com.example.demo1.entity.FundHeavy;
 //import com.example.demo1.entity.Instance;
 import com.example.demo1.entity.User;
@@ -19,8 +20,7 @@ import javax.servlet.ServletContext;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+
 /*
     //////////////////////////注意： 这里是spring的初始化配置，我自己也在调研 ，可不看///////////////////////////////////
  */
@@ -41,6 +41,8 @@ public class InitTestDataConfig implements InitializingBean, ServletContextAware
     @Autowired
     User user_1;
 
+    @Autowired
+    private FundHeavyDao fundHeavyDao;
 
 
     //public static Map<String, Test> initTestData = new ConcurrentHashMap<>();
@@ -48,6 +50,8 @@ public class InitTestDataConfig implements InitializingBean, ServletContextAware
     @Override
     public void afterPropertiesSet() throws Exception {
         System.out.println("我也可以初始化，选一个就可以啦(测试)");
+//        fundHeavyDao.setFundHeavyAll();
+//        fundHeavyDao.preprocess();
     }
 
     @Override
@@ -71,17 +75,17 @@ public class InitTestDataConfig implements InitializingBean, ServletContextAware
         String sql = "select * from m_user where username = ?";
 //        String username="15361022832";
         String username="ccj";
-        User user= this.jdbcTemplate.queryForObject(sql, new RowMapper<User>() {
-            @Override
-            public User mapRow(ResultSet resultSet, int i) throws SQLException {
-                User user = new User();
-                user.setId(resultSet.getLong("id"));
-                user.setUsername(resultSet.getString("username"));
-                user.setPassword(resultSet.getString("password"));
-                return user;
-            }
-        }, username);
-        user_1.setUsername(user.getUsername());
+//        User user= this.jdbcTemplate.queryForObject(sql, new RowMapper<User>() {
+//            @Override
+//            public User mapRow(ResultSet resultSet, int i) throws SQLException {
+//                User user = new User();
+//                user.setId(resultSet.getLong("id"));
+//                user.setUsername(resultSet.getString("username"));
+//                user.setPassword(resultSet.getString("password"));
+//                return user;
+//            }
+//        }, username);
+//        user_1.setUsername(user.getUsername());
         System.out.println("user1"+user_1.getUsername());
         //me.setUsername("改个名");
 
@@ -98,7 +102,7 @@ public class InitTestDataConfig implements InitializingBean, ServletContextAware
             @Override
             public FundHeavy mapRow(ResultSet resultSet, int i) throws SQLException {
                 FundHeavy fundHeavy = new FundHeavy();
-                fundHeavy.setId(resultSet.getString("id"));
+                fundHeavy.set_id(resultSet.getString("id"));
 
                 return fundHeavy;
             }

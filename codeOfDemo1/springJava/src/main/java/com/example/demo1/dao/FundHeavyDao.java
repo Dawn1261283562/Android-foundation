@@ -13,6 +13,10 @@ public interface FundHeavyDao {
     //全部sql拉取
     List<FundHeavy> getListAll();
 
+    void setFundHeavyAll();
+
+    void preprocess();
+
 
     //测试代码
     //FundHeavy getFundHeavy();
