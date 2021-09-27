@@ -42,7 +42,7 @@ public class FundHeavyController {
     @ResponseBody
     public List<FundHeavy>  getListByStockScore(int num,String[] stockIdList,String[] stockRadioList) {
 
-
+        System.out.println(stockIdList);
         List<FundHeavy> result = this.fundHeavyService.getListByStockScore(num,stockIdList,stockRadioList);
         //System.out.println(result.id);
         //result=null;
@@ -82,4 +82,16 @@ public class FundHeavyController {
 //
 //        return 123;
 //    }
+
+    //模式二
+    @RequestMapping("/getListByStockAllType")
+    @ResponseBody
+    public List<FundHeavy>  getListByStockScore(int num,String[] TypeList) {
+
+        System.out.println(TypeList);
+        List<FundHeavy> result = this.fundHeavyService.getListByStockAllType(num,TypeList);
+        //System.out.println(result.id);
+        //result=null;
+        return result;
+    }
 }

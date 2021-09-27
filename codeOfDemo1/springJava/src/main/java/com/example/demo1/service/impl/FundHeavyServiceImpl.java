@@ -1,18 +1,13 @@
 package com.example.demo1.service.impl;
 
 import com.example.demo1.dao.FundHeavyDao;
-import com.example.demo1.dao.UserDao;
 import com.example.demo1.entity.FundHeavy;
 //import com.example.demo1.entity.Instance;
-import com.example.demo1.entity.User;
 import com.example.demo1.service.FundHeavyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.*;
-
-import java.math.BigDecimal;
 
 @Service
 public class FundHeavyServiceImpl implements FundHeavyService {
@@ -35,7 +30,7 @@ public class FundHeavyServiceImpl implements FundHeavyService {
             FundHeavy s = all_fund.get(i);
             for(int j=0;j<num;j++){
                 for(int p=0;p<10;p++){
-                    if(Objects.equals(s.getStock_id()[p], stockIdList[j])){
+                    if(Objects.equals(s.get_stock_id()[p], stockIdList[j])){
                         s.score++;
                     }
                 }
@@ -67,21 +62,24 @@ public class FundHeavyServiceImpl implements FundHeavyService {
         List<FundHeavy> all_fund=fundHeavyDao.getListAll();
         List<FundHeavy> m_fund=new ArrayList<FundHeavy>();
 
+        for(FundHeavy fundHeavy:all_fund){
+            fundHeavy.score=0;//注意这里的fundHeavy是单例，所以要清零。
+        }
         
         for (int i = 0; i < all_fund.size(); i++) {
             FundHeavy s = (FundHeavy)all_fund.get(i);
             int count=0;
             for(int j=0;j<num;j++){
                 for(int p=0;p<10;p++){
-                    System.out.print(stockIdList);System.out.print(stockIdList);
-                    if(Objects.equals(s.getStock_id()[p], stockIdList[j])){
+                    //System.out.print(1);System.out.print(stockIdList);
+                    if(Objects.equals(s.get_stock_id()[p], stockIdList[j])){
                         count++;
                     }
                 }
             }
             //筛出来了
-            if(count==num){
-                m_fund.add(s);
+            if(count!=0){
+            m_fund.add(s);
             }
 
         }
@@ -91,7 +89,7 @@ public class FundHeavyServiceImpl implements FundHeavyService {
             FundHeavy s = (FundHeavy)m_fund.get(i);
             for(int j=0;j<num;j++){
                 for(int p=0;p<10;p++){
-                    if(Objects.equals(s.getStock_id()[p], stockIdList[j])){
+                    if(Objects.equals(s.get_stock_id()[p], stockIdList[j])){
                         //System.out.println(s.score);
                         double expectRadio=0;
 
@@ -99,7 +97,7 @@ public class FundHeavyServiceImpl implements FundHeavyService {
                         //System.out.println(expectRadio);
                         double realRadio =0;
 
-                        realRadio= Double.parseDouble(s.getStock_ratio()[p].toString());
+                        realRadio= Double.parseDouble(s.get_stock_ratio()[p].toString());
                         //System.out.println(realRadio);
                         double difference=0;
 
@@ -148,7 +146,7 @@ public class FundHeavyServiceImpl implements FundHeavyService {
         List<FundHeavy> all_fund=fundHeavyDao.getListAll();
         for(FundHeavy fundHeavy:all_fund){
             fundHeavy.score=0;//注意这里的fundHeavy是单例，所以要清零。
-            Set<String> set=fundHeavy.getStock_type();
+            Set<String> set=fundHeavy.get_stock_type();
             for(int j=0;j<TypeList.length;j++){
                 if(set.contains(TypeList[j]))fundHeavy.score++;
             }
@@ -166,6 +164,51 @@ public class FundHeavyServiceImpl implements FundHeavyService {
         return ans;
     }
 
+
+    //模式3+
+    @Override
+    public List<FundHeavy> getListByStockAllType(int num, String[] TypeList) {
+        List<FundHeavy> m_fund=fundHeavyDao.getListAll();
+        for(FundHeavy fundHeavy:m_fund){
+            fundHeavy.score=0;//注意这里的fundHeavy是单例，所以要清零
+
+        }
+        for (int i = 0; i < m_fund.size(); i++) {
+            FundHeavy s = (FundHeavy)m_fund.get(i);
+            for(int n=0;n<num;n++) {
+                String n1=TypeList[n];
+                for (int p = 0; p < 10; p++) {
+                    String s1 = s.get_stock_all_Type()[p];
+                    boolean status = s1.contains(n1);
+                    if(status){
+                        s.score++;
+                    }
+
+                }
+            }
+            //m_fund.add(s);
+        }
+
+        Collections.sort(m_fund);
+        List<FundHeavy> m_m_fund=new ArrayList<FundHeavy>();
+        m_m_fund=m_fund;
+        //这里有可能不满十个，甚至一个都没有的情况，
+        if(m_fund.size()-1-10>=0){
+            for (int i = m_fund.size()-1; i > m_fund.size()-1-10; i--) {
+                FundHeavy s = (FundHeavy)m_fund.get(i);
+
+                m_m_fund.add(s);
+            }
+        }
+        else{
+            for (int i = m_fund.size()-1; i >0; i--) {
+                FundHeavy s = (FundHeavy)m_fund.get(i);
+                m_m_fund.add(s);
+            }
+        }
+        return m_m_fund;
+
+    }
     //测试用
 //    @Override
 //    public FundHeavy getFundHeavy() {
