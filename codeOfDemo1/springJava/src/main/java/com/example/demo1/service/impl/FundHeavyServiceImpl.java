@@ -74,6 +74,7 @@ public class FundHeavyServiceImpl implements FundHeavyService {
                     //System.out.print(1);System.out.print(stockIdList);
                     if(Objects.equals(s.get_stock_id()[p], stockIdList[j])){
                         count++;
+
                     }
                 }
             }
