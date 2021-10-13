@@ -178,10 +178,17 @@ public class FundHeavyServiceImpl implements FundHeavyService {
             FundHeavy s = (FundHeavy)m_fund.get(i);
             for(int n=0;n<num;n++) {
                 String n1=TypeList[n];
-                for (int p = 0; p < 10; p++) {
+
+                String[] s11 = s.get_stock_all_Type();
+                int si_size=s11.length;
+
+                for (int p = 0; p < si_size; p++) {
                     String s1 = s.get_stock_all_Type()[p];
-                    boolean status = s1.contains(n1);
-                    if(status){
+                    //boolean status = status;
+//                    System.out.println(s1);
+//                    System.out.println(n1);
+                    if(s1==null)continue;
+                    if(s1.contains(n1)){
                         s.score++;
                     }
 
@@ -210,6 +217,94 @@ public class FundHeavyServiceImpl implements FundHeavyService {
         return m_m_fund;
 
     }
+
+    @Override
+    public List<FundHeavy> getListByStockAllTypeRadio(int num, String[] TypeList) {
+        List<FundHeavy> m_fund=fundHeavyDao.getListAll();
+        for(FundHeavy fundHeavy:m_fund){
+            fundHeavy.score=0;//注意这里的fundHeavy是单例，所以要清零
+
+        }
+
+        for (int fundNum = 0; fundNum < m_fund.size(); fundNum++) {
+            FundHeavy fund = (FundHeavy)m_fund.get(fundNum);
+            String[] type_list = fund.get_stock_all_Type();
+            int type_list_size=type_list.length;
+
+            String[] radio_list = fund.get_stock_ratio();
+            //int radio_list_size=radio_list.length;
+            for (int p = 0; p < type_list_size; p++) {
+                String one_typeSet = fund.get_stock_all_Type()[p];
+                String one_radio=fund.get_stock_ratio()[p];
+                if(one_radio==null)continue;
+                int matchingDegreeOfNum =0;
+
+                for(int n=0;n<num;n++) {
+                    String wanted=TypeList[n];
+                    if(one_typeSet==null)continue;
+
+                    if(one_typeSet.contains(wanted)){
+                        matchingDegreeOfNum++;
+                    }
+                }
+                int matchingDegree_rewardMechanism =(int)Math.pow(matchingDegreeOfNum,1.25)*1000;
+
+                double expectRadio=0;
+                expectRadio= Double.parseDouble(one_radio.toString());
+                int scoreSum=(int)(matchingDegree_rewardMechanism*expectRadio*100);
+                if(matchingDegree_rewardMechanism>=1){
+                    fund.score=fund.score+scoreSum;
+//                    fund.score=matchingDegreeOfNum;
+                }
+            }
+        }
+
+//        for (int i = 0; i < m_fund.size(); i++) {
+//            FundHeavy s = (FundHeavy)m_fund.get(i);
+//            for(int n=0;n<num;n++) {
+//                String n1=TypeList[n];
+//
+//                String[] s11 = s.get_stock_all_Type();
+//                int si_size=s11.length;
+//
+//                for (int p = 0; p < si_size; p++) {
+//                    String s1 = s.get_stock_all_Type()[p];
+//                    //boolean status = status;
+////                    System.out.println(s1);
+////                    System.out.println(n1);
+//                    if(s1==null)continue;
+//                    if(s1.contains(n1)){
+//                        s.score++;
+//                    }
+//
+//                }
+//            }
+//            //m_fund.add(s);
+//        }
+
+        Collections.sort(m_fund);
+        List<FundHeavy> m_m_fund=new ArrayList<FundHeavy>();
+        m_m_fund=m_fund;
+        //这里有可能不满十个，甚至一个都没有的情况，
+        if(m_fund.size()-1-10>=0){
+            for (int i = m_fund.size()-1; i > m_fund.size()-1-10; i--) {
+                FundHeavy s = (FundHeavy)m_fund.get(i);
+
+                m_m_fund.add(s);
+            }
+        }
+        else{
+            for (int i = m_fund.size()-1; i >0; i--) {
+                FundHeavy s = (FundHeavy)m_fund.get(i);
+                m_m_fund.add(s);
+            }
+        }
+        return m_m_fund;
+
+    }
+
+
+
     //测试用
 //    @Override
 //    public FundHeavy getFundHeavy() {
