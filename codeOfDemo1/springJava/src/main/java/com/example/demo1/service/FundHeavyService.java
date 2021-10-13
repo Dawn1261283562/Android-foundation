@@ -17,7 +17,10 @@ public interface FundHeavyService {
     //模式三 num表示前端期望后端返回基金的数量，Typelist表示前端向后端传的板块数组
     List<FundHeavy> getListByStockType(int num,String[] TypeList);
 
+
     List<FundHeavy> getListByStockAllType(int num,String[] TypeList);
+
+    List<FundHeavy> getListByStockAllTypeRadio(int num,String[] TypeList);
     //测试用
     //FundHeavy getFundHeavy();
 }

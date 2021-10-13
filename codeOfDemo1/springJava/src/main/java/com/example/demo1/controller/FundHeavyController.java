@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.List;
 @RestController
 @RequestMapping("/fundHeavy")
@@ -15,7 +16,7 @@ public class FundHeavyController {
     @Autowired
     private FundHeavyService fundHeavyService;
 
-    //注意，开销极大
+    //注意，开销极大（ //10/9 15:00 经过测试开销可接受，不大）
     @RequestMapping("/getListAll")
     @ResponseBody
     public List<FundHeavy> getListAll() {
@@ -83,15 +84,28 @@ public class FundHeavyController {
 //        return 123;
 //    }
 
-    //模式二
+    //模式三
     @RequestMapping("/getListByStockAllType")
     @ResponseBody
-    public List<FundHeavy>  getListByStockScore(int num,String[] TypeList) {
+    public List<FundHeavy>  getListByStockAllType(int num,String[] TypeList) {
 
-        System.out.println(TypeList);
+        System.out.println(Arrays.toString(TypeList));
         List<FundHeavy> result = this.fundHeavyService.getListByStockAllType(num,TypeList);
         //System.out.println(result.id);
         //result=null;
         return result;
     }
+
+    //模式三 权值版（考量数量，占比与匹配程度）
+    @RequestMapping("/getListByStockAllTypeRadio")
+    @ResponseBody
+    public List<FundHeavy>  getListByStockAllTypeRadio(int num,String[] TypeList) {
+
+        System.out.println(Arrays.toString(TypeList));
+        List<FundHeavy> result = this.fundHeavyService.getListByStockAllTypeRadio(num,TypeList);
+        //System.out.println(result.id);
+        //result=null;
+        return result;
+    }
+
 }
