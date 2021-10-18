@@ -30,6 +30,7 @@ public class StockDaoImpl implements StockDao {
                 stock.setId(resultSet.getString("id"));
                 stock.setName(resultSet.getString("name"));
                 stock.setType(resultSet.getString("type"));
+                stock.setHits(resultSet.getInt("hits"));
                 return stock;
             }
         },id);
@@ -39,7 +40,16 @@ public class StockDaoImpl implements StockDao {
         }
 
         return result;
+    }
 
-
+    @Override
+    public int updateHitsBySearch(String id) {
+        Stock stock = getById(id);
+        String sql = "update m_stock set hits = ? where id = ?";
+        return this.jdbcTemplate.update(
+                sql,
+                stock.getHits()+1,
+                stock.getId()
+        );
     }
 }
