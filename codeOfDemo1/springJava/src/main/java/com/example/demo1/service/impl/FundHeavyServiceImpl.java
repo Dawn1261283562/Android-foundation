@@ -1,6 +1,7 @@
 package com.example.demo1.service.impl;
 
 import com.example.demo1.dao.FundHeavyDao;
+import com.example.demo1.dao.StockDao;
 import com.example.demo1.entity.FundHeavy;
 //import com.example.demo1.entity.Instance;
 import com.example.demo1.service.FundHeavyService;
@@ -13,6 +14,8 @@ import java.util.*;
 public class FundHeavyServiceImpl implements FundHeavyService {
     @Autowired
     private FundHeavyDao fundHeavyDao;
+    @Autowired
+    private StockDao stockDao;
     
     @Override
     public List<FundHeavy> getListAll() {
@@ -22,6 +25,9 @@ public class FundHeavyServiceImpl implements FundHeavyService {
 
     @Override
     public List<FundHeavy> getListByStockList(int num,String[] stockIdList) {
+        //更新热度
+        for(int i=0;i<num;i++)
+            stockDao.updateHitsBySearch(stockIdList[i]);
         //全部元组
         List<FundHeavy> all_fund=fundHeavyDao.getListAll();
 
@@ -58,6 +64,9 @@ public class FundHeavyServiceImpl implements FundHeavyService {
      */
     @Override
     public List<FundHeavy> getListByStockScore(int num,String[] stockIdList,String[] stockRadioList) {
+        //更新热度
+        for(int i=0;i<num;i++)
+            stockDao.updateHitsBySearch(stockIdList[i]);
 
         List<FundHeavy> all_fund=fundHeavyDao.getListAll();
         List<FundHeavy> m_fund=new ArrayList<FundHeavy>();

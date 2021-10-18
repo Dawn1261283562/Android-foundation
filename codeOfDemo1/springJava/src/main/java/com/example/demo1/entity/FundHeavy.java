@@ -15,6 +15,15 @@ public class FundHeavy implements Comparable<FundHeavy> {
     private String[] stock_ratio = new String[size];
     private String[] stock_all_type = new String[size];
     //因为每只基金有10只股票，可能两只股票有相同的板块，所以用HashSet自动去重
+    private int hits = 0;
+    public int getHits() {
+        return hits;
+    }
+
+    public void setHits(int hits) {
+        this.hits = hits;
+    }
+
     public Set<String> stock_type = new HashSet<String>();
 
     public void set_id(String id) {

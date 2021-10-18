@@ -11,7 +11,7 @@ public interface FundHeavyService {
     //开销极大
     List<FundHeavy> getListAll();
     //模式一
-    List<FundHeavy> getListByStockList(int num,String[] asd);
+    List<FundHeavy> getListByStockList(int num,String[] stockIdList);
     //模式二
     List<FundHeavy> getListByStockScore(int num,String[] stockIdList,String[] stockRadioList);
     //模式三 num表示前端期望后端返回基金的数量，Typelist表示前端向后端传的板块数组

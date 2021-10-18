@@ -39,10 +39,10 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
     }
 
     public void setFundHeavyAll() {
+
         String sql = "select * from m_fund_heavy ";//where id  =?or id =?or id =?or id =?
 
-//        String sql2 =
-//        "SELECT * FROM m_fund_heavy INNER JOIN m_stock ON m_fund_heavy.stock_id_1=m_stock.id";
+//      String sql2 ="SELECT * FROM m_fund_heavy INNER JOIN m_stock ON m_fund_heavy.stock_id_1=m_stock.id";
         String sql2="SELECT * from(SELECT F.id as id , S1.type as stock_type_1 ,S1.id as stock_id_1 ,  F.stock_ratio_1 FROM m_fund_heavy as F INNER JOIN m_stock as S1 ON F.stock_id_1=S1.id order by id)as T1 natural join(SELECT F.id as id , S2.type as stock_type_2 , S2.id as stock_id_2 , F.stock_ratio_2 FROM m_fund_heavy as F INNER JOIN m_stock as S2 ON F.stock_id_2=S2.id order by id)as T2 natural join(SELECT F.id as id , S3.type as stock_type_3 , S3.id as stock_id_3 ,  F.stock_ratio_3 FROM m_fund_heavy as F INNER JOIN m_stock as S3 ON F.stock_id_3=S3.id order by id)as T3 natural join(SELECT F.id as id , S4.type as stock_type_4 , S4.id as stock_id_4 ,  F.stock_ratio_4 FROM m_fund_heavy as F INNER JOIN m_stock as S4 ON F.stock_id_4=S4.id order by id)as T4 natural join(SELECT F.id as id , S5.type as stock_type_5 , S5.id as stock_id_5 ,  F.stock_ratio_5 FROM m_fund_heavy as F INNER JOIN m_stock as S5 ON F.stock_id_5=S5.id order by id)as T5 order by id";
         String sql3="SELECT * from(SELECT F.id as id , S6.type as stock_type_6 , S6.id as stock_id_6 , F.stock_ratio_6 FROM m_fund_heavy as F INNER JOIN m_stock as S6 ON F.stock_id_6=S6.id order by id)as T6 natural join(SELECT F.id as id , S7.type as stock_type_7 , S7.id as stock_id_7 , F.stock_ratio_7 FROM m_fund_heavy as F INNER JOIN m_stock as S7 ON F.stock_id_7=S7.id order by id)as T7 natural join(SELECT F.id as id , S8.type as stock_type_8 , S8.id as stock_id_8 ,  F.stock_ratio_8 FROM m_fund_heavy as F INNER JOIN m_stock as S8 ON F.stock_id_8=S8.id order by id)as T8 natural join(SELECT F.id as id , S9.type as stock_type_9 , S9.id as stock_id_9 ,  F.stock_ratio_9 FROM m_fund_heavy as F INNER JOIN m_stock as S9 ON F.stock_id_9=S9.id order by id)as T9  natural join(SELECT F.id as id ,S10.type as stock_type_10 , S10.id as stock_id_10 ,  F.stock_ratio_10 FROM m_fund_heavy as F INNER JOIN m_stock as S10 ON F.stock_id_10=S10.id order by id)as T10 order by id";
 

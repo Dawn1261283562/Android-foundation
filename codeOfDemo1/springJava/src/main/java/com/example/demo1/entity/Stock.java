@@ -5,6 +5,16 @@ public class Stock {
     private String name;
     private String type;
 
+    public int getHits() {
+        return hits;
+    }
+
+    public void setHits(int hits) {
+        this.hits = hits;
+    }
+
+    private int hits;
+
     public String getId() {
         return id;
     }
