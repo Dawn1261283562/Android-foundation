@@ -138,6 +138,21 @@ public class FundHeavyServiceImpl implements FundHeavyService {
         }
 
         return m_m_fund;
+//        List<FundHeavy> m_m_m_fund=new ArrayList<FundHeavy>();
+//        if(m_m_fund.size()-1-10>=0){
+//            for (int i = m_m_fund.size()-1; i > m_m_fund.size()-1-10; i--) {
+//                FundHeavy s = (FundHeavy)m_m_fund.get(i);
+//
+//                m_m_m_fund.add(s);
+//            }
+//        }
+//        else{
+//            for (int i = m_m_fund.size()-1; i >0; i--) {
+//                FundHeavy s = (FundHeavy)m_m_fund.get(i);
+//                m_m_m_fund.add(s);
+//            }
+//        }
+//        return m_m_m_fund;
     }
 
     //下面大致是模式三的逻辑，不过实际上只是比较数量，再相同数量的板块还未比较大小，这个后面再写
@@ -199,21 +214,22 @@ public class FundHeavyServiceImpl implements FundHeavyService {
 
         Collections.sort(m_fund);
         List<FundHeavy> m_m_fund=new ArrayList<FundHeavy>();
-        m_m_fund=m_fund;
+        //m_m_fund=m_fund;
         //这里有可能不满十个，甚至一个都没有的情况，
         if(m_fund.size()-1-10>=0){
-            for (int i = m_fund.size()-1; i > m_fund.size()-1-10; i--) {
+            for (int i = 0; i < 10; i++) {
                 FundHeavy s = (FundHeavy)m_fund.get(i);
 
                 m_m_fund.add(s);
             }
         }
         else{
-            for (int i = m_fund.size()-1; i >0; i--) {
+            for (int i = 0; i <m_fund.size(); i--) {
                 FundHeavy s = (FundHeavy)m_fund.get(i);
                 m_m_fund.add(s);
             }
         }
+
         return m_m_fund;
 
     }
@@ -284,22 +300,24 @@ public class FundHeavyServiceImpl implements FundHeavyService {
 
         Collections.sort(m_fund);
         List<FundHeavy> m_m_fund=new ArrayList<FundHeavy>();
-        m_m_fund=m_fund;
+        //m_m_fund=m_fund;
         //这里有可能不满十个，甚至一个都没有的情况，
         if(m_fund.size()-1-10>=0){
-            for (int i = m_fund.size()-1; i > m_fund.size()-1-10; i--) {
+            for (int i = 0; i < 10; i++) {
                 FundHeavy s = (FundHeavy)m_fund.get(i);
 
                 m_m_fund.add(s);
             }
         }
         else{
-            for (int i = m_fund.size()-1; i >0; i--) {
+            for (int i = 0; i <m_fund.size(); i--) {
                 FundHeavy s = (FundHeavy)m_fund.get(i);
                 m_m_fund.add(s);
             }
         }
+
         return m_m_fund;
+
 
     }
 
