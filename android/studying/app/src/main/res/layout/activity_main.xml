@@ -7,7 +7,7 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vPager"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="332dp"
         android:layout_gravity="center"
         android:layout_weight="1" />
 
@@ -15,6 +15,43 @@
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:background="@color/colorNavi"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:id="@+id/tv_username"
+            android:text="用户信息搜索："/>
+        <EditText
+            android:layout_toRightOf="@+id/tv_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_username"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:id="@+id/pwd"
+            android:text="密码："/>
+        <EditText
+            android:layout_toRightOf="@+id/pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_pwd"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="登录"/>
 
     <LinearLayout
         android:layout_width="match_parent"
