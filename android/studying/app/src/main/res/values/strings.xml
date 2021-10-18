@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">studying</string>
+    <string name="tab1">基金</string>
+    <string name="tab2">自选</string>
+    <string name="tab3">我的</string>
+    <string name="sear_tab1">基金搜索</string>
+    <string name="sear_tab2">股票搜索</string>
+    <string name="sear_tab3">基金筛选</string>
+    <string name="tip1">完成投资前准备即可随时随地地投资</string>
+    <string name="user_name">用户名</string>
+    <string name="user_mail">邮箱</string>
+    <string name="service">服务</string>
+    <string name="quit">安全退出</string>
+</resources>

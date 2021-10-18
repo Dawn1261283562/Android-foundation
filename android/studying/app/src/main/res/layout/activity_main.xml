@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/colorNavi"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/colorNavi"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/tab1"
+            style="@style/naviTab">
+            <ImageButton
+                android:id="@+id/tab_img1"
+                style="@style/naviButton"
+                android:src="@mipmap/icon1_2"/>
+            <TextView
+                style="@style/naviText"
+                android:text="@string/tab1"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tab2"
+            style="@style/naviTab">
+            <ImageButton
+                android:id="@+id/tab_img2"
+                style="@style/naviButton"
+                android:src="@mipmap/icon1_1" />
+            <TextView
+                style="@style/naviText"
+                android:text="@string/tab2"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tab3"
+            style="@style/naviTab">
+            <ImageButton
+                android:id="@+id/tab_img3"
+                style="@style/naviButton"
+                android:src="@mipmap/icon1_1"/>
+            <TextView
+                style="@style/naviText"
+                android:text="@string/tab3"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/colorNavi"/>
+
+</LinearLayout>
