@@ -1,8 +1,8 @@
 package com.example.demo1.controller;
 import com.example.demo1.entity.FundHeavy;
+import com.example.demo1.entity.Stock;
 import com.example.demo1.entity.User;
-import com.example.demo1.service.FundHeavyService;
-import com.example.demo1.service.HttpClient;
+import com.example.demo1.service.*;
 import com.example.demo1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -22,6 +22,8 @@ public class StockController {
 
     @Autowired
     private HttpClient httpClient;
+    @Autowired
+    private StockService stockService;
 //    @Autowired
 //    User user_1;
 
@@ -37,7 +39,21 @@ public class StockController {
 //            System.out.println(s);
 //        }
 
-        return httpClient.client(url,method,params);
+        String data=httpClient.client(url,method,params);
+        String[] nums = data.split(",") ;
+        //System.out.println(nums[3]);
+        Stock stock = new Stock();
+        String temp=nums[3];
+
+        String temp1=id.substring(0,2);String temp2=id.substring(2,8);
+        System.out.println(temp2+'.'+temp1);
+        String id_restructure=temp2+'.'+temp1;
+        stock.setId(id_restructure);
+        stock.setPrice(temp);
+        stockService.update(stock);
+        //System.out.println(stock.getPrice());
+
+        return data;
 
 
     }

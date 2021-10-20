@@ -62,7 +62,7 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
 //                sql1
 //
 //        );
-        //////////////////////////////////////////////
+        //////////////////////////////////////////////1-5
         fundHeavyAll = jdbcTemplate.query(sql2, new RowMapper<FundHeavy>() {
             @Override
             public FundHeavy mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -96,7 +96,7 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
                 return fundHeavy;
             }
         });
-        ///////////////////////////////////////////////
+        ///////////////////////////////////////////////6-10
         fundHeavyAllTemp = jdbcTemplate.query(sql3, new RowMapper<FundHeavy>() {
             @Override
             public FundHeavy mapRow(ResultSet resultSet, int i) throws SQLException {

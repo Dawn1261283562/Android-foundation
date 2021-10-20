@@ -52,4 +52,17 @@ public class StockDaoImpl implements StockDao {
                 stock.getId()
         );
     }
+
+    @Override
+    public int update(Stock stock) {
+        //Stock stock = getById(id);
+        String sql = "update m_stock set price = ? where id = ?";
+        return this.jdbcTemplate.update(
+                sql,
+                stock.getPrice(),
+                stock.getId()
+        );
+    }
+
+
 }
