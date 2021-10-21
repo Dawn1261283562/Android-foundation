@@ -13,7 +13,7 @@ public class PageFragment3 extends androidx.fragment.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mView == null) {
-            mView = inflater.inflate(R.layout.fragment3, container, false);
+            mView = inflater.inflate(R.layout.page_fragment3, container, false);
         }
         return mView;
     }
