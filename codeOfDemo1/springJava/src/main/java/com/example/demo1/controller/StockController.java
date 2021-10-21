@@ -59,6 +59,23 @@ public class StockController {
 
     }
 
+//    @RequestMapping("/allStock")
+//    public String allStock() {
+//
+//        //get shujuku all stock id
+//
+//        //for idlist
+//
+//        //8010{
+//        //restquhdai
+//        //price
+//        //upda
+//        //}
+//
+//
+//
+//
+//    }
 
 
 }

@@ -209,9 +209,11 @@ public class MainActivity extends   AppCompatActivity implements View.OnClickLis
                 url="http://4s348z6897.qicp.vip/user/getListByPhone?userName=";
                 url = "http://4s348z6897.qicp.vip/stock/hellos?id=";
 
+                //url = "http://localhost:8080/stock/hellos?id=";
 
-                url = "http://localhost:8080/stock/hellos?id=";
-                url = "http://43m486x897.yicp.fun/fundHeavy/hellos?id=";
+                //http://43m486x897.yicp.fun
+                //http://4s348z6897.qicp.vip
+                url = "http://43m486x897.yicp.fun"+"/fundHeavy/hellos?id=";
                 //请求传入的参数
                 RequestBody requestBody = new FormBody.Builder()
                         .add("username", et_username.getText().toString())
@@ -267,13 +269,13 @@ public class MainActivity extends   AppCompatActivity implements View.OnClickLis
 //                        Looper.loop();
 
 
-                        ResponseBody data = response.body();
-                        String strByJson = response.body().string();
-
-                        Looper.prepare();
-                        System.out.println(data);
-                        Toast.makeText(MainActivity.this, strByJson, Toast.LENGTH_SHORT).show();
-                        Looper.loop();
+//                        ResponseBody data = response.body();
+//                        String strByJson = response.body().string();
+//
+//                        Looper.prepare();
+//                        System.out.println(data);
+//                        Toast.makeText(MainActivity.this, strByJson, Toast.LENGTH_SHORT).show();
+//                        Looper.loop();
                     }
                 });
             }
