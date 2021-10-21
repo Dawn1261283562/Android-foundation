@@ -41,7 +41,7 @@ import okhttp3.ResponseBody;
 
 //txml
 //FragmentActivity
-public class MainActivity extends   AppCompatActivity implements View.OnClickListener  {
+public class MainActivity extends   FragmentActivity implements View.OnClickListener  {
 
     private EditText et_username;
 
