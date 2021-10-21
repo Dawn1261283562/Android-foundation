@@ -25,6 +25,7 @@ public class FundHeavyController {
 //    @Autowired
 //    User user_1;
 
+
     @RequestMapping("/hellos")
     public String hellos(String id) {
         String url="http://hq.sinajs.cn/list="+id;//sz000006
