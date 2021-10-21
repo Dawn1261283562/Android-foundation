@@ -7,13 +7,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 
-public class SearchFragment1 extends androidx.fragment.app.Fragment {
+public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
     private View mView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mView == null) {
-            mView = inflater.inflate(R.layout.search_fragment1, container, false);
+            mView = inflater.inflate(R.layout.search_fragment3_1, container, false);
         }
         return mView;
     }

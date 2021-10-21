@@ -12,19 +12,22 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 public class PageFragment2 extends androidx.fragment.app.Fragment {
-    @Nullable
+    private View mView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment2, container, false);
-        TextView txt = (TextView) view.findViewById(R.id.txt2);
-        txt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "当前页面：1", Toast.LENGTH_SHORT).show();
-            }
-        });
-        return view;
+        if (mView == null) {
+            mView = inflater.inflate(R.layout.page_fragment2, container, false);
+        }
+        return mView;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ((ViewGroup) mView.getParent()).removeView(mView);
+    }
+}
 
 //    private EditText et_username;
 //
@@ -75,4 +78,3 @@ public class PageFragment2 extends androidx.fragment.app.Fragment {
 //            }
 //        });
 //    }
-}
