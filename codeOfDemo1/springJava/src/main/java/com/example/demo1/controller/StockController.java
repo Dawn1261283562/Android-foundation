@@ -27,8 +27,9 @@ public class StockController {
 //    @Autowired
 //    User user_1;
 
-    @RequestMapping("/hellos")
-    public String hellos(String id) {
+    //@RequestMapping("/hellos")
+    @RequestMapping("/oneStock")
+    public String oneStock(String id) {
         String url="http://hq.sinajs.cn/list="+id;//sz000006
         HttpMethod method=HttpMethod.GET;
         MultiValueMap<String,String> params=new LinkedMultiValueMap<>();
