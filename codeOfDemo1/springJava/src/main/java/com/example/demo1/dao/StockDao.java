@@ -6,6 +6,4 @@ public interface StockDao {
     Stock getById(String id);
 
     public int updateHitsBySearch(String id) ;
-
-    public int update(Stock stock) ;
 }
