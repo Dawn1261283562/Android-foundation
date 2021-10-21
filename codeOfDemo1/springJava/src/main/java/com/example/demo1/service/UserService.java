@@ -25,12 +25,9 @@ public interface UserService {
     //sql  字符匹配 例子： “61” 匹配 15361202831 6161616161等等
     List<User> getListByPhone(String username);
 
-
-
     //无用实现目前
     boolean login(String username, String password);
 
     //int deleteById(long id);
-
     //User getById(long id);
 }

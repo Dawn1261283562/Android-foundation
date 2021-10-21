@@ -78,7 +78,7 @@ public class UserDaoImpl implements UserDao {
     public User getByPhone(String username) {
         String sql = "select * from m_user where username = ?";
 
-        return this.jdbcTemplate.queryForObject(sql, new RowMapper<User>() {
+        User temp=this.jdbcTemplate.queryForObject(sql, new RowMapper<User>() {
             @Override
             public User mapRow(ResultSet resultSet, int i) throws SQLException {
                 User user = new User();
@@ -88,6 +88,8 @@ public class UserDaoImpl implements UserDao {
                 return user;
             }
         }, username);
+
+        return temp;
     }
 
     @Override
@@ -126,6 +128,8 @@ public class UserDaoImpl implements UserDao {
             return user;
         }, username,password);
     }
+
+
 //    @Override
 //    public User login(long id, String password) {
 //        String sql = "select * from m_user where id=? and password=?";
