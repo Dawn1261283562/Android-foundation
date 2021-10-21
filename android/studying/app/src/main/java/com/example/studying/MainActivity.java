@@ -39,6 +39,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+//txml
 //FragmentActivity
 public class MainActivity extends   AppCompatActivity implements View.OnClickListener  {
 
@@ -201,9 +202,16 @@ public class MainActivity extends   AppCompatActivity implements View.OnClickLis
             @Override
             public void onClick(View v) {
                 String url = "http://localhost:8080/user/lgoin";
-                 url = "http://4s348z6897.qicp.vip/stock/hellos?id=sz000004";
+                url = "http://4s348z6897.qicp.vip/stock/hellos?id=sz000004";
+                url = "http://localhost:8080/stock/hellos?id=";
+                url = "http://localhost:8080/user/getListByPhone?userName=";
+                url = "http://43m486x897.yicp.fun:50117/user/getListByPhone?userName=";
                 url="http://4s348z6897.qicp.vip/user/getListByPhone?userName=";
+                url = "http://4s348z6897.qicp.vip/stock/hellos?id=";
 
+
+                url = "http://localhost:8080/stock/hellos?id=";
+                url = "http://43m486x897.yicp.fun/fundHeavy/hellos?id=";
                 //请求传入的参数
                 RequestBody requestBody = new FormBody.Builder()
                         .add("username", et_username.getText().toString())
@@ -220,36 +228,47 @@ public class MainActivity extends   AppCompatActivity implements View.OnClickLis
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
+
+//                        ResponseBody data = response.body();
+//                        String strByJson = response.body().string();
+//
+////                        Gson gson = new Gson();
+////                        User bean = gson.fromJson(jstr, User.class);
+////                        System.out.println(bean.id);
+////                        System.out.println(bean.username);
+////                        System.out.println(bean.password);
+//
+//                        JsonParser parser = new JsonParser();
+//                        //将JSON的String 转成一个JsonArray对象
+//                        JsonArray jsonArray = parser.parse(strByJson).getAsJsonArray();
+//
+//                        Gson gson = new Gson();
+//                        ArrayList<User> userBeanList = new ArrayList<>();
+//
+//                        //加强for循环遍历JsonArray
+//                        for (JsonElement user : jsonArray) {
+//                            //使用GSON，直接转成Bean对象
+//                            User userBean = gson.fromJson(user, User.class);
+//                            userBeanList.add(userBean);
+//
+//                            System.out.println(userBean.id);
+//                            System.out.println(userBean.username);
+//                            System.out.println(userBean.password);
+//                        }
+//
+//                        //String json = new String(data.bytes());
+//                        //var obj = data.parseJSON();
+//                        //JSONArray.fromObject(stu);
+//
+//
+//                        Looper.prepare();
+//                        System.out.println(data);
+//                        Toast.makeText(MainActivity.this, strByJson, Toast.LENGTH_SHORT).show();
+//                        Looper.loop();
+
+
                         ResponseBody data = response.body();
                         String strByJson = response.body().string();
-//                        Gson gson = new Gson();
-//                        User bean = gson.fromJson(jstr, User.class);
-//                        System.out.println(bean.id);
-//                        System.out.println(bean.username);
-//                        System.out.println(bean.password);
-
-                        JsonParser parser = new JsonParser();
-                        //将JSON的String 转成一个JsonArray对象
-                        JsonArray jsonArray = parser.parse(strByJson).getAsJsonArray();
-
-                        Gson gson = new Gson();
-                        ArrayList<User> userBeanList = new ArrayList<>();
-
-                        //加强for循环遍历JsonArray
-                        for (JsonElement user : jsonArray) {
-                            //使用GSON，直接转成Bean对象
-                            User userBean = gson.fromJson(user, User.class);
-                            userBeanList.add(userBean);
-
-                            System.out.println(userBean.id);
-                            System.out.println(userBean.username);
-                            System.out.println(userBean.password);
-                        }
-
-                        //String json = new String(data.bytes());
-                        //var obj = data.parseJSON();
-                        //JSONArray.fromObject(stu);
-
 
                         Looper.prepare();
                         System.out.println(data);

@@ -4,6 +4,8 @@ public class Stock {
     private String id;
     private String name;
     private String type;
+    private String price;
+    private int hits;
 
     public int getHits() {
         return hits;
@@ -13,7 +15,13 @@ public class Stock {
         this.hits = hits;
     }
 
-    private int hits;
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
 
     public String getId() {
         return id;

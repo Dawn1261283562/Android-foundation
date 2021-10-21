@@ -1,7 +1,6 @@
 package com.example.demo1.service.impl;
 
 import com.example.demo1.dao.FundHeavyDao;
-import com.example.demo1.dao.StockDao;
 import com.example.demo1.entity.FundHeavy;
 //import com.example.demo1.entity.Instance;
 import com.example.demo1.service.FundHeavyService;
@@ -10,13 +9,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+
 @Service
 public class FundHeavyServiceImpl implements FundHeavyService {
     @Autowired
     private FundHeavyDao fundHeavyDao;
-    @Autowired
-    private StockDao stockDao;
-    
+
+    int ten=10;
+    int toInt=1000;
+    double concentrationRatio=1.25;
     @Override
     public List<FundHeavy> getListAll() {
         List<FundHeavy> listAll = fundHeavyDao.getListAll();
@@ -25,9 +26,6 @@ public class FundHeavyServiceImpl implements FundHeavyService {
 
     @Override
     public List<FundHeavy> getListByStockList(int num,String[] stockIdList) {
-        //更新热度
-        for(int i=0;i<num;i++)
-            stockDao.updateHitsBySearch(stockIdList[i]);
         //全部元组
         List<FundHeavy> all_fund=fundHeavyDao.getListAll();
 
@@ -64,9 +62,6 @@ public class FundHeavyServiceImpl implements FundHeavyService {
      */
     @Override
     public List<FundHeavy> getListByStockScore(int num,String[] stockIdList,String[] stockRadioList) {
-        //更新热度
-        for(int i=0;i<num;i++)
-            stockDao.updateHitsBySearch(stockIdList[i]);
 
         List<FundHeavy> all_fund=fundHeavyDao.getListAll();
         List<FundHeavy> m_fund=new ArrayList<FundHeavy>();
@@ -246,24 +241,20 @@ public class FundHeavyServiceImpl implements FundHeavyService {
     @Override
     public List<FundHeavy> getListByStockAllTypeRadio(int num, String[] TypeList) {
         List<FundHeavy> m_fund=fundHeavyDao.getListAll();
-        for(FundHeavy fundHeavy:m_fund){
-            fundHeavy.score=0;//注意这里的fundHeavy是单例，所以要清零
-
-        }
-
+        //注意这里的fundHeavy是单例，所以要清零
+        for(FundHeavy fundHeavy:m_fund)fundHeavy.score=0;
+        //对List评分
         for (int fundNum = 0; fundNum < m_fund.size(); fundNum++) {
             FundHeavy fund = (FundHeavy)m_fund.get(fundNum);
             String[] type_list = fund.get_stock_all_Type();
             int type_list_size=type_list.length;
-
-            String[] radio_list = fund.get_stock_ratio();
-            //int radio_list_size=radio_list.length;
+            //用户选择多种板块纳入考量
             for (int p = 0; p < type_list_size; p++) {
                 String one_typeSet = fund.get_stock_all_Type()[p];
                 String one_radio=fund.get_stock_ratio()[p];
                 if(one_radio==null)continue;
                 int matchingDegreeOfNum =0;
-
+                //统计各持仓板块集中度
                 for(int n=0;n<num;n++) {
                     String wanted=TypeList[n];
                     if(one_typeSet==null)continue;
@@ -272,44 +263,14 @@ public class FundHeavyServiceImpl implements FundHeavyService {
                         matchingDegreeOfNum++;
                     }
                 }
-                int matchingDegree_rewardMechanism =(int)Math.pow(matchingDegreeOfNum,1.25)*1000;
-
-                double expectRadio=0;
-                expectRadio= Double.parseDouble(one_radio.toString());
-                int scoreSum=(int)(matchingDegree_rewardMechanism*expectRadio*100);
-                if(matchingDegree_rewardMechanism>=1){
-                    fund.score=fund.score+scoreSum;
-//                    fund.score=matchingDegreeOfNum;
-                }
+                int matchingDegree_rewardMechanism =(int)Math.pow(matchingDegreeOfNum,concentrationRatio)*toInt;
+                double expectRadio= Double.parseDouble(one_radio.toString());
+                int scoreSum=(int)(matchingDegree_rewardMechanism*expectRadio*toInt);
+                if(matchingDegree_rewardMechanism>=1)fund.score=fund.score+scoreSum;
             }
         }
-
-//        for (int i = 0; i < m_fund.size(); i++) {
-//            FundHeavy s = (FundHeavy)m_fund.get(i);
-//            for(int n=0;n<num;n++) {
-//                String n1=TypeList[n];
-//
-//                String[] s11 = s.get_stock_all_Type();
-//                int si_size=s11.length;
-//
-//                for (int p = 0; p < si_size; p++) {
-//                    String s1 = s.get_stock_all_Type()[p];
-//                    //boolean status = status;
-////                    System.out.println(s1);
-////                    System.out.println(n1);
-//                    if(s1==null)continue;
-//                    if(s1.contains(n1)){
-//                        s.score++;
-//                    }
-//
-//                }
-//            }
-//            //m_fund.add(s);
-//        }
-
-        Collections.sort(m_fund);
-        List<FundHeavy> m_m_fund=new ArrayList<FundHeavy>();
-        //m_m_fund=m_fund;
+        Collections.sort(m_fund);//评分排序
+        List<FundHeavy> m_m_fund=new ArrayList<FundHeavy>();//打包数据给controller层
         //这里有可能不满十个，甚至一个都没有的情况，
         if(m_fund.size()-1-10>=0){
             for (int i = 0; i < 10; i++) {
@@ -318,16 +279,8 @@ public class FundHeavyServiceImpl implements FundHeavyService {
                 m_m_fund.add(s);
             }
         }
-        else{
-            for (int i = 0; i <m_fund.size(); i--) {
-                FundHeavy s = (FundHeavy)m_fund.get(i);
-                m_m_fund.add(s);
-            }
-        }
-
+        else for (int i = 0; i <m_fund.size(); i--)m_m_fund.add((FundHeavy)m_fund.get(i));
         return m_m_fund;
-
-
     }
 
 
