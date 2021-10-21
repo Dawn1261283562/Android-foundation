@@ -202,11 +202,15 @@ public class MainActivity extends   AppCompatActivity implements View.OnClickLis
             public void onClick(View v) {
                 String url = "http://localhost:8080/user/lgoin";
                 url = "http://4s348z6897.qicp.vip/stock/hellos?id=sz000004";
-
+                url = "http://localhost:8080/stock/hellos?id=";
                 url = "http://localhost:8080/user/getListByPhone?userName=";
                 url = "http://43m486x897.yicp.fun:50117/user/getListByPhone?userName=";
                 url="http://4s348z6897.qicp.vip/user/getListByPhone?userName=";
                 url = "http://4s348z6897.qicp.vip/stock/hellos?id=";
+
+
+                url = "http://localhost:8080/stock/hellos?id=";
+                url = "http://43m486x897.yicp.fun/fundHeavy/hellos?id=";
                 //请求传入的参数
                 RequestBody requestBody = new FormBody.Builder()
                         .add("username", et_username.getText().toString())

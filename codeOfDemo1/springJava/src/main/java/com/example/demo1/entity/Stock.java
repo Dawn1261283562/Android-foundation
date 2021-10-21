@@ -5,6 +5,8 @@ public class Stock {
     private String name;
     private String type;
     private String price;
+    private int hits;
+
     public int getHits() {
         return hits;
     }
@@ -20,8 +22,6 @@ public class Stock {
     public void setPrice(String price) {
         this.price = price;
     }
-
-    private int hits;
 
     public String getId() {
         return id;

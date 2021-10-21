@@ -17,6 +17,5 @@ public class HttpClient {
         System.out.println(R);
         return response1.getBody();
     }
-    
 
 }
