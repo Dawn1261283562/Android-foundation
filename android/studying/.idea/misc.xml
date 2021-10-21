@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/12612/Desktop/android/studying/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/12612/Desktop/android/studying/app/src/main/res/layout/fragment1.xml" value="0.1816123188405797" />
+        <entry key="..\:/Users/12612/Desktop/android/studying/app/src/main/res/layout/fragment2.xml" value="0.1" />
+        <entry key="..\:/Users/12612/Desktop/android/studying/app/src/main/res/layout/fragment3.xml" value="0.1816123188405797" />
+        <entry key="..\:/Users/12612/Desktop/android/studying/app/src/main/res/layout/search_fragment1.xml" value="0.1816123188405797" />
+        <entry key="..\:/Users/Administrator/studying/app/src/main/res/drawable/ic_launcher_background.xml" value="0.23333333333333334" />
+        <entry key="..\:/Users/Administrator/studying/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/Administrator/studying/app/src/main/res/layout/first_acti.xml" value="0.1272644927536232" />
+        <entry key="..\:/Users/Administrator/studying/app/src/main/res/layout/fragment1.xml" value="0.2454434993924666" />
+        <entry key="..\:/Users/Administrator/studying/app/src/main/res/layout/fragment2.xml" value="0.10520833333333333" />
+        <entry key="..\:/Users/Administrator/studying/app/src/main/res/layout/fragment3.xml" value="0.296998420221169" />
+        <entry key="..\:/Users/Administrator/studying/app/src/main/res/layout/gupiaosearch.xml" value="0.1" />
+        <entry key="..\:/Users/Administrator/studying/app/src/main/res/layout/jijinserch.xml" value="0.1" />
+        <entry key="..\:/Users/Administrator/studying/app/src/main/res/layout/search1.xml" value="0.1" />
+        <entry key="..\:/Users/Administrator/studying/app/src/main/res/layout/search2.xml" value="0.1" />
+        <entry key="..\:/Users/Administrator/studying/app/src/main/res/layout/search3.xml" value="0.1" />
+        <entry key="..\:/Users/Administrator/studying/app/src/main/res/layout/search_fragment1.xml" value="0.1484375" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
