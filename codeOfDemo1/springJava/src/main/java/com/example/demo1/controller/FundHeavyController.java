@@ -70,7 +70,7 @@ public class FundHeavyController {
     @ResponseBody
     public List<FundHeavy>  getListByStockScore(int num,String[] stockIdList,String[] stockRadioList) {
 
-        System.out.println(stockIdList);
+        //System.out.println(stockIdList);
         List<FundHeavy> result = this.fundHeavyService.getListByStockScore(num,stockIdList,stockRadioList);
         //System.out.println(result.id);
         //result=null;
