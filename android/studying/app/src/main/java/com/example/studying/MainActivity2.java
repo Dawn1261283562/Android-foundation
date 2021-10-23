@@ -54,6 +54,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         mFragments.add(new SearchFragment2());
         mFragments.add(new SearchFragment3_1());
         mFragments.add(new SearchFragment3_2());
+        mFragments.add(new SearchFragment3_10());
 
         //初始化适配器
         mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
