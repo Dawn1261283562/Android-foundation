@@ -1,6 +1,6 @@
 package com.example.studying.entity;
 
-public class m_fund_info {
+public class FundHeavyInfo {
     private String id;
     private String name;
     private String full_name;

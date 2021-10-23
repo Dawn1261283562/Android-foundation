@@ -29,7 +29,7 @@ public class FundHeavyServiceImpl implements FundHeavyService {
     public List<FundHeavy> getListByStockList(int num,String[] stockIdList) {
         //全部元组
         List<FundHeavy> all_fund=fundHeavyDao.getListAll();
-
+        for(FundHeavy fundHeavy:all_fund)fundHeavy.score=0;
         //计分
         for (int i = 0; i < all_fund.size(); i++) {
             FundHeavy s = all_fund.get(i);
@@ -85,7 +85,9 @@ public class FundHeavyServiceImpl implements FundHeavyService {
             }
             //筛出来了
             if(count!=0){
-            m_fund.add(s);
+                int u= num-count;
+                s.score=s.score+u*10;
+                m_fund.add(s);
             }
 
         }
@@ -309,6 +311,28 @@ public class FundHeavyServiceImpl implements FundHeavyService {
         else return fundHeavyDao.getFundHeavyInfoByNotId(str);
 
     }
+
+    @Override
+    public List<FundHeavy> getById(String id) {
+
+        List<FundHeavy> m_fund=fundHeavyDao.getListAll();
+
+        for(FundHeavy fundHeavy:m_fund){
+            if(Objects.equals(fundHeavy.id, id)){
+                FundHeavy temp=fundHeavy;
+                List<FundHeavy> m_fund1=new ArrayList<FundHeavy>();
+                m_fund1.add(temp);
+                return m_fund1;
+            }
+        }
+        FundHeavy temp=null;
+        List<FundHeavy> m_fund1=new ArrayList<FundHeavy>();
+        m_fund1.add(temp);
+        return m_fund1;
+
+
+    }
+
 
     //测试用
 //    @Override

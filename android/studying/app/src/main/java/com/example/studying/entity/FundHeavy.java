@@ -3,11 +3,12 @@ package com.example.studying.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-public class fundHeavy {
+public class FundHeavy {
 
-    public double score = 0;//用于评分的临时变量
+    //public double score = 0;//用于评分的临时变量
     public String id;
     public String name;
+    private String score;
     public static final int size = 10;//数组固定大小
 
     public String[] _stock_id = new String[size];
@@ -17,6 +18,13 @@ public class fundHeavy {
     //因为每只基金有10只股票，可能两只股票有相同的板块，所以用HashSet自动去重
     public int hits = 0;
 
+
+    public String getScore() {
+        return score;
+    }
+    public void setScore(String score) {
+        this.score = score;
+    }
 
     public int getHits() {
         return hits;
