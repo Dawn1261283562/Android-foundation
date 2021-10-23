@@ -5,6 +5,7 @@ import com.example.demo1.entity.User;
 import com.example.demo1.service.*;
 import com.example.demo1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpMethod;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -59,23 +60,47 @@ public class StockController {
 
     }
 
-//    @RequestMapping("/allStock")
-//    public String allStock() {
-//
-//        //get shujuku all stock id
-//
-//        //for idlist
-//
-//        //8010{
-//        //restquhdai
-//        //price
-//        //upda
-//        //}
-//
-//
-//
-//
-//    }
+    //ZC--StockController.class
+    @RequestMapping("/allStock")
+    public void allStock(){
+        String id="sz000001";
+        for (int i = 0; i < 2541; i++) {
+            try {
+                String id_num = id.substring(2);
+                int num1 = Integer.parseInt(id_num);
+                num1++;
+                String str = String.format("%06d", num1);
+                String ret = id.substring(0, 2) + str;
+                id = ret;
+
+                String url = "http://hq.sinajs.cn/list=" + ret;//sz000006
+                HttpMethod method = HttpMethod.GET;
+                MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+
+
+                String data = httpClient.client(url, method, params);
+                String[] nums = data.split(",");
+                Stock stock = new Stock();
+                String temp = nums[3];
+
+                String temp1 = ret.substring(0, 2);
+                String temp2 = ret.substring(2, 8);
+                System.out.println(temp2 + '.' + temp1);
+                String id_restructure = temp2 + '.' + temp1;
+                stock.setId(id_restructure);
+                stock.setPrice(temp);
+                stockService.update(stock);
+
+                System.out.println(data);
+            }
+            catch (Exception e){
+                System.out.println("无法找到该数据。");
+            }
+
+
+
+        }
+    }
 
 
 }
