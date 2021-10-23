@@ -1,6 +1,7 @@
 package com.example.demo1.service;
 
 import com.example.demo1.entity.FundHeavy;
+import com.example.demo1.entity.FundHeavyInfo;
 import com.example.demo1.entity.User;
 
 import java.util.List;
@@ -27,6 +28,11 @@ public interface FundHeavyService {
 
     //模式三加: 板块搜索，考虑股票占比以及按板块匹配数与集中度进行匹配
     List<FundHeavy> getListByStockAllTypeRadio(int num,String[] TypeList);
+
+    //基金普通搜索，如果是ID样式，则根据ID搜索基金，如果不是ID样式，则进行子字符串匹配
+    List<FundHeavyInfo> getListByGeneralSearch(String str);
+
+
     //测试用
     //FundHeavy getFundHeavy();
 }
