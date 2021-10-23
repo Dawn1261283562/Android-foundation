@@ -2,7 +2,9 @@ package com.example.demo1.dao.impl;
 
 import com.example.demo1.dao.FundHeavyDao;
 import com.example.demo1.entity.FundHeavy;
+import com.example.demo1.entity.FundHeavyInfo;
 import com.example.demo1.entity.Stock;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -191,9 +194,58 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
 
     }
 
+    @Override
+    public List<FundHeavyInfo> getFundHeavyInfoByNotId(String str) {
+        String sql="select * from m_fund_info where name LIKE concat('%',?,'%') or legal_person LIKE concat('%',?,'%')" +
+                " or full_name LIKE concat('%',?,'%') or manager LIKE concat('%',?,'%')";
+        List<FundHeavyInfo> ans=null;
+        try {
+            ans=this.jdbcTemplate.query(sql, new RowMapper<FundHeavyInfo>() {
+                @Override
+                public FundHeavyInfo mapRow(ResultSet resultSet, int i) throws SQLException {
+                    FundHeavyInfo fundHeavyInfo=new FundHeavyInfo();
+                    fundHeavyInfo.setId(resultSet.getString("id"));
+                    fundHeavyInfo.setName(resultSet.getString("name"));
+                    fundHeavyInfo.setFull_name(resultSet.getString("full_name"));
+                    fundHeavyInfo.setLegal_person(resultSet.getString("legal_person"));
+                    fundHeavyInfo.setManager(resultSet.getString("manager"));
+                    return fundHeavyInfo;
+                }
+            },str,str,str,str);
+        }
+        catch(DataAccessException e){
+            ans=null;
+        }
+        return ans;
+    }
 
+    @Override
+    public List<FundHeavyInfo> getFundHeavyInfoById(String id) {
+        String sql="select * from m_fund_info where id = ?";
+        FundHeavyInfo result = null;
+        try{
+            result=this.jdbcTemplate.queryForObject(sql, new RowMapper<FundHeavyInfo>() {
+                @Override
+                public FundHeavyInfo mapRow(ResultSet resultSet, int i) throws SQLException {
+                    FundHeavyInfo fundHeavyInfo=new FundHeavyInfo();
+                    fundHeavyInfo.setId(resultSet.getString("id"));
+                    fundHeavyInfo.setName(resultSet.getString("name"));
+                    fundHeavyInfo.setFull_name(resultSet.getString("full_name"));
+                    fundHeavyInfo.setLegal_person(resultSet.getString("legal_person"));
+                    fundHeavyInfo.setManager(resultSet.getString("manager"));
+                    return fundHeavyInfo;
+                }
+            },id);
+        } catch(DataAccessException e){
+            //System.out.println(5555);
+            result=null;
+        }
+        List<FundHeavyInfo> ans=new ArrayList<FundHeavyInfo>();
+        ans.add(result);
+        return ans;
+    }
 
-//        String sql = "select * from m_fund_heavy ";//where id  =?or id =?or id =?or id =?
+    //        String sql = "select * from m_fund_heavy ";//where id  =?or id =?or id =?or id =?
 //        //select * from d_menu where name like concat('%',?,'%')or id =?,s2or id =?
 //        String s1="000001.OF";String s2="000309.OF";String s3="000513.OF";String s4="000893.OF";
 //        List<FundHeavy> fundHeavy1 = jdbcTemplate.query(sql, new RowMapper<FundHeavy>() {

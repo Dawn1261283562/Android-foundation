@@ -3,6 +3,7 @@ package com.example.demo1.service.impl;
 import com.example.demo1.dao.FundHeavyDao;
 import com.example.demo1.entity.FundHeavy;
 //import com.example.demo1.entity.Instance;
+import com.example.demo1.entity.FundHeavyInfo;
 import com.example.demo1.service.FundHeavyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -283,7 +284,13 @@ public class FundHeavyServiceImpl implements FundHeavyService {
         return m_m_fund;
     }
 
-
+    //普通搜索
+    @Override
+    public List<FundHeavyInfo> getListByGeneralSearch(String str) {
+        String regex = "\\d{6}.OF";
+        if(str.matches(regex))return fundHeavyDao.getFundHeavyInfoById(str);
+        else return fundHeavyDao.getFundHeavyInfoByNotId(str);
+    }
 
     //测试用
 //    @Override

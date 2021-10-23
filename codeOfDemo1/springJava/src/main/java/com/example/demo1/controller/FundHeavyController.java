@@ -1,5 +1,6 @@
 package com.example.demo1.controller;
 import com.example.demo1.entity.FundHeavy;
+import com.example.demo1.entity.FundHeavyInfo;
 import com.example.demo1.entity.User;
 import com.example.demo1.service.FundHeavyService;
 import com.example.demo1.service.HttpClient;
@@ -135,4 +136,11 @@ public class FundHeavyController {
         return result;
     }
 
+
+    //基金普通搜索，如果是ID样式，则根据ID搜索基金，如果不是ID样式，则进行子字符串匹配
+    @RequestMapping("/getListByGeneralSearch")
+    @ResponseBody
+    public List<FundHeavyInfo> getListByGeneralSearch(String str) {
+        return this.fundHeavyService.getListByGeneralSearch(str);
+    }
 }
