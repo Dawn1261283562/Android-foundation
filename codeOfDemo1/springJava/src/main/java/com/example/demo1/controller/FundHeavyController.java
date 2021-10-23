@@ -140,7 +140,12 @@ public class FundHeavyController {
     //基金普通搜索，如果是ID样式，则根据ID搜索基金，如果不是ID样式，则进行子字符串匹配
     @RequestMapping("/getListByGeneralSearch")
     @ResponseBody
-    public List<FundHeavyInfo> getListByGeneralSearch(String str) {
-        return this.fundHeavyService.getListByGeneralSearch(str);
+    public List<FundHeavyInfo> getListByGeneralSearch(String id) {
+
+//        String regex2 ="\\d{6}";
+//        if(id.matches(regex2)){
+//            System.out.println(123);
+//        }
+        return this.fundHeavyService.getListByGeneralSearch(id);
     }
 }
