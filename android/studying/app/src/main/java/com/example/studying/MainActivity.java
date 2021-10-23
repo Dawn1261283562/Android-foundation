@@ -41,13 +41,13 @@ import okhttp3.ResponseBody;
 
 //txml
 //FragmentActivity
-public class MainActivity extends   AppCompatActivity implements View.OnClickListener  {
+public class MainActivity extends   FragmentActivity implements View.OnClickListener  {
 
-    private EditText et_username;
+/*    private EditText et_username;
 
     private EditText et_password;
 
-    private Button btn_login;
+    private Button btn_login;*/
 
 
 
@@ -79,7 +79,7 @@ public class MainActivity extends   AppCompatActivity implements View.OnClickLis
         initViews();//初始化控件
         initEvents();//初始化事件
         initData();//初始化数据
-        initView();
+//        initView();
     }
 
     private void initData() {
@@ -191,11 +191,12 @@ public class MainActivity extends   AppCompatActivity implements View.OnClickLis
     }
 
     //Request 请求代码
-    private void initView() {
+/*    private void initView() {
         //绑定控件
         et_username = findViewById(R.id.edit_username);
         et_password = findViewById(R.id.edit_pwd);
         btn_login = findViewById(R.id.btn_login);
+
 
         //为登录按钮设置点击事件
         btn_login.setOnClickListener(new View.OnClickListener() {
@@ -209,9 +210,12 @@ public class MainActivity extends   AppCompatActivity implements View.OnClickLis
                 url="http://4s348z6897.qicp.vip/user/getListByPhone?userName=";
                 url = "http://4s348z6897.qicp.vip/stock/hellos?id=";
 
+                //url = "http://localhost:8080/stock/hellos?id=";
 
-                url = "http://localhost:8080/stock/hellos?id=";
-                url = "http://43m486x897.yicp.fun/fundHeavy/hellos?id=";
+                //http://43m486x897.yicp.fun
+                //http://4s348z6897.qicp.vip
+                url = "http://43m486x897.yicp.fun"+"/fundHeavy/hellos?id=";
+                url = "http://4s348z6897.qicp.vip/stock/oneStock?id=";
                 //请求传入的参数
                 RequestBody requestBody = new FormBody.Builder()
                         .add("username", et_username.getText().toString())
@@ -271,13 +275,13 @@ public class MainActivity extends   AppCompatActivity implements View.OnClickLis
                         String strByJson = response.body().string();
 
                         Looper.prepare();
-                        System.out.println(data);
+                        System.out.println(strByJson);
                         Toast.makeText(MainActivity.this, strByJson, Toast.LENGTH_SHORT).show();
                         Looper.loop();
                     }
                 });
             }
         });
-    }
+    }*/
 
 }

@@ -1,5 +1,34 @@
 package com.example.studying;
 
-public class SearchFragment1 extends androidx.fragment.app.Fragment{
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
+public class SearchFragment1 extends androidx.fragment.app.Fragment {
+    private View mView;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (mView == null) {
+            mView = inflater.inflate(R.layout.search_fragment1, container, false);
+        }
+
+        EditText searchEdit = (EditText) mView.findViewById(R.id.search_edit1);
+        TextView searchBut = (TextView) mView.findViewById(R.id.searchBut);
+
+        return mView;
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ((ViewGroup) mView.getParent()).removeView(mView);
+    }
 }

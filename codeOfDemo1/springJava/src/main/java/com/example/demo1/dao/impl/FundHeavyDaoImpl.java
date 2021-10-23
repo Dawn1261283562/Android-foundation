@@ -186,7 +186,7 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
 //                System.out.println(stockDaoImpl.getById(temp).getType());
 //                System.out.println(stockDaoImpl.getById(temp).getType());
                 //fundHeavy.stock_type.contains(stock_type);
-                fundHeavy.set_stock_type(asd.getType());
+                //fundHeavy.set_stock_type(asd.getType());
                 //System.out.println(1);
             }
         }
