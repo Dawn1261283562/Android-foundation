@@ -27,6 +27,8 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
     private List<FundHeavy> fundHeavyAll;
     private List<FundHeavy> fundHeavyAllTemp;
 
+
+
 //    private List<FundHeavy> globalFundHeavy;
     @Override
     public List<FundHeavy> getListAll() {
@@ -302,6 +304,32 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
 //            }
 //        });//,s1,s2,s3,s4
 //        return fundHeavy1;
+//    @Override
+//    public List<FundHeavy> getById(String id) {
+//        String sql="select * from m_fund_heavy where id = ?";
+//        FundHeavyInfo result = null;
+//        try{
+//            result=this.jdbcTemplate.queryForObject(sql, new RowMapper<FundHeavy>() {
+//                @Override
+//                public FundHeavy mapRow(ResultSet resultSet, int i) throws SQLException {
+//                    FundHeavy fundHeavy=new FundHeavyInfo();
+//                    fundHeavy.setId(resultSet.getString("id"));
+//                    fundHeavy.setName(resultSet.getString("name"));
+//                    fundHeavyInfo.setFull_name(resultSet.getString("full_name"));
+//                    fundHeavyInfo.setLegal_person(resultSet.getString("legal_person"));
+//                    fundHeavyInfo.setManager(resultSet.getString("manager"));
+//                    return fundHeavyInfo;
+//                }
+//            },id);
+//        } catch(DataAccessException e){
+//            //System.out.println(5555);
+//            result=null;
+//        }
+//        List<FundHeavy> ans=new ArrayList<FundHeavyInfo>();
+//        ans.add(result);
+//        return ans;
+//    }
+
 }
 
 

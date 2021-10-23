@@ -5,14 +5,12 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.example.studying.entity.User;
-import com.example.studying.entity.fundHeavy;
+import com.example.studying.entity.FundHeavy;
 import com.example.studying.utils.HttpGetRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -107,13 +105,13 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
                         JsonArray jsonArray = parser.parse(strByJson).getAsJsonArray();
 
                         Gson gson = new Gson();
-                        ArrayList<fundHeavy> userBeanList = new ArrayList<>();
+                        ArrayList<FundHeavy> userBeanList = new ArrayList<>();
 
                         System.out.println(strByJson);
                         //加强for循环遍历JsonArray
                         for (JsonElement fundHeavy : jsonArray) {
                             //使用GSON，直接转成Bean对象
-                            fundHeavy userBean = gson.fromJson(fundHeavy, fundHeavy.class);
+                            FundHeavy userBean = gson.fromJson(fundHeavy, FundHeavy.class);
                             userBeanList.add(userBean);
 
                             System.out.println(userBean.id);

@@ -6,14 +6,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="143dp">
+        android:layout_height="103dp">
 
         <TextView
-            android:id="@+id/tv_username"
+            android:id="@+id/tv_username1"
             android:layout_width="157dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="用户信息搜索：" />
+            android:text="板块搜索：" />
 
         <Button
             android:id="@+id/btn_login1"
@@ -21,7 +21,91 @@
             android:layout_height="62dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="155dp"
-            android:layout_toEndOf="@+id/tv_username"
+            android:layout_toEndOf="@+id/tv_username1"
+            android:text="查询" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="99dp">
+
+        <TextView
+            android:id="@+id/tv_username2"
+            android:layout_width="157dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="持仓搜索（考虑期望比例）：" />
+
+        <Button
+            android:id="@+id/btn_login2"
+            android:layout_width="99dp"
+            android:layout_height="62dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="155dp"
+            android:layout_toEndOf="@+id/tv_username2"
+            android:text="查询" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="103dp">
+
+        <TextView
+            android:id="@+id/tv_username3"
+            android:layout_width="157dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="持仓搜索（无期望比例）：" />
+
+        <Button
+            android:id="@+id/btn_login3"
+            android:layout_width="99dp"
+            android:layout_height="62dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="155dp"
+            android:layout_toEndOf="@+id/tv_username3"
+            android:text="查询" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="103dp">
+
+        <TextView
+            android:id="@+id/tv_username4"
+            android:layout_width="157dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="普通搜索 基金：" />
+
+        <Button
+            android:id="@+id/btn_login4"
+            android:layout_width="99dp"
+            android:layout_height="62dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="155dp"
+            android:layout_toEndOf="@+id/tv_username4"
+            android:text="查询" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="99dp">
+
+        <TextView
+            android:id="@+id/tv_username5"
+            android:layout_width="157dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="普通搜索 股票：" />
+
+        <Button
+            android:id="@+id/btn_login5"
+            android:layout_width="99dp"
+            android:layout_height="62dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="155dp"
+            android:layout_toEndOf="@+id/tv_username5"
             android:text="查询" />
     </RelativeLayout>
 
