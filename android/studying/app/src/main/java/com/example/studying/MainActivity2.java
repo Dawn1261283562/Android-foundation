@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,6 +30,8 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
     private TextView mTex4;
     private TextView mTex5;
 
+    private EditText editText;
+    private TextView searchBut;
     private TextView titleTex;
 
     @Override
@@ -116,6 +119,8 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         mTex4 = (TextView) findViewById(R.id.top_tab4);
         mTex5 = (TextView) findViewById(R.id.top_tab5);
 
+        editText=(EditText)findViewById(R.id.search_edit1);
+        searchBut=(TextView)findViewById(R.id.search_but1);
         titleTex = (TextView) findViewById(R.id.title_text);
     }
 
@@ -150,27 +155,37 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 mLir1.setVisibility(View.VISIBLE);
                 mLir2.setVisibility(View.GONE);
                 mTex1.setTextColor(Color.parseColor("#FF0000"));
-                titleTex.setText("搜索页面");
+                editText.setHint("基金名称");
+                editText.setVisibility(View.VISIBLE);
+                searchBut.setVisibility(View.VISIBLE);
+                titleTex.setVisibility(View.GONE);
                 break;
             case 1:
                 mLir1.setVisibility(View.VISIBLE);
                 mLir2.setVisibility(View.GONE);
                 mTex2.setTextColor(Color.parseColor("#FF0000"));
-                titleTex.setText("搜索页面");
+                editText.setHint("股票名称");
+                editText.setVisibility(View.VISIBLE);
+                searchBut.setVisibility(View.VISIBLE);
+                titleTex.setVisibility(View.GONE);
                 break;
             case 2:
                 mLir1.setVisibility(View.GONE);
                 mLir2.setVisibility(View.VISIBLE);
                 mTex3.setTextColor(Color.parseColor("#FF0000"));
                 mTex4.setTextColor(Color.parseColor("#FF0000"));
-                titleTex.setText("基金筛选");
+                titleTex.setVisibility(View.VISIBLE);
+                editText.setVisibility(View.INVISIBLE);
+                searchBut.setVisibility(View.INVISIBLE);
                 break;
             case 3:
                 mLir1.setVisibility(View.GONE);
                 mLir2.setVisibility(View.VISIBLE);
                 mTex3.setTextColor(Color.parseColor("#FF0000"));
                 mTex5.setTextColor(Color.parseColor("#FF0000"));
-                titleTex.setText("基金筛选");
+                titleTex.setVisibility(View.VISIBLE);
+                editText.setVisibility(View.INVISIBLE);
+                searchBut.setVisibility(View.INVISIBLE);
                 break;
         }
         //设置当前点击的Tab所对应的页面
