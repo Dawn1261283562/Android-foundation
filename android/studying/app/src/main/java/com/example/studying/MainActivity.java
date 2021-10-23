@@ -43,11 +43,11 @@ import okhttp3.ResponseBody;
 //FragmentActivity
 public class MainActivity extends   FragmentActivity implements View.OnClickListener  {
 
-    private EditText et_username;
+/*    private EditText et_username;
 
     private EditText et_password;
 
-    private Button btn_login;
+    private Button btn_login;*/
 
 
 
@@ -79,7 +79,7 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
         initViews();//初始化控件
         initEvents();//初始化事件
         initData();//初始化数据
-        initView();
+//        initView();
     }
 
     private void initData() {
@@ -191,7 +191,7 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
     }
 
     //Request 请求代码
-    private void initView() {
+/*    private void initView() {
         //绑定控件
         et_username = findViewById(R.id.edit_username);
         et_password = findViewById(R.id.edit_pwd);
@@ -278,6 +278,6 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
                 });
             }
         });
-    }
+    }*/
 
 }

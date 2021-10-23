@@ -3,18 +3,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView android:id="@+id/txt2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:text="搜索页面\n3_1"
-        />
 
     <ListView
+        android:id="@+id/list_search"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/list_search">
-
+        android:layout_height="match_parent">
     </ListView>
 </LinearLayout>
