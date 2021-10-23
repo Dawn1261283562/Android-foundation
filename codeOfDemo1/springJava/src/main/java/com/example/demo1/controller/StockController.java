@@ -28,6 +28,79 @@ public class StockController {
 //    @Autowired
 //    User user_1;
 
+    @RequestMapping("/searchStock")
+    public List<Stock> searchStock(String id) {
+        String regex = "\\d{6}.[a-zA-Z][a-zA-Z]";
+        String regex1 = "[a-zA-Z][a-zA-Z]\\d{6}";
+        String regex2 ="\\d{6}";
+        if(id.matches(regex2)){
+            String formalId =stockService.getFormalId(id);
+
+
+            id =formalId;
+            System.out.println(id);
+            String temp1=id.substring(0,6);String temp2=id.substring(7,9);
+            //System.out.println(temp2+temp1);
+            String id_restructure=temp2+temp1;
+            id=id_restructure;
+        }
+        else if(id.matches(regex)){
+            //System.out.println(1233);
+            String temp1=id.substring(0,6);String temp2=id.substring(7,9);
+            //System.out.println(temp2+temp1);
+            String id_restructure=temp2+temp1;
+            id=id_restructure;
+            //System.out.println(id);
+        }
+        else if(id.matches(regex1)){
+            String temp1=id.substring(0,2);String temp2=id.substring(2,8);
+            temp1=temp1.toLowerCase();
+            id=temp1+temp2;
+        }
+        else {
+
+            List<Stock>stockList = null;
+            stockList =stockService.getByOther(id);
+
+
+            //stockList.add(stock1);
+            return stockList;
+        }
+        String url="http://hq.sinajs.cn/list="+id.toLowerCase();//sz000006
+        HttpMethod method=HttpMethod.GET;
+        MultiValueMap<String,String> params=new LinkedMultiValueMap<>();
+
+//        List<FundHeavy>fundHeavy = fundHeavyService.getListAll();
+//        for(int i=0;i<fundHeavy.size();i++){
+//            String s= fundHeavy.get(i).id;
+//            System.out.println(s);
+//        }
+
+        String data=httpClient.client(url,method,params);
+        String[] nums = data.split(",") ;
+        //System.out.println(nums[3]);
+        Stock stock = new Stock();
+        if(nums.length>3) {
+            String temp = nums[3];
+            stock.setPrice(temp);
+        }
+        String temp1=id.substring(0,2);String temp2=id.substring(2,8);
+        System.out.println(temp2+'.'+temp1);
+        String id_restructure=temp2+'.'+temp1;
+        stock.setId(id_restructure);
+
+        stockService.update(stock);
+        List<Stock>stockList = null;
+        stockList =stockService.getById(stock);
+
+
+        //stockList.add(stock1);
+        return stockList;
+
+
+
+    }
+
     //@RequestMapping("/hellos")
     @RequestMapping("/oneStock")
     public String oneStock(String id) {

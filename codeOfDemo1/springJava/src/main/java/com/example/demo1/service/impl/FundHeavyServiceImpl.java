@@ -285,11 +285,29 @@ public class FundHeavyServiceImpl implements FundHeavyService {
     }
 
     //普通搜索
+    //普通搜索
     @Override
     public List<FundHeavyInfo> getListByGeneralSearch(String str) {
         String regex = "\\d{6}.OF";
-        if(str.matches(regex))return fundHeavyDao.getFundHeavyInfoById(str);
+        String regex1 = "\\d{6}.of";
+        String regex2 = "\\d{6}.oF";
+        String regex3 = "\\d{6}.Of";
+        String regex4 = "\\d{6}.Of";
+        String regex5 = "\\d{6}";
+        if(str.matches(regex)||str.matches(regex1)||str.matches(regex2)||str.matches(regex3)||str.matches(regex4)){
+
+            String temp1=str.substring(0,6);String temp2=str.substring(7,9);
+            temp2=temp2.toUpperCase();
+            str=temp1+'.'+temp2;
+            System.out.println(str);
+            return fundHeavyDao.getFundHeavyInfoById(str);
+            }
+        else if(str.matches(regex5)){
+            str=str+".Of";
+            return fundHeavyDao.getFundHeavyInfoById(str);
+            }
         else return fundHeavyDao.getFundHeavyInfoByNotId(str);
+
     }
 
     //测试用
@@ -298,3 +316,22 @@ public class FundHeavyServiceImpl implements FundHeavyService {
 //        return fundHeavyDao.getFundHeavy();
 //    }
 }
+//    String regex = "\\d{6}.OF";
+//    String regex1 = "\\d{6}.of";
+//    String regex2 = "\\d{6}.oF";
+//    String regex3 = "\\d{6}.Of";
+//    String regex4 = "\\d{6}.Of";
+//    String regex5 = "\\d{6}";
+//        if(str.matches(regex)){
+//
+//                String temp1=str.substring(0,6);String temp2=str.substring(7,9);
+//                temp2=temp2.toUpperCase();
+//                str=temp1+'.'+temp2;
+//                System.out.println(str);
+//                return fundHeavyDao.getFundHeavyInfoById(str);
+//                }
+//                else if(str.matches(regex5)){
+//                str=str+".Of";
+//                return fundHeavyDao.getFundHeavyInfoById(str);
+//                }
+//                else return fundHeavyDao.getFundHeavyInfoByNotId(str);
