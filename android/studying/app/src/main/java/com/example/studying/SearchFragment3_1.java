@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -14,6 +15,10 @@ import java.util.List;
 public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
     private View mView;
 
+    private FlowLayout flowLayout;
+    private ArrayList<String> strList;
+    private LayoutInflater layoutInflater;
+
     private List<FundGeneral> fundGeneralList=new ArrayList<>();
 
     @Override
@@ -21,16 +26,57 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
         if (mView == null) {
             mView = inflater.inflate(R.layout.search_fragment3_1, container, false);
         }
+
+        //获取用户选择的股票
+        stockSlected();
+
         //获取持仓搜索结果
         fundSearchResult();
 
         FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
 
-        ListView listView = (ListView) mView.findViewById(R.id.list_search);
+        ListView listView = (ListView) mView.findViewById(R.id.list_search3_1);
         listView.setAdapter(fundAdapter);
 
         return mView;
     }
+
+    private void stockSlected() {
+        strList = new ArrayList<>();
+        strList.add("阿里巴巴");
+        strList.add("阿巴阿巴");
+        strList.add("阿巴巴巴巴");
+        strList.add("阿里巴巴阿里巴巴阿里巴巴阿里巴巴阿里巴巴阿里巴巴");
+        strList.add("阿巴阿巴阿巴");
+        strList.add("阿巴阿");
+        strList.add("阿巴阿巴");
+        strList.add("阿巴阿巴");
+        strList.add("阿巴阿巴");
+        strList.add("巴阿巴");
+        strList.add("阿巴阿");
+
+        flowLayout = (FlowLayout) mView.findViewById(R.id.flowlayout3_1);
+        layoutInflater = LayoutInflater.from(getContext());
+
+        flowLayout.setAdapter(new FlowLayout.Adapter() {
+            @Override
+            public int getCount() {
+                return strList.size();
+            }
+
+            @Override
+            public View getView(int position, ViewGroup parent) {
+                View view = layoutInflater.inflate(R.layout.flow_item3_1,parent,false);
+                // 给 View 设置 margin
+                ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(view.getLayoutParams());
+                mlp.setMargins(5, 5, 5, 5);
+                view.setLayoutParams(mlp);
+                ((TextView)view.findViewById(R.id.flow_text3_1)).setText(strList.get(position));
+                return view;
+            }
+        });
+    }
+
 
     private void fundSearchResult(){
         fundGeneralList.clear();
