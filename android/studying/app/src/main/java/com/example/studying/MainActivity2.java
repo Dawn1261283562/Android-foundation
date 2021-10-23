@@ -2,19 +2,38 @@ package com.example.studying;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.studying.entity.FundHeavyInfo;
+import com.example.studying.entity.Stock;
+import com.example.studying.utils.HttpGetRequest;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class MainActivity2 extends FragmentActivity implements View.OnClickListener {
     private ViewPager mViewPager;
@@ -32,6 +51,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
 
     private EditText editText;
     private TextView searchBut;
+    private Button searchButTrue;
     private TextView titleTex;
 
     @Override
@@ -121,6 +141,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
 
         editText=(EditText)findViewById(R.id.search_edit1);
         searchBut=(TextView)findViewById(R.id.search_but1);
+        searchButTrue=findViewById(R.id.button);
         titleTex = (TextView) findViewById(R.id.title_text);
     }
 
@@ -159,6 +180,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 editText.setVisibility(View.VISIBLE);
                 searchBut.setVisibility(View.VISIBLE);
                 titleTex.setVisibility(View.GONE);
+                initbtn_login4();
                 break;
             case 1:
                 mLir1.setVisibility(View.VISIBLE);
@@ -168,6 +190,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 editText.setVisibility(View.VISIBLE);
                 searchBut.setVisibility(View.VISIBLE);
                 titleTex.setVisibility(View.GONE);
+                initbtn_login5();
                 break;
             case 2:
                 mLir1.setVisibility(View.GONE);
@@ -206,5 +229,115 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
             case R.id.back_icon:
                 finish();
         }
+    }
+
+    private void initbtn_login4() {
+        searchButTrue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "http://localhost:8080/user/lgoin";
+                url = "http://43m486x897.yicp.fun/fundHeavy/getListByGeneralSearch?id=000013";
+                url = "http://43m486x897.yicp.fun/fundHeavy/getListByGeneralSearch?id=";
+                //请求传入的参数
+                String urlAdd= editText.getText().toString();
+                System.out.println(urlAdd);
+                RequestBody requestBody = new FormBody.Builder().build();
+                url=url+urlAdd;
+                HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        Looper.prepare();
+                        //Toast.makeText(MainActivity.this, "post请求失败", Toast.LENGTH_SHORT).show();
+                        Looper.loop();
+                    }
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        ResponseBody data = response.body();
+                        String strByJson = response.body().string();
+
+                        JsonParser parser = new JsonParser();
+                        //将JSON的String 转成一个JsonArray对象
+                        JsonArray jsonArray = parser.parse(strByJson).getAsJsonArray();
+
+                        Gson gson = new Gson();
+                        ArrayList<FundHeavyInfo> fundHeavyInfoList = new ArrayList<>();
+
+                        System.out.println(strByJson);
+                        //加强for循环遍历JsonArray
+
+                        for (JsonElement fundHeavyInfo : jsonArray) {
+                            //使用GSON，直接转成Bean对象
+                            FundHeavyInfo fundHeavyInfoBean = gson.fromJson(fundHeavyInfo, FundHeavyInfo.class);
+                            fundHeavyInfoList.add(fundHeavyInfoBean);
+
+                            System.out.println("这下面是 基金信息的代码、名字、全名、法人公司名、管理者");
+                            System.out.println(fundHeavyInfoBean.getId());
+                            System.out.println(fundHeavyInfoBean.getName());
+                            System.out.println(fundHeavyInfoBean.getFull_name());
+                            System.out.println(fundHeavyInfoBean.getLegal_person());
+                            System.out.println(fundHeavyInfoBean.getManager());
+                            System.out.println("这上面是 基金信息的代码、名字、全名、法人公司名、管理者");
+                        }
+                        Looper.prepare();
+                        System.out.println(data);
+                        Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
+                        Looper.loop();
+                    }
+                });
+            }
+        });
+    }
+    private void initbtn_login5() {
+        searchButTrue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "http://localhost:8080/user/lgoin";
+                url = "http://43m486x897.yicp.fun/stock/searchStock?id=平安";
+                url = "http://43m486x897.yicp.fun/stock/searchStock?id=";
+                //请求传入的参数
+                String urlAdd= editText.getText().toString();
+                RequestBody requestBody = new FormBody.Builder().build();
+                url+=urlAdd;
+
+                HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        Looper.prepare();
+                        //Toast.makeText(MainActivity.this, "post请求失败", Toast.LENGTH_SHORT).show();
+                        Looper.loop();
+                    }
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        ResponseBody data = response.body();
+                        String strByJson = response.body().string();
+                        JsonParser parser = new JsonParser();
+                        //将JSON的String 转成一个JsonArray对象
+                        JsonArray jsonArray = parser.parse(strByJson).getAsJsonArray();
+
+                        Gson gson = new Gson();
+                        ArrayList<Stock> stockBeanList = new ArrayList<Stock>();
+
+                        System.out.println(strByJson);
+                        //加强for循环遍历JsonArray
+                        for (JsonElement stock : jsonArray) {
+                            //使用GSON，直接转成Bean对象
+                            Stock stockBean = gson.fromJson(stock, Stock.class);
+                            stockBeanList.add(stockBean);
+
+                            System.out.println("这下面是 股票的代码、名字、板块集、股价、热度");
+                            System.out.println(stockBean.getId());
+                            System.out.println(stockBean.getName());
+                            System.out.println(stockBean.getType());
+                            System.out.println(stockBean.getPrice());
+                            System.out.println(stockBean.getHits());
+                            System.out.println("这上面是 股票的代码、名字、板块集、股价、热度");
+                        }
+                        Looper.prepare();
+                        Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
+                        Looper.loop();
+                    }
+                });
+            }
+        });
     }
 }
