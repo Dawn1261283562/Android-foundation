@@ -39,11 +39,11 @@
         <TextView
             android:id="@+id/top_tab4"
             style="@style/topTabText"
-            android:text="根据股票"/>
+            android:text="持仓搜索"/>
         <TextView
             android:id="@+id/top_tab5"
             style="@style/topTabText"
-            android:text="根据板块"/>
+            android:text="板块搜索"/>
     </LinearLayout>
 
     <androidx.viewpager.widget.ViewPager
