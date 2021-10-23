@@ -45,7 +45,7 @@ public class SearchFragment3_10 extends androidx.fragment.app.Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mView == null) {
 
-            mView = inflater.inflate(R.layout.search_fragment3_2, container, false);
+            mView = inflater.inflate(R.layout.search_fragment3_10, container, false);
         }
         initView();
 

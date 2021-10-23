@@ -6,32 +6,10 @@
     android:paddingRight="15dp"
     android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText android:id="@+id/txt1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:textSize="20dp"
-            android:hint="股票名称"
-            android:background="@drawable/search_background"/>
-
-        <TextView android:id="@+id/txt2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textSize="20dp"
-            android:text="搜索"
-            android:background="@drawable/search_background"/>
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:text="股票搜索"/>
 </LinearLayout>
