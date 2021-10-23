@@ -21,6 +21,7 @@ import com.google.gson.JsonParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -108,6 +109,7 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
                         Gson gson = new Gson();
                         ArrayList<fundHeavy> userBeanList = new ArrayList<>();
 
+                        System.out.println(strByJson);
                         //加强for循环遍历JsonArray
                         for (JsonElement fundHeavy : jsonArray) {
                             //使用GSON，直接转成Bean对象
@@ -115,6 +117,12 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
                             userBeanList.add(userBean);
 
                             System.out.println(userBean.id);
+                            System.out.println(userBean.name);
+                            System.out.println(Arrays.toString(userBean._stock_id));
+                            System.out.println(Arrays.toString(new String[]{userBean._stock_id[1]}));
+                            System.out.println(Arrays.toString(userBean._stock_ratio));
+                            System.out.println(Arrays.toString(new String[]{userBean._stock_ratio[1]}));
+                            System.out.println(userBean.hits);
 
                         }
 
