@@ -11,11 +11,13 @@ public class FundHeavy implements Comparable<FundHeavy> {
     private static final int size = 10;//数组固定大小
 
     private String[] stock_id = new String[size];
-    private String[] stock_name = new String[size];
+    //private String[] stock_name = new String[size];
     private String[] stock_ratio = new String[size];
     private String[] stock_all_type = new String[size];
     //因为每只基金有10只股票，可能两只股票有相同的板块，所以用HashSet自动去重
     private int hits = 0;
+
+
     public int getHits() {
         return hits;
     }
@@ -32,9 +34,9 @@ public class FundHeavy implements Comparable<FundHeavy> {
 
     public Set<String> get_stock_type() {return stock_type;}
 
-    public void set_stock_type(Set<String> stock_type) {
-        this.stock_type = stock_type;
-    }
+    //public void set_stock_type(Set<String> stock_type) {
+    //    this.stock_type = stock_type;
+    //}
 
     public void set_name(String name) {
         this.name = name;
@@ -44,9 +46,9 @@ public class FundHeavy implements Comparable<FundHeavy> {
         return stock_id;
     }
 
-    public String[] get_stock_name() {
-        return stock_name;
-    }
+//    //public String[] get_stock_name() {
+//        return stock_name;
+//    }
 
     public String[] get_stock_ratio() {
         return stock_ratio;
@@ -58,9 +60,9 @@ public class FundHeavy implements Comparable<FundHeavy> {
     public void set_stock_id(int i,String stock_id){
         this.stock_id[i]=stock_id;
     }
-    public void set_stock_name(int i,String stock_name){
-        this.stock_name[i]=stock_name;
-    }
+//    //public void set_stock_name(int i,String stock_name){
+//        this.stock_name[i]=stock_name;
+//    }
     public void set_stock_ratio(int i,String stock_ratio){
         this.stock_ratio[i]=stock_ratio;
     }
