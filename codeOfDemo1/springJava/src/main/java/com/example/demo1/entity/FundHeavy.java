@@ -11,6 +11,23 @@ public class FundHeavy implements Comparable<FundHeavy> {
     private static final int size = 10;//数组固定大小
 
     private String[] stock_id = new String[size];
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     //private String[] stock_name = new String[size];
     private String[] stock_ratio = new String[size];
     private String[] stock_all_type = new String[size];
@@ -28,9 +45,9 @@ public class FundHeavy implements Comparable<FundHeavy> {
 
     public Set<String> stock_type = new HashSet<String>();
 
-    public void set_id(String id) {
-        this.id = id;
-    }
+//    public void set_id(String id) {
+//        this.id = id;
+//    }
 
     public Set<String> get_stock_type() {return stock_type;}
 
@@ -38,9 +55,9 @@ public class FundHeavy implements Comparable<FundHeavy> {
     //    this.stock_type = stock_type;
     //}
 
-    public void set_name(String name) {
-        this.name = name;
-    }
+//    public void set_name(String name) {
+//        this.name = name;
+//    }
 
     public String[] get_stock_id() {
         return stock_id;
