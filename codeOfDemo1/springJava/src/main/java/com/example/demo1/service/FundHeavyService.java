@@ -29,10 +29,19 @@ public interface FundHeavyService {
     //模式三加: 板块搜索，考虑股票占比以及按板块匹配数与集中度进行匹配
     List<FundHeavy> getListByStockAllTypeRadio(int num,String[] TypeList);
 
+    //模式四：在模式三中加入公司筛选的条件
+    List<FundHeavy> getListByCompanyAndTypeRadio(int num,String[] TypeList,String company);
+
+    //为模式四复用模式三加而写的函数
+    List<FundHeavy> getListByStockAllTypeRadio1(int num,List<FundHeavy> FundList,String[] TypeList);
+
     //基金普通搜索，如果是ID样式，则根据ID搜索基金，如果不是ID样式，则进行子字符串匹配
     List<FundHeavyInfo> getListByGeneralSearch(String str);
 
     List<FundHeavy> getById(String id);
+
+    //分数清零
+    List<FundHeavy> resetListAll();
 
 
     //测试用

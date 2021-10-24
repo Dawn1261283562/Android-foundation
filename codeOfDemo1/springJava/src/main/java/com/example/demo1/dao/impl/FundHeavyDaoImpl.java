@@ -72,8 +72,8 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
             @Override
             public FundHeavy mapRow(ResultSet resultSet, int i) throws SQLException {
                 FundHeavy fundHeavy = new FundHeavy();
-                fundHeavy.set_id(resultSet.getString("id"));
-                fundHeavy.set_name(resultSet.getString("name"));
+                fundHeavy.setId(resultSet.getString("id"));
+                fundHeavy.setName(resultSet.getString("name"));
                 //fundHeavy.set_stock_id_1(resultSet.getString("stock_id_1"));
                 //fundHeavy.set_stock_name_1(resultSet.getString("id"))
                 //fundHeavy.set_stock_id_1(resultSet.getString("id"));
@@ -106,7 +106,7 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
             @Override
             public FundHeavy mapRow(ResultSet resultSet, int i) throws SQLException {
                 FundHeavy fundHeavy = new FundHeavy();
-                fundHeavy.set_id(resultSet.getString("id"));
+                fundHeavy.setId(resultSet.getString("id"));
                 //fundHeavy.set_name(resultSet.getString("name"));
                 //fundHeavy.set_stock_id_1(resultSet.getString("stock_id_1"));
                 //fundHeavy.set_stock_name_1(resultSet.getString("id"))
@@ -194,6 +194,25 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
         }
 
 
+    }
+
+    @Override
+    public List<String> getIdListByCompany(String company) {
+        String sql="select id from m_fund_info where legal_person = ?";
+        List<String> ans=null;
+        try {
+            ans=this.jdbcTemplate.query(sql, new RowMapper<String>() {
+                @Override
+                public String mapRow(ResultSet resultSet, int i) throws SQLException {
+                    String id=resultSet.getString("id");
+                    return id;
+                }
+            },company);
+        }
+        catch(DataAccessException e){
+            ans=null;
+        }
+        return ans;
     }
 
     @Override

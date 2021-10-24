@@ -1,13 +1,17 @@
 package com.example.studying;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+
+import com.example.studying.entity.Stock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +22,8 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
     private FlowLayout flowLayout;
     private ArrayList<String> strList;
     private LayoutInflater layoutInflater;
-
+    private Button addBtn;
+    private ArrayList<Stock> stockList;
     private List<FundGeneral> fundGeneralList=new ArrayList<>();
 
     @Override
@@ -34,7 +39,7 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
         fundSearchResult();
 
         FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
-
+        addBtn =(Button)mView.findViewById(R.id.frag3_1_but1);
         ListView listView = (ListView) mView.findViewById(R.id.list_search3_1);
         listView.setAdapter(fundAdapter);
 
@@ -77,6 +82,27 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
         });
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(),addStockActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("stockList", stockList);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+//                Intent intent=new Intent(getActivity(),addStockActivity.class);
+//                intent.putExtra("i",0);
+//                startActivity(intent);
+            }
+        });
+
+    }
 
     private void fundSearchResult(){
         fundGeneralList.clear();
