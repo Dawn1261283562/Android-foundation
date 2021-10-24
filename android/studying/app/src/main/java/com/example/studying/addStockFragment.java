@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class addStockFragment extends androidx.fragment.app.Fragment {
 
     private ListView listView;
     private FundAdapter fundAdapter;
+    private EditText editText;
     private ArrayList<Stock> stockList1=new ArrayList<Stock>();
     public Button BB;
     @Override
@@ -49,7 +51,8 @@ public class addStockFragment extends androidx.fragment.app.Fragment {
 
         fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
 
-        BB=mView.findViewById(R.id.BB);
+        editText=(EditText)mView.findViewById(R.id.search_edit1);
+        BB=mView.findViewById(R.id.search_but1);
 
         listView = (ListView) mView.findViewById(R.id.list_search2);
         listView.setAdapter(fundAdapter);
@@ -152,61 +155,71 @@ public class addStockFragment extends androidx.fragment.app.Fragment {
                 System.out.println(123);
                 String url = "http://localhost:8080/user/lgoin";
                 url = "http://43m486x897.yicp.fun/stock/searchStock?id=平安";
-                url = "http://43m486x897.yicp.fun/stock/searchStock?id=平安";
+                url = "http://43m486x897.yicp.fun/stock/searchStock?id=";
                 //请求传入的参数
-                //String urlAdd= (addStockActivity)getActivity().editText.getText().toString();
+                String urlAdd= editText.getText().toString();
                 RequestBody requestBody = new FormBody.Builder().build();
-                //url+=urlAdd;
+                url+=urlAdd;
 
 
                 HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
+
                         Looper.prepare();
-                        //Toast.makeText(MainActivity.this, "post请求失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "post请求失败", Toast.LENGTH_SHORT).show();
                         Looper.loop();
                     }
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
+
                         ResponseBody data = response.body();
-                        String strByJson = response.body().string();
-                        JsonParser parser = new JsonParser();
-                        //将JSON的String 转成一个JsonArray对象
-                        JsonArray jsonArray = parser.parse(strByJson).getAsJsonArray();
+                        if(response.code()==200){
+                            String strByJson = response.body().string();
+                            JsonParser parser = new JsonParser();
+                            //将JSON的String 转成一个JsonArray对象
+                            JsonArray jsonArray = parser.parse(strByJson).getAsJsonArray();
 
-                        Gson gson = new Gson();
-                        ArrayList<Stock> stockBeanList = new ArrayList<Stock>();
+                            Gson gson = new Gson();
+                            ArrayList<Stock> stockBeanList = new ArrayList<Stock>();
 
-                        System.out.println(strByJson);
-                        //加强for循环遍历JsonArray
-                        for (JsonElement stock : jsonArray) {
-                            //使用GSON，直接转成Bean对象
-                            Stock stockBean = gson.fromJson(stock, Stock.class);
-                            stockBeanList.add(stockBean);
+                            System.out.println(strByJson);
+                            //加强for循环遍历JsonArray
+                            for (JsonElement stock : jsonArray) {
+                                //使用GSON，直接转成Bean对象
+                                Stock stockBean = gson.fromJson(stock, Stock.class);
+                                stockBeanList.add(stockBean);
 
-                            System.out.println("这下面是 股票的代码、名字、板块集、股价、热度");
-                            System.out.println(stockBean.getId());
-                            System.out.println(stockBean.getName());
-                            System.out.println(stockBean.getType());
-                            System.out.println(stockBean.getPrice());
-                            System.out.println(stockBean.getHits());
-                            System.out.println("这上面是 股票的代码、名字、板块集、股价、热度");
+                                System.out.println("这下面是 股票的代码、名字、板块集、股价、热度");
+                                System.out.println(stockBean.getId());
+                                System.out.println(stockBean.getName());
+                                System.out.println(stockBean.getType());
+                                System.out.println(stockBean.getPrice());
+                                System.out.println(stockBean.getHits());
+                                System.out.println("这上面是 股票的代码、名字、板块集、股价、热度");
+                            }
+                            stockList1 =stockBeanList;
+                            fundGeneralList.clear();
+
+                            int size = stockBeanList.size();
+                            for (int i = 0; i < size; i++) {
+                                Stock value = stockBeanList.get(i);
+                                FundGeneral fundGeneral1=new FundGeneral((String) value.getId(),(String) value.getName(),(String) value.getPrice());
+                                fundGeneralList.add(fundGeneral1);
+
+
+                            }
                         }
-                        stockList1 =stockBeanList;
-                        fundGeneralList.clear();
-
-                        int size = stockBeanList.size();
-                        for (int i = 0; i < size; i++) {
-                            Stock value = stockBeanList.get(i);
-                            FundGeneral fundGeneral1=new FundGeneral((String) value.getId(),(String) value.getName(),(String) value.getPrice());
-                            fundGeneralList.add(fundGeneral1);
-
-
+                        else{
+                            Looper.prepare();
+                            Toast.makeText(getActivity(), "无相关信息", Toast.LENGTH_SHORT).show();
+                            Looper.loop();
                         }
 
-                        Looper.prepare();
-                        Toast.makeText(getActivity(), strByJson, Toast.LENGTH_SHORT).show();
-                        Looper.loop();
+
+//                        Looper.prepare();
+//                        Toast.makeText(getActivity(), strByJson, Toast.LENGTH_SHORT).show();
+//                        Looper.loop();
                     }
                 });
                 fundAdapter.notifyDataSetChanged();
