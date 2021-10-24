@@ -31,17 +31,21 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
 
         ListView listView = (ListView) mView.findViewById(R.id.list_search1);
         listView.setAdapter(fundAdapter);
+        listView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         return mView;
     }
 
     private void fundSearchResult() {
         fundGeneralList.clear();
-        FundGeneral fundGeneral1=new FundGeneral("基金代码","基金名字","管理者");
+        FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行平安银行平安银行平安银行","管理者");
         fundGeneralList.add(fundGeneral1);
-        FundGeneral fundGeneral2=new FundGeneral("000001.SZ","平安银行平安银行平安银行平安银行","管理者");
+        FundGeneral fundGeneral2=new FundGeneral("000001.SZ","平安银行","管理者");
         fundGeneralList.add(fundGeneral2);
-        FundGeneral fundGeneral3=new FundGeneral("000001.SZ","平安银行","管理者");
-        fundGeneralList.add(fundGeneral3);
     }
 
 
