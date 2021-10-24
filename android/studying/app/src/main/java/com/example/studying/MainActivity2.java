@@ -3,6 +3,7 @@ package com.example.studying;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -54,7 +55,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
     private Button searchBut;
     private TextView titleTex;
 
-    private  ArrayList<FundHeavyInfo> temp;
+    private    ArrayList<FundHeavyInfo> temp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -281,12 +282,22 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                             System.out.println("这上面是 基金信息的代码、名字、全名、法人公司名、管理者");
                         }
                         //
-                        temp=fundHeavyInfoList;
+                        //temp=fundHeavyInfoList;
 
-                        Looper.prepare();
-                        System.out.println(data);
+                        ArrayList<FundHeavyInfo> fundHeavyInfoList1 = new ArrayList<>();
+                        FundHeavyInfo fundHeavyInfo=new FundHeavyInfo();
+                        fundHeavyInfo.setId("1111");
+                        fundHeavyInfo.setFull_nameame("aaaaaa");
+                        fundHeavyInfo.setManager("aaaaaa");
+                        fundHeavyInfo.setName("aaaaaa");
+                        fundHeavyInfo.setLegal_person("aaaaaa");
+                        fundHeavyInfoList1.add(fundHeavyInfo);
+
+                        Bundle bundle=new Bundle();
+                        bundle.putParcelableArrayList("initbtn_login4",fundHeavyInfoList1);
+                        mFragments.get(0).setArguments(bundle);
+
                         Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
-                        Looper.loop();
                     }
                 });
             }
