@@ -20,4 +20,10 @@
         android:layout_height="266dp">
 
     </ListView>
+
+    <Button
+        android:id="@+id/BB"
+        android:layout_width="35dp"
+        android:layout_height="23dp"
+        android:text="BB" />
 </LinearLayout>

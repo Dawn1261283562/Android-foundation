@@ -55,7 +55,9 @@ public class addStockActivity extends FragmentActivity implements View.OnClickLi
     private Button searchBut;
     private TextView titleTex;
     private ArrayList<Stock> stockList=new ArrayList<Stock>();
+    private ArrayList<Stock> stockList1=new ArrayList<Stock>();
     private ArrayList<FundHeavyInfo> temp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,6 +200,8 @@ public class addStockActivity extends FragmentActivity implements View.OnClickLi
         }
     }
 
+
+
     private void initbtn_login5() {
         searchBut.setOnClickListener(new View.OnClickListener() {
 
@@ -211,6 +215,7 @@ public class addStockActivity extends FragmentActivity implements View.OnClickLi
                 String urlAdd= editText.getText().toString();
                 RequestBody requestBody = new FormBody.Builder().build();
                 url+=urlAdd;
+
 
                 HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
                     @Override
@@ -246,8 +251,10 @@ public class addStockActivity extends FragmentActivity implements View.OnClickLi
                             System.out.println("这上面是 股票的代码、名字、板块集、股价、热度");
                         }
                         System.out.println(stockBeanList);
+                        stockList1 =stockBeanList;
 
-                        addStockFragment.update(stockBeanList);
+
+
 
 //                        if(stockList!=null)
 //                        stockList.addAll(stockBeanList);
@@ -257,12 +264,17 @@ public class addStockActivity extends FragmentActivity implements View.OnClickLi
 //
 //
 //                        System.out.println(111111);
-                        System.out.println(stockList);
+                        System.out.println(stockList1);
                         Looper.prepare();
+                        //addStockFragment.BB.performClick();
                         Toast.makeText(addStockActivity.this, strByJson, Toast.LENGTH_SHORT).show();
                         Looper.loop();
                     }
                 });
+                addStockFragment.update(stockList1);
+
+
+
             }
         });
     }

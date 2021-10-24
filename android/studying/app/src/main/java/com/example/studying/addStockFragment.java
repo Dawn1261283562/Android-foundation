@@ -1,18 +1,34 @@
 package com.example.studying;
 
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import com.example.studying.entity.Stock;
+import com.example.studying.utils.HttpGetRequest;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class addStockFragment extends androidx.fragment.app.Fragment {
     private View mView;
@@ -20,27 +36,48 @@ public class addStockFragment extends androidx.fragment.app.Fragment {
     private List<FundGeneral> fundGeneralList=new ArrayList<>();
 
     private ListView listView;
+    private FundAdapter fundAdapter;
+    private ArrayList<Stock> stockList1=new ArrayList<Stock>();
+    public Button BB;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mView == null) {
             mView = inflater.inflate(R.layout.add_stock_fragment, container, false);
         }
         //获取持仓搜索结果
-        fundSearchResult();
+        //fundSearchResult();
 
-        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
+        fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
+
+        BB=mView.findViewById(R.id.BB);
 
         listView = (ListView) mView.findViewById(R.id.list_search2);
         listView.setAdapter(fundAdapter);
 
+        initbtn_login5();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 FundGeneral fundGeneral =fundGeneralList.get(i);
                 System.out.println(122);
-
+                //fundSearchResult();
+                //fundAdapter.notifyDataSetChanged();
+                //FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
+                //fundGeneralList.add(fundGeneral1);
+                fundAdapter.notifyDataSetChanged();
             }
         });
+
+
+//        BB.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                fundAdapter.notifyDataSetChanged();
+//            }
+//        });
+
+
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemCli
@@ -50,17 +87,14 @@ public class addStockFragment extends androidx.fragment.app.Fragment {
         return mView;
     }
 
+
+
+
     private void fundSearchResult() {
-        fundGeneralList.clear();
-//        FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
-//        fundGeneralList.add(fundGeneral1);
-//        FundGeneral fundGeneral2=new FundGeneral("000001.SZ","平安银行","20.04");
-//        fundGeneralList.add(fundGeneral2);
-//        FundGeneral fundGeneral3=new FundGeneral("000001.SZ","平安银行","20.04");
-//        fundGeneralList.add(fundGeneral1);
-//        FundGeneral fundGeneral4=new FundGeneral("000001.SZ","平安银行","20.04");
-//        fundGeneralList.add(fundGeneral2);
-//        fundGeneralList.add(fundGeneral2);
+
+        FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
+        fundGeneralList.add(fundGeneral1);
+
     }
 
     @Override
@@ -70,18 +104,36 @@ public class addStockFragment extends androidx.fragment.app.Fragment {
     }
 
     public void update(ArrayList<Stock> stockBeanList) {
-        fundGeneralList.clear();
 
+        System.out.println(123321);
+
+//        for(int i = fundGeneralList.size() - 1; i >= 0; i--){
+//            FundGeneral item = fundGeneralList.get(i);
+//
+//            fundGeneralList.remove(item);
+//
+//        }
+
+        fundGeneralList.clear();
 
         int size = stockBeanList.size();
         for (int i = 0; i < size; i++) {
             Stock value = stockBeanList.get(i);
             FundGeneral fundGeneral1=new FundGeneral((String) value.getId(),(String) value.getName(),(String) value.getPrice());
             fundGeneralList.add(fundGeneral1);
-            FundGeneral fundGeneral2=new FundGeneral("000000.SZ","平安银行","20.04");
-            fundGeneralList.add(fundGeneral2);
+
+
         }
 
+        //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
+//        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
+//
+//        listView = (ListView) mView.findViewById(R.id.list_search2);
+//        listView.setAdapter(fundAdapter);
+
+        //BB.performClick();
+        System.out.println(fundGeneralList.size());
+        //fundAdapter.notifyDataSetChanged();
 //        FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
 //        fundGeneralList.add(fundGeneral1);
 
@@ -89,5 +141,84 @@ public class addStockFragment extends androidx.fragment.app.Fragment {
 
 
 
+    }
+
+
+    private void initbtn_login5() {
+        BB.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                System.out.println(123);
+                String url = "http://localhost:8080/user/lgoin";
+                url = "http://43m486x897.yicp.fun/stock/searchStock?id=平安";
+                url = "http://43m486x897.yicp.fun/stock/searchStock?id=平安";
+                //请求传入的参数
+                //String urlAdd= (addStockActivity)getActivity().editText.getText().toString();
+                RequestBody requestBody = new FormBody.Builder().build();
+                //url+=urlAdd;
+
+
+                HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        Looper.prepare();
+                        //Toast.makeText(MainActivity.this, "post请求失败", Toast.LENGTH_SHORT).show();
+                        Looper.loop();
+                    }
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        ResponseBody data = response.body();
+                        String strByJson = response.body().string();
+                        JsonParser parser = new JsonParser();
+                        //将JSON的String 转成一个JsonArray对象
+                        JsonArray jsonArray = parser.parse(strByJson).getAsJsonArray();
+
+                        Gson gson = new Gson();
+                        ArrayList<Stock> stockBeanList = new ArrayList<Stock>();
+
+                        System.out.println(strByJson);
+                        //加强for循环遍历JsonArray
+                        for (JsonElement stock : jsonArray) {
+                            //使用GSON，直接转成Bean对象
+                            Stock stockBean = gson.fromJson(stock, Stock.class);
+                            stockBeanList.add(stockBean);
+
+                            System.out.println("这下面是 股票的代码、名字、板块集、股价、热度");
+                            System.out.println(stockBean.getId());
+                            System.out.println(stockBean.getName());
+                            System.out.println(stockBean.getType());
+                            System.out.println(stockBean.getPrice());
+                            System.out.println(stockBean.getHits());
+                            System.out.println("这上面是 股票的代码、名字、板块集、股价、热度");
+                        }
+                        stockList1 =stockBeanList;
+                        fundGeneralList.clear();
+
+                        int size = stockBeanList.size();
+                        for (int i = 0; i < size; i++) {
+                            Stock value = stockBeanList.get(i);
+                            FundGeneral fundGeneral1=new FundGeneral((String) value.getId(),(String) value.getName(),(String) value.getPrice());
+                            fundGeneralList.add(fundGeneral1);
+
+
+                        }
+
+                        Looper.prepare();
+                        Toast.makeText(getActivity(), strByJson, Toast.LENGTH_SHORT).show();
+                        Looper.loop();
+                    }
+                });
+                fundAdapter.notifyDataSetChanged();
+
+
+
+            }
+        });
+    }
+    @Override
+    public void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
     }
 }
