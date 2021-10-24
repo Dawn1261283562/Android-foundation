@@ -1,9 +1,11 @@
 package com.example.studying;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,6 +20,8 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
     private FlowLayout flowLayout;
     private ArrayList<String> strList;
     private LayoutInflater layoutInflater;
+    private ArrayList<String> typeList;
+    private Button addBtn;
 
     private List<FundGeneral> fundGeneralList=new ArrayList<>();
 
@@ -34,6 +38,8 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
         fundSearchResult();
 
         FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
+
+        addBtn =(Button)mView.findViewById(R.id.frag3_2_but1);
 
         ListView listView = (ListView) mView.findViewById(R.id.list_search3_2);
         listView.setAdapter(fundAdapter);
@@ -71,6 +77,27 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
         });
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+//        addBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent();
+//                intent.setClass(getActivity(),addStockActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("typeList", typeList);
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+//
+////                Intent intent=new Intent(getActivity(),addStockActivity.class);
+////                intent.putExtra("i",0);
+////                startActivity(intent);
+//            }
+//        });
+
+    }
 
     private void fundSearchResult(){
         fundGeneralList.clear();
