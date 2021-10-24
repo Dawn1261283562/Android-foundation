@@ -157,4 +157,15 @@ public class FundHeavyController {
 //        }
         return this.fundHeavyService.getListByGeneralSearch(id);
     }
+
+    @RequestMapping("/getListByCompanyAndTypeRadio")
+    @ResponseBody
+    public List<FundHeavy> getListByCompanyAndTypeRadio(int num,String[] TypeList,String company) {
+
+//        String regex2 ="\\d{6}";
+//        if(id.matches(regex2)){
+//            System.out.println(123);
+//        }
+        return this.fundHeavyService.getListByCompanyAndTypeRadio(num,TypeList,company);
+    }
 }
