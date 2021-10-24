@@ -30,7 +30,6 @@ public class FundAdapter extends ArrayAdapter<FundGeneral> {
         TextView fund2=(TextView) view.findViewById(R.id.fund2);
         TextView fund3=(TextView) view.findViewById(R.id.fund3);
 
-        DecimalFormat df=new DecimalFormat(("0.00"));
 
         fund1.setText(fundGeneral.getFund1());
         fund2.setText(fundGeneral.getFund2());
@@ -38,4 +37,5 @@ public class FundAdapter extends ArrayAdapter<FundGeneral> {
 
         return view;
     }
+
 }

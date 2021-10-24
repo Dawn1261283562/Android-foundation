@@ -3,6 +3,7 @@ package com.example.studying;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -54,13 +55,21 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
     private Button searchBut;
     private TextView titleTex;
 
-    private  ArrayList<FundHeavyInfo> temp;
+
+    SearchFragment1 searchFragment1;
+    SearchFragment2 searchFragment2;
+    SearchFragment3_1 searchFragment3_1;
+    SearchFragment3_2 searchFragment3_2;
+    SearchFragment3_10 searchFragment3_10;
+
+    private    ArrayList<FundHeavyInfo> temp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main2);
+
         initViews();
         initEvents();
         initData();
@@ -73,13 +82,19 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
     }
 
     private void initData() {
+        searchFragment1=new SearchFragment1();
+        searchFragment2=new SearchFragment2();
+        searchFragment3_1=new SearchFragment3_1();
+        searchFragment3_2=new SearchFragment3_2();
+        searchFragment3_10=new SearchFragment3_10();
+
         mFragments = new ArrayList<>();
 
-        mFragments.add(new SearchFragment1());
-        mFragments.add(new SearchFragment2());
-        mFragments.add(new SearchFragment3_1());
-        mFragments.add(new SearchFragment3_2());
-        mFragments.add(new SearchFragment3_10());
+        mFragments.add(searchFragment1);
+        mFragments.add(searchFragment2);
+        mFragments.add(searchFragment3_1);
+        mFragments.add(searchFragment3_2);
+        mFragments.add(searchFragment3_10);
 
         //初始化适配器
         mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -95,6 +110,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         };
         //设置ViewPager的适配器
         mViewPager.setAdapter(mAdapter);
+        mViewPager.setOffscreenPageLimit(5);
         //设置ViewPager的切换监听
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -144,6 +160,10 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         editText=(EditText)findViewById(R.id.search_edit1);
         searchBut=findViewById(R.id.search_but1);
         titleTex = (TextView) findViewById(R.id.title_text);
+    }
+
+    public ArrayList<FundHeavyInfo> getTemp(){
+        return temp;
     }
 
     @Override
@@ -242,6 +262,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 //请求传入的参数
                 String urlAdd= editText.getText().toString();
                 System.out.println(urlAdd);
+
                 RequestBody requestBody = new FormBody.Builder().build();
                 url=url+urlAdd;
                 HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
@@ -282,6 +303,9 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                         }
                         //
                         temp=fundHeavyInfoList;
+
+                        searchFragment1.fundSearchResult();
+
 
                         Looper.prepare();
                         System.out.println(data);
