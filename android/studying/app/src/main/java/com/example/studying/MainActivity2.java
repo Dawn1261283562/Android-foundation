@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.studying.entity.FundHeavy;
 import com.example.studying.entity.FundHeavyInfo;
 import com.example.studying.entity.Stock;
 import com.example.studying.utils.HttpGetRequest;
@@ -50,9 +51,10 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
     private TextView mTex5;
 
     private EditText editText;
-    private TextView searchBut;
-    private Button searchButTrue;
+    private Button searchBut;
     private TextView titleTex;
+
+    private  ArrayList<FundHeavyInfo> temp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,8 +142,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         mTex5 = (TextView) findViewById(R.id.top_tab5);
 
         editText=(EditText)findViewById(R.id.search_edit1);
-        searchBut=(TextView)findViewById(R.id.search_but1);
-        searchButTrue=findViewById(R.id.button);
+        searchBut=findViewById(R.id.search_but1);
         titleTex = (TextView) findViewById(R.id.title_text);
     }
 
@@ -232,7 +233,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
     }
 
     private void initbtn_login4() {
-        searchButTrue.setOnClickListener(new View.OnClickListener() {
+        searchBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String url = "http://localhost:8080/user/lgoin";
@@ -260,6 +261,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                         JsonArray jsonArray = parser.parse(strByJson).getAsJsonArray();
 
                         Gson gson = new Gson();
+
                         ArrayList<FundHeavyInfo> fundHeavyInfoList = new ArrayList<>();
 
                         System.out.println(strByJson);
@@ -278,6 +280,9 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                             System.out.println(fundHeavyInfoBean.getManager());
                             System.out.println("这上面是 基金信息的代码、名字、全名、法人公司名、管理者");
                         }
+                        //
+                        temp=fundHeavyInfoList;
+
                         Looper.prepare();
                         System.out.println(data);
                         Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
@@ -288,7 +293,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         });
     }
     private void initbtn_login5() {
-        searchButTrue.setOnClickListener(new View.OnClickListener() {
+        searchBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String url = "http://localhost:8080/user/lgoin";

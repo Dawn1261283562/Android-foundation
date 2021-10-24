@@ -65,14 +65,5 @@
         android:textColor="@color/white"
         android:textSize="20dp"/>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="55dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="279dp"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="@+id/search_edit1"
-        tools:layout_editor_absoluteY="3dp" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
