@@ -31,6 +31,12 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
 
         ListView listView = (ListView) mView.findViewById(R.id.list_search1);
         listView.setAdapter(fundAdapter);
+        listView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                
+            }
+        });
         return mView;
     }
 
