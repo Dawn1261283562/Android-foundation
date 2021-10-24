@@ -37,15 +37,18 @@
         <entry key="..\:/Users/Administrator/studying/app/src/main/res/layout/search3.xml" value="0.1" />
         <entry key="..\:/Users/Administrator/studying/app/src/main/res/layout/search_fragment1.xml" value="0.1484375" />
         <entry key="..\:/fund/android/studying/app/src/main/res/layout/activity_main.xml" value="0.25364583333333335" />
-        <entry key="..\:/fund/android/studying/app/src/main/res/layout/activity_main2.xml" value="0.10989583333333333" />
+        <entry key="..\:/fund/android/studying/app/src/main/res/layout/activity_main2.xml" value="0.264" />
+        <entry key="..\:/fund/android/studying/app/src/main/res/layout/flow_item3_1.xml" value="0.12708333333333333" />
+        <entry key="..\:/fund/android/studying/app/src/main/res/layout/fund_item.xml" value="0.12708333333333333" />
         <entry key="..\:/fund/android/studying/app/src/main/res/layout/page_fragment1.xml" value="0.13125" />
         <entry key="..\:/fund/android/studying/app/src/main/res/layout/page_fragment2.xml" value="0.13125" />
-        <entry key="..\:/fund/android/studying/app/src/main/res/layout/page_fragment3.xml" value="0.13125" />
+        <entry key="..\:/fund/android/studying/app/src/main/res/layout/page_fragment3.xml" value="0.2" />
         <entry key="..\:/fund/android/studying/app/src/main/res/layout/search_fragment1.xml" value="0.13125" />
-        <entry key="..\:/fund/android/studying/app/src/main/res/layout/search_fragment2.xml" value="0.13125" />
+        <entry key="..\:/fund/android/studying/app/src/main/res/layout/search_fragment2.xml" value="0.2" />
         <entry key="..\:/fund/android/studying/app/src/main/res/layout/search_fragment3_1.xml" value="0.2" />
+        <entry key="..\:/fund/android/studying/app/src/main/res/layout/search_fragment3_10.xml" value="0.264" />
         <entry key="..\:/fund/android/studying/app/src/main/res/layout/search_fragment3_2.xml" value="0.264" />
-        <entry key="..\:/fund/android/studying/app/src/main/res/layout/title_layout.xml" value="0.10989583333333333" />
+        <entry key="..\:/fund/android/studying/app/src/main/res/layout/title_layout.xml" value="0.4" />
       </map>
     </option>
   </component>

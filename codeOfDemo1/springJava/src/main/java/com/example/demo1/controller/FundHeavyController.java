@@ -56,7 +56,16 @@ public class FundHeavyController {
         return result;
     }
 
+    @RequestMapping("/getById")
+    @ResponseBody
+    public List<FundHeavy> getById(String id) {
 
+
+        List<FundHeavy> result = this.fundHeavyService.getById(id);
+        //System.out.println(result.id);
+
+        return result;
+    }
     //模式一
     @RequestMapping("/getListByStockList")
     @ResponseBody

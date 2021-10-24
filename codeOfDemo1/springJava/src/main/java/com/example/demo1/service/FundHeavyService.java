@@ -32,6 +32,8 @@ public interface FundHeavyService {
     //基金普通搜索，如果是ID样式，则根据ID搜索基金，如果不是ID样式，则进行子字符串匹配
     List<FundHeavyInfo> getListByGeneralSearch(String str);
 
+    List<FundHeavy> getById(String id);
+
 
     //测试用
     //FundHeavy getFundHeavy();
