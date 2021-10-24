@@ -28,8 +28,7 @@ public class FundHeavyServiceImpl implements FundHeavyService {
     @Override
     public List<FundHeavy> getListByStockList(int num,String[] stockIdList) {
         //全部元组
-        List<FundHeavy> all_fund=fundHeavyDao.getListAll();
-        for(FundHeavy fundHeavy:all_fund)fundHeavy.score=0;
+        List<FundHeavy> all_fund=resetListAll();
         //计分
         for (int i = 0; i < all_fund.size(); i++) {
             FundHeavy s = all_fund.get(i);
@@ -64,13 +63,9 @@ public class FundHeavyServiceImpl implements FundHeavyService {
     @Override
     public List<FundHeavy> getListByStockScore(int num,String[] stockIdList,String[] stockRadioList) {
 
-        List<FundHeavy> all_fund=fundHeavyDao.getListAll();
+        List<FundHeavy> all_fund=resetListAll();
         List<FundHeavy> m_fund=new ArrayList<FundHeavy>();
 
-        for(FundHeavy fundHeavy:all_fund){
-            fundHeavy.score=0;//注意这里的fundHeavy是单例，所以要清零。
-        }
-        
         for (int i = 0; i < all_fund.size(); i++) {
             FundHeavy s = (FundHeavy)all_fund.get(i);
             int count=0;
@@ -191,11 +186,7 @@ public class FundHeavyServiceImpl implements FundHeavyService {
     //模式3+
     @Override
     public List<FundHeavy> getListByStockAllType(int num, String[] TypeList) {
-        List<FundHeavy> m_fund=fundHeavyDao.getListAll();
-        for(FundHeavy fundHeavy:m_fund){
-            fundHeavy.score=0;//注意这里的fundHeavy是单例，所以要清零
-
-        }
+        List<FundHeavy> m_fund = resetListAll();
         for (int i = 0; i < m_fund.size(); i++) {
             FundHeavy s = (FundHeavy)m_fund.get(i);
             for(int n=0;n<num;n++) {
@@ -243,12 +234,52 @@ public class FundHeavyServiceImpl implements FundHeavyService {
 
     @Override
     public List<FundHeavy> getListByStockAllTypeRadio(int num, String[] TypeList) {
-        List<FundHeavy> m_fund=fundHeavyDao.getListAll();
-        //注意这里的fundHeavy是单例，所以要清零
-        for(FundHeavy fundHeavy:m_fund)fundHeavy.score=0;
+        List<FundHeavy> m_fund = resetListAll();
+        return getListByStockAllTypeRadio1(num,m_fund,TypeList);
         //对List评分
-        for (int fundNum = 0; fundNum < m_fund.size(); fundNum++) {
-            FundHeavy fund = (FundHeavy)m_fund.get(fundNum);
+//        for (int fundNum = 0; fundNum < m_fund.size(); fundNum++) {
+//            FundHeavy fund = (FundHeavy)m_fund.get(fundNum);
+//            String[] type_list = fund.get_stock_all_Type();
+//            int type_list_size=type_list.length;
+//            //用户选择多种板块纳入考量
+//            for (int p = 0; p < type_list_size; p++) {
+//                String one_typeSet = fund.get_stock_all_Type()[p];
+//                String one_radio=fund.get_stock_ratio()[p];
+//                if(one_radio==null)continue;
+//                int matchingDegreeOfNum =0;
+//                //统计各持仓板块集中度
+//                for(int n=0;n<num;n++) {
+//                    String wanted=TypeList[n];
+//                    if(one_typeSet==null)continue;
+//
+//                    if(one_typeSet.contains(wanted)){
+//                        matchingDegreeOfNum++;
+//                    }
+//                }
+//                int matchingDegree_rewardMechanism =(int)Math.pow(matchingDegreeOfNum,concentrationRatio)*toInt;
+//                double expectRadio= Double.parseDouble(one_radio.toString());
+//                int scoreSum=(int)(matchingDegree_rewardMechanism*expectRadio*toInt);
+//                if(matchingDegree_rewardMechanism>=1)fund.score=fund.score+scoreSum;
+//            }
+//        }
+//        Collections.sort(m_fund);//评分排序
+//        List<FundHeavy> m_m_fund=new ArrayList<FundHeavy>();//打包数据给controller层
+//        //这里有可能不满十个，甚至一个都没有的情况，
+//        if(m_fund.size()-1-10>=0){
+//            for (int i = 0; i < 10; i++) {
+//                FundHeavy s = (FundHeavy)m_fund.get(i);
+//
+//                m_m_fund.add(s);
+//            }
+//        }
+//        else for (int i = 0; i <m_fund.size(); i--)m_m_fund.add((FundHeavy)m_fund.get(i));
+//        return m_m_fund;
+    }
+
+    @Override
+    public List<FundHeavy> getListByStockAllTypeRadio1(int num,List<FundHeavy> FundList,String[] TypeList){
+        for (int fundNum = 0; fundNum < FundList.size(); fundNum++) {
+            FundHeavy fund = (FundHeavy)FundList.get(fundNum);
             String[] type_list = fund.get_stock_all_Type();
             int type_list_size=type_list.length;
             //用户选择多种板块纳入考量
@@ -272,18 +303,31 @@ public class FundHeavyServiceImpl implements FundHeavyService {
                 if(matchingDegree_rewardMechanism>=1)fund.score=fund.score+scoreSum;
             }
         }
-        Collections.sort(m_fund);//评分排序
+        Collections.sort(FundList);//评分排序
         List<FundHeavy> m_m_fund=new ArrayList<FundHeavy>();//打包数据给controller层
         //这里有可能不满十个，甚至一个都没有的情况，
-        if(m_fund.size()-1-10>=0){
+        if(FundList.size()-1-10>=0){
             for (int i = 0; i < 10; i++) {
-                FundHeavy s = (FundHeavy)m_fund.get(i);
+                FundHeavy s = (FundHeavy)FundList.get(i);
 
                 m_m_fund.add(s);
             }
         }
-        else for (int i = 0; i <m_fund.size(); i--)m_m_fund.add((FundHeavy)m_fund.get(i));
+        else for (int i = 0; i <FundList.size(); i--)m_m_fund.add((FundHeavy)FundList.get(i));
         return m_m_fund;
+    }
+    //模式4，筛选出指定公司的基金，再使用模式三
+    @Override
+    public List<FundHeavy> getListByCompanyAndTypeRadio(int num, String[] TypeList,String company) {
+        List<String> fundIdList = fundHeavyDao.getIdListByCompany(company);
+        List<FundHeavy> all_fund = resetListAll();
+        List<FundHeavy> m_fund = new ArrayList<FundHeavy>();
+        for(FundHeavy fundHeavy:all_fund){
+            for(String str:fundIdList){
+                if(fundHeavy.getId().equals(str))m_fund.add(fundHeavy);
+            }
+        }
+        return getListByStockAllTypeRadio1(num,m_fund,TypeList);
     }
 
     //普通搜索
@@ -333,6 +377,13 @@ public class FundHeavyServiceImpl implements FundHeavyService {
 
     }
 
+    @Override
+    public List<FundHeavy> resetListAll() {
+        List<FundHeavy> m_fund=fundHeavyDao.getListAll();
+        //注意这里的fundHeavy是单例，所以要清零
+        for(FundHeavy fundHeavy:m_fund)fundHeavy.score=0;
+        return m_fund;
+    }
 
     //测试用
 //    @Override
