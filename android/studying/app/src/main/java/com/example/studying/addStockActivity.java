@@ -40,6 +40,7 @@ public class addStockActivity extends FragmentActivity implements View.OnClickLi
     private ViewPager mViewPager;
     private FragmentPagerAdapter mAdapter;
     private List<Fragment> mFragments;
+    addStockFragment addStockFragment;
 
     private LinearLayout mLir1;
     private LinearLayout mLir2;
@@ -78,6 +79,8 @@ public class addStockActivity extends FragmentActivity implements View.OnClickLi
 
 
         mFragments.add(new addStockFragment());
+
+        addStockFragment= (addStockFragment)mFragments.get(0);
 
 
         //初始化适配器
@@ -197,8 +200,10 @@ public class addStockActivity extends FragmentActivity implements View.OnClickLi
 
     private void initbtn_login5() {
         searchBut.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                System.out.println(123);
                 String url = "http://localhost:8080/user/lgoin";
                 url = "http://43m486x897.yicp.fun/stock/searchStock?id=平安";
                 url = "http://43m486x897.yicp.fun/stock/searchStock?id=";
@@ -241,6 +246,9 @@ public class addStockActivity extends FragmentActivity implements View.OnClickLi
                             System.out.println("这上面是 股票的代码、名字、板块集、股价、热度");
                         }
                         System.out.println(stockBeanList);
+
+                        addStockFragment.update(stockBeanList);
+
 //                        if(stockList!=null)
 //                        stockList.addAll(stockBeanList);
 //                        else {
