@@ -30,6 +30,7 @@
         android:padding="8dp"
         android:text="刷新"/>
 
+
     <com.example.studying.FlowLayout
         android:id="@+id/flowlayout3_1"
         android:layout_width="wrap_content"
