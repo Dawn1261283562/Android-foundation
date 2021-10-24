@@ -5,29 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <Button
         android:id="@+id/frag3_1_but1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/frag3_1_but2"
+        app:layout_constraintBottom_toBottomOf="@id/frag3_1_but2"
         app:layout_constraintLeft_toLeftOf="parent"
         android:background="@drawable/search_background"
-        android:padding="8dp"
         android:textSize="15dp"
-        android:text="添加心仪股票"/>
-    <TextView
+        android:text="添加心仪股"/>
+    <Button
         android:id="@+id/frag3_1_but2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:background="@drawable/search_background"
         android:textSize="15dp"
-        android:padding="8dp"
         android:text="刷新"/>
 
 
@@ -39,7 +38,7 @@
         android:paddingBottom="10dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        app:layout_constraintTop_toBottomOf="@id/frag3_1_but1"
+        app:layout_constraintTop_toBottomOf="@id/frag3_1_but2"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
 
