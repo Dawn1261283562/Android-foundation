@@ -33,12 +33,10 @@ public class SearchFragment2 extends androidx.fragment.app.Fragment {
 
     private void fundSearchResult() {
         fundGeneralList.clear();
-        FundGeneral fundGeneral1=new FundGeneral("股票代码","股票名字","股价");
+        FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
         fundGeneralList.add(fundGeneral1);
         FundGeneral fundGeneral2=new FundGeneral("000001.SZ","平安银行","20.04");
         fundGeneralList.add(fundGeneral2);
-        FundGeneral fundGeneral3=new FundGeneral("000001.SZ","平安银行","20.04");
-        fundGeneralList.add(fundGeneral3);
     }
 
     @Override
