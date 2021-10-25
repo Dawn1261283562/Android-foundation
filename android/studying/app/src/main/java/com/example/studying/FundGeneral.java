@@ -1,5 +1,6 @@
 package com.example.studying;
 
+import com.example.studying.entity.FundHeavyInfo;
 import com.example.studying.entity.Stock;
 
 public class FundGeneral {
@@ -7,10 +8,27 @@ public class FundGeneral {
     private String fund2;
     private String fund3;
 
+    private FundHeavyInfo fundHeavyInfo;
     private Stock stock;
+    private String type;
 
+    public void setFundHeavyInfo(FundHeavyInfo fundHeavyInfo) {
+        this.fundHeavyInfo = fundHeavyInfo;
+    }
 
-    public FundGeneral(String fund1,String fund2,String fund3){
+    public FundHeavyInfo getFundHeavyInfo() {
+        return fundHeavyInfo;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public FundGeneral(String fund1, String fund2, String fund3){
         this.fund1=fund1;
         this.fund2=fund2;
         this.fund3=fund3;
