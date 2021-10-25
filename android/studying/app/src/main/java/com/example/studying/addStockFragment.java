@@ -51,16 +51,13 @@ public class addStockFragment extends androidx.fragment.app.Fragment {
         //获取持仓搜索结果
         //fundSearchResult();
 
-        fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
-
-        editText=(EditText)mView.findViewById(R.id.search_edit1);
-        BB=mView.findViewById(R.id.search_but1);
+        /*fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
 
         listView = (ListView) mView.findViewById(R.id.list_search2);
-        listView.setAdapter(fundAdapter);
+        listView.setAdapter(fundAdapter);*/
 
         //initbtn_login5();
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 FundGeneral fundGeneral =fundGeneralList.get(i);
@@ -81,75 +78,67 @@ public class addStockFragment extends androidx.fragment.app.Fragment {
 
                 fundAdapter.notifyDataSetChanged();
             }
-        });
-
-
-//        BB.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                fundAdapter.notifyDataSetChanged();
-//            }
-//        });
-
-
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemCli
-//
-//        });
-
+        });*/
         return mView;
     }
 
-
-
-
-    private void fundSearchResult() {
-
-        FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
-        fundGeneralList.add(fundGeneral1);
-
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ((ViewGroup) mView.getParent()).removeView(mView);
-    }
-
-    public void update(ArrayList<Stock> stockBeanList) {
-
-        System.out.println(123321);
-        fundGeneralList.clear();
-
-        int size = stockBeanList.size();
-        for (int i = 0; i < size; i++) {
-            Stock value = stockBeanList.get(i);
-            FundGeneral fundGeneral1=new FundGeneral((String) value.getId(),(String) value.getName(),(String) value.getPrice());
-            fundGeneral1.setStock(value);
-            fundGeneralList.add(fundGeneral1);
-
-
-        }
-
-        listView.setAdapter(new FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList));
-
-        //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
-//        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
+//    private void fundSearchResult(ArrayList<Stock> stockBeanList) {
+//        /*FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
+//        fundGeneralList.add(fundGeneral1);*/
 //
-//        listView = (ListView) mView.findViewById(R.id.list_search2);
-//        listView.setAdapter(fundAdapter);
+//        System.out.println(123321);
+//        fundGeneralList.clear();
+//
+//        int size = stockBeanList.size();
+//        for (int i = 0; i < size; i++) {
+//            Stock value = stockBeanList.get(i);
+//            FundGeneral fundGeneral1=new FundGeneral((String) value.getId(),(String) value.getName(),(String) value.getPrice());
+//            fundGeneral1.setStock(value);
+//            fundGeneralList.add(fundGeneral1);
+//        }
+//
+//        listView.setAdapter(new FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList));
+//
+//        //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
+////        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
+////
+////        listView = (ListView) mView.findViewById(R.id.list_search2);
+////        listView.setAdapter(fundAdapter);
+//
+//        //BB.performClick();
+//        System.out.println(fundGeneralList.size());
+//        fundAdapter.notifyDataSetChanged();
+//    }
 
-        //BB.performClick();
-        System.out.println(fundGeneralList.size());
-        fundAdapter.notifyDataSetChanged();
-//        FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
-//        fundGeneralList.add(fundGeneral1);
 
-
-    }
-
+//    public void update(ArrayList<Stock> stockBeanList) {
+//
+//        System.out.println(123321);
+//        fundGeneralList.clear();
+//
+//        int size = stockBeanList.size();
+//        for (int i = 0; i < size; i++) {
+//            Stock value = stockBeanList.get(i);
+//            FundGeneral fundGeneral1=new FundGeneral((String) value.getId(),(String) value.getName(),(String) value.getPrice());
+//            fundGeneral1.setStock(value);
+//            fundGeneralList.add(fundGeneral1);
+//
+//
+//        }
+//
+//        listView.setAdapter(new FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList));
+//
+//        //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
+////        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
+////
+////        listView = (ListView) mView.findViewById(R.id.list_search2);
+////        listView.setAdapter(fundAdapter);
+//
+//        //BB.performClick();
+//        System.out.println(fundGeneralList.size());
+//        fundAdapter.notifyDataSetChanged();
+//    }
+/*
     public void hasSelectedUpdate(ArrayList<Stock> stockList) {
         System.out.println(123321);
         this.stockList=stockList;
@@ -159,7 +148,7 @@ public class addStockFragment extends androidx.fragment.app.Fragment {
             System.out.println(value.getName());
         }
         System.out.println(123321);
-    }
+    }*/
 
 
 //    private void initbtn_login5() {

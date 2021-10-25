@@ -75,37 +75,19 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main2);
 
         initViews();
-        editText.setOnKeyListener(new View.OnKeyListener(){
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent keyEvent) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (imm.isActive()) {
-                        imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
-                    }
-                }
-                return false;
-            }
-        });
-        /*editText.setOnEditorActionListener(new TextView.OnEditorActionListener(){
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if(i == EditorInfo.IME_ACTION_SEARCH)
-            }
-        });*/
         initEvents();
+        initData();
 
 
         int i=getIntent().getIntExtra("i",0);
         Intent intent = this.getIntent();
         stockList = (ArrayList<Stock>) intent.getSerializableExtra("stockList");
-        initData();
-        mViewPager.setCurrentItem(i);
 
+        mViewPager.setCurrentItem(i);
         resetTab();
         selectTab(i);
 
@@ -180,7 +162,24 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         mTex4.setOnClickListener(this);
         mTex5.setOnClickListener(this);
 
-
+        editText.setOnKeyListener(new View.OnKeyListener(){
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent keyEvent) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm.isActive()) {
+                        imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
+                    }
+                }
+                return false;
+            }
+        });
+        /*editText.setOnEditorActionListener(new TextView.OnEditorActionListener(){
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i == EditorInfo.IME_ACTION_SEARCH)
+            }
+        });*/
     }
 
     private void initViews() {
