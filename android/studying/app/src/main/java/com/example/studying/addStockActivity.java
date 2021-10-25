@@ -208,6 +208,7 @@ public class addStockActivity extends FragmentActivity implements View.OnClickLi
             @Override
             public void onClick(View v) {
                 System.out.println(123);
+
                 String url = "http://localhost:8080/user/lgoin";
                 url = "http://43m486x897.yicp.fun/stock/searchStock?id=平安";
                 url = "http://43m486x897.yicp.fun/stock/searchStock?id=";
@@ -215,8 +216,6 @@ public class addStockActivity extends FragmentActivity implements View.OnClickLi
                 String urlAdd= editText.getText().toString();
                 RequestBody requestBody = new FormBody.Builder().build();
                 url+=urlAdd;
-
-
                 HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -227,54 +226,53 @@ public class addStockActivity extends FragmentActivity implements View.OnClickLi
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         ResponseBody data = response.body();
-                        String strByJson = response.body().string();
-                        JsonParser parser = new JsonParser();
-                        //将JSON的String 转成一个JsonArray对象
-                        JsonArray jsonArray = parser.parse(strByJson).getAsJsonArray();
+                        if(response.code()==200){
+                            String strByJson = response.body().string();
+                            JsonParser parser = new JsonParser();
+                            //将JSON的String 转成一个JsonArray对象
+                            JsonArray jsonArray = parser.parse(strByJson).getAsJsonArray();
 
-                        Gson gson = new Gson();
-                        ArrayList<Stock> stockBeanList = new ArrayList<Stock>();
+                            Gson gson = new Gson();
+                            ArrayList<Stock> stockBeanList = new ArrayList<Stock>();
 
-                        System.out.println(strByJson);
-                        //加强for循环遍历JsonArray
-                        for (JsonElement stock : jsonArray) {
-                            //使用GSON，直接转成Bean对象
-                            Stock stockBean = gson.fromJson(stock, Stock.class);
-                            stockBeanList.add(stockBean);
+                            System.out.println(strByJson);
+                            //加强for循环遍历JsonArray
+                            for (JsonElement stock : jsonArray) {
+                                //使用GSON，直接转成Bean对象
+                                Stock stockBean = gson.fromJson(stock, Stock.class);
+                                if(stockBean==null){
+                                    Looper.prepare();
+                                    //addStockFragment.BB.performClick();
+                                    Toast.makeText(addStockActivity.this, "无相关信息", Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                    return;
+                                }
+                                stockBeanList.add(stockBean);
 
-                            System.out.println("这下面是 股票的代码、名字、板块集、股价、热度");
-                            System.out.println(stockBean.getId());
-                            System.out.println(stockBean.getName());
-                            System.out.println(stockBean.getType());
-                            System.out.println(stockBean.getPrice());
-                            System.out.println(stockBean.getHits());
-                            System.out.println("这上面是 股票的代码、名字、板块集、股价、热度");
+                                System.out.println("这下面是 股票的代码、名字、板块集、股价、热度");
+                                System.out.println(stockBean.getId());
+                                System.out.println(stockBean.getName());
+                                System.out.println(stockBean.getType());
+                                System.out.println(stockBean.getPrice());
+                                System.out.println(stockBean.getHits());
+                                System.out.println("这上面是 股票的代码、名字、板块集、股价、热度");
+                            }
+                            System.out.println(stockBeanList);
+                            stockList1 =stockBeanList;
+                            System.out.println(stockList1);
+                            Looper.prepare();
+                            Toast.makeText(addStockActivity.this, strByJson, Toast.LENGTH_SHORT).show();
+                            Looper.loop();
                         }
-                        System.out.println(stockBeanList);
-                        stockList1 =stockBeanList;
-
-
-
-
-//                        if(stockList!=null)
-//                        stockList.addAll(stockBeanList);
-//                        else {
-//                            stockList=stockBeanList;
-//                        }
-//
-//
-//                        System.out.println(111111);
-                        System.out.println(stockList1);
-                        Looper.prepare();
-                        //addStockFragment.BB.performClick();
-                        Toast.makeText(addStockActivity.this, strByJson, Toast.LENGTH_SHORT).show();
-                        Looper.loop();
+                        else{
+                            Looper.prepare();
+                            Toast.makeText(addStockActivity.this, "无相关信息", Toast.LENGTH_SHORT).show();
+                            Looper.loop();
+                        }
                     }
                 });
                 addStockFragment.update(stockList1);
-
-
-
+                addStockFragment.hasSelectedUpdate(stockList);
             }
         });
     }

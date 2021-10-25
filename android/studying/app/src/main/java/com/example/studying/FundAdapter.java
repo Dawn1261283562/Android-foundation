@@ -16,7 +16,8 @@ import java.util.List;
 public class FundAdapter extends ArrayAdapter<FundGeneral> {
     private int mResourceId;
     public FundAdapter(Context context, int textViewResourceId, List<FundGeneral> fundItem){
-        super(context,textViewResourceId,fundItem);
+        super(context,
+                textViewResourceId,fundItem);
         mResourceId=textViewResourceId;
     }
 

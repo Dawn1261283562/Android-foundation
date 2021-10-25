@@ -1,6 +1,8 @@
 package com.example.studying.entity;
 
-public class Stock<String> {
+import java.io.Serializable;
+
+public class Stock<String> implements Serializable {
     private String id;
     private String name;
     private String type;

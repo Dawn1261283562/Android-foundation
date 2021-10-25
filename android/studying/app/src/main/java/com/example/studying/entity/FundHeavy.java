@@ -1,9 +1,10 @@
 package com.example.studying.entity;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class FundHeavy {
+public class FundHeavy implements Serializable {
 
     //public double score = 0;//用于评分的临时变量
     public String id;

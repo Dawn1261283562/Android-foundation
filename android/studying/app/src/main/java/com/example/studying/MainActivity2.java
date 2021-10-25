@@ -1,6 +1,7 @@
 package com.example.studying;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Looper;
@@ -60,6 +61,8 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
     private TextView titleTex;
 
 
+
+
     SearchFragment1 searchFragment1;
     SearchFragment2 searchFragment2;
     SearchFragment3_1 searchFragment3_1;
@@ -67,6 +70,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
     SearchFragment3_10 searchFragment3_10;
 
     private    ArrayList<FundHeavyInfo> temp;
+    private ArrayList<Stock> stockList=new ArrayList<Stock>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,19 +155,29 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
             }
         });*/
         initEvents();
-        initData();
+
 
         int i=getIntent().getIntExtra("i",0);
+        Intent intent = this.getIntent();
+        stockList = (ArrayList<Stock>) intent.getSerializableExtra("stockList");
+        initData();
         mViewPager.setCurrentItem(i);
+
         resetTab();
         selectTab(i);
 
+        if(stockList!=null){
+
+            selectTab(2);
+        }
+        else return;
+        //System.out.println(stockList.get(1).getName());
     }
 
     private void initData() {
         searchFragment1=new SearchFragment1();
         searchFragment2=new SearchFragment2();
-        searchFragment3_1=new SearchFragment3_1();
+        searchFragment3_1=new SearchFragment3_1(stockList);
         searchFragment3_2=new SearchFragment3_2();
         searchFragment3_10=new SearchFragment3_10();
 
