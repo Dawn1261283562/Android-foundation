@@ -77,93 +77,18 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main2);
 
         initViews();
-//        editText.setOnKeyListener(new View.OnKeyListener(){
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent keyEvent) {
-//                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-//                    String url = "http://localhost:8080/user/lgoin";
-//                    url = "http://43m486x897.yicp.fun/fundHeavy/getListByGeneralSearch?id=000013";
-//                    url = "http://43m486x897.yicp.fun/fundHeavy/getListByGeneralSearch?id=";
-//                    //请求传入的参数
-//                    String urlAdd= editText.getText().toString();
-//                    System.out.println(urlAdd+"yyyy");
-//
-//                    RequestBody requestBody = new FormBody.Builder().build();
-//                    url=url+urlAdd;
-//                    HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
-//                        @Override
-//                        public void onFailure(Call call, IOException e) {
-//                            Looper.prepare();
-//                            //Toast.makeText(MainActivity.this, "post请求失败", Toast.LENGTH_SHORT).show();
-//                            Looper.loop();
-//                        }
-//                        @Override
-//                        public void onResponse(Call call, Response response) throws IOException {
-//                            ResponseBody data = response.body();
-//                            String strByJson = response.body().string();
-//
-//                            JsonParser parser = new JsonParser();
-//                            //将JSON的String 转成一个JsonArray对象
-//                            JsonArray jsonArray = parser.parse(strByJson).getAsJsonArray();
-//
-//                            Gson gson = new Gson();
-//
-//                            ArrayList<FundHeavyInfo> fundHeavyInfoList = new ArrayList<>();
-//
-//                            System.out.println(strByJson);
-//                            //加强for循环遍历JsonArray
-//
-//                            for (JsonElement fundHeavyInfo : jsonArray) {
-//                                //使用GSON，直接转成Bean对象
-//                                FundHeavyInfo fundHeavyInfoBean = gson.fromJson(fundHeavyInfo, FundHeavyInfo.class);
-//                                fundHeavyInfoList.add(fundHeavyInfoBean);
-//
-//                                System.out.println("这下面是 基金信息的代码、名字、全名、法人公司名、管理者");
-//                                System.out.println(fundHeavyInfoBean.getId());
-//                                System.out.println(fundHeavyInfoBean.getName());
-//                                System.out.println(fundHeavyInfoBean.getFull_name());
-//                                System.out.println(fundHeavyInfoBean.getLegal_person());
-//                                System.out.println(fundHeavyInfoBean.getManager());
-//                                System.out.println("这上面是 基金信息的代码、名字、全名、法人公司名、管理者");
-//                            }
-//                            //
-//                            temp=fundHeavyInfoList;
-//
-//                            searchFragment1.fundSearchResult();
-//
-//
-//                            Looper.prepare();
-//                            System.out.println(data);
-//                            Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
-//                            Looper.loop();
-//                        }
-//                    });
-//                    InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-//                    if (imm.isActive()) {
-//                        imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
-//                    }
-//                }
-//                return false;
-//            }
-//        });
-        /*editText.setOnEditorActionListener(new TextView.OnEditorActionListener(){
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if(i == EditorInfo.IME_ACTION_SEARCH)
-            }
-        });*/
         initEvents();
+        initData();
 
 
         int i=getIntent().getIntExtra("i",0);
         Intent intent = this.getIntent();
         stockList = (ArrayList<Stock>) intent.getSerializableExtra("stockList");
         typeList = (ArrayList<String>) intent.getSerializableExtra("typeList");
-        initData();
         mViewPager.setCurrentItem(i);
 
 
@@ -247,7 +172,24 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         mTex4.setOnClickListener(this);
         mTex5.setOnClickListener(this);
 
-
+        editText.setOnKeyListener(new View.OnKeyListener(){
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent keyEvent) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm.isActive()) {
+                        imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
+                    }
+                }
+                return false;
+            }
+        });
+        /*editText.setOnEditorActionListener(new TextView.OnEditorActionListener(){
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i == EditorInfo.IME_ACTION_SEARCH)
+            }
+        });*/
     }
 
     private void initViews() {

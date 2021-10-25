@@ -2,22 +2,24 @@
 
 package com.example.studying;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Looper;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.studying.entity.FundHeavyInfo;
 import com.example.studying.entity.Stock;
@@ -38,171 +40,116 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class addStockActivity extends FragmentActivity implements View.OnClickListener {
-    private ViewPager mViewPager;
-    private FragmentPagerAdapter mAdapter;
-    private List<Fragment> mFragments;
-    addStockFragment addStockFragment;
-
-    private LinearLayout mLir1;
-    private LinearLayout mLir2;
-
-    private TextView mTex1;
-    private TextView mTex2;
-    private TextView mTex3;
-    private TextView mTex4;
-    private TextView mTex5;
+public class addStockActivity extends AppCompatActivity {
 
     private EditText editText;
     private Button searchBut;
-    private TextView titleTex;
+
     private ArrayList<Stock> stockList=new ArrayList<Stock>();
     private ArrayList<Stock> stockList1=new ArrayList<Stock>();
     private ArrayList<FundHeavyInfo> temp;
 
+    private List<FundGeneral> fundGeneralList=new ArrayList<>();
+
+    private ListView listView;
+    private FundAdapter fundAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_add_stock);
         initViews();
         initEvents();
         initData();
 
-        Intent intent = this.getIntent();
-        stockList = (ArrayList<Stock>) intent.getSerializableExtra("stockList");
-
-        selectTab(1);
+        initbtn_login5();
         //System.out.println(stockList);
-
     }
 
     private void initData() {
-        mFragments = new ArrayList<>();
+        editText.setHint("股票名称");
+        listView.setAdapter(fundAdapter);
 
+        fundAdapter=new FundAdapter(addStockActivity.this,R.layout.fund_item,fundGeneralList);
+    }
 
-        mFragments.add(new addStockFragment());
-
-        addStockFragment= (addStockFragment)mFragments.get(0);
-
-
-        //初始化适配器
-        mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+    private void initEvents() {
+        editText.setOnKeyListener(new View.OnKeyListener(){
             @Override
-            public Fragment getItem(int position) {//从集合中获取对应位置的Fragment
-                return mFragments.get(position);
+            public boolean onKey(View v, int keyCode, KeyEvent keyEvent) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm.isActive()) {
+                        imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
+                    }
+                }
+                return false;
             }
+        });
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public int getCount() {//获取集合中Fragment的总数
-                return mFragments.size();
-            }
-        };
-        //设置ViewPager的适配器
-        mViewPager.setAdapter(mAdapter);
-        //设置ViewPager的切换监听
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            //页面滚动事件
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                FundGeneral fundGeneral =fundGeneralList.get(i);
+                System.out.println(122);
 
-            }
+                stockList.add(fundGeneral.getStock());
 
-            //页面选中事件
-            @Override
-            public void onPageSelected(int position) {
-                //设置position对应的集合中的Fragment页面
-                mViewPager.setCurrentItem(position);
-                resetTab();
-                selectTab(position);
-            }
-
-            @Override
-            //页面滚动状态改变事件
-            public void onPageScrollStateChanged(int state) {
-
+                fundAdapter.notifyDataSetChanged();
             }
         });
     }
 
-    private void initEvents() {
-        //设置3个按钮的点击事件
-        mTex1.setOnClickListener(this);
-        mTex2.setOnClickListener(this);
-        mTex3.setOnClickListener(this);
-        mTex4.setOnClickListener(this);
-        mTex5.setOnClickListener(this);
-    }
-
     private void initViews() {
-        mViewPager = (ViewPager) findViewById(R.id.vPager);
-
-        mLir1 = (LinearLayout) findViewById(R.id.top_Tab1);
-        mLir2 = (LinearLayout) findViewById(R.id.top_Tab2);
-
-        mTex1 = (TextView) findViewById(R.id.top_tab1);
-        mTex2 = (TextView) findViewById(R.id.top_tab2);
-        mTex3 = (TextView) findViewById(R.id.top_tab3);
-        mTex4 = (TextView) findViewById(R.id.top_tab4);
-        mTex5 = (TextView) findViewById(R.id.top_tab5);
-
         editText=(EditText)findViewById(R.id.search_edit1);
         searchBut=findViewById(R.id.search_but1);
-        titleTex = (TextView) findViewById(R.id.title_text);
+        listView = (ListView) findViewById(R.id.list_search2);
     }
 
-    @Override
-    public void onClick(View v) {
-        setTab(v.getId());
-    }
-
-    private void setTab(int i){
-        resetTab();
-
-        switch (i) {
-
-            case R.id.top_tab2:
-                selectTab(1);
-                break;
-
-
-
-        }
-    }
-
-    private void selectTab(int i) {
-        switch (i) {
-
-            case 1:
-                mLir1.setVisibility(View.VISIBLE);
-                mLir2.setVisibility(View.GONE);
-                mTex2.setTextColor(Color.parseColor("#FF0000"));
-                editText.setHint("股票名称");
-                editText.setVisibility(View.VISIBLE);
-                searchBut.setVisibility(View.VISIBLE);
-                titleTex.setVisibility(View.GONE);
-                initbtn_login5();
-                break;
-
-        }
-        //设置当前点击的Tab所对应的页面
-        mViewPager.setCurrentItem(i);
-    }
-
-    //设置默认的tab的图标
-    private void resetTab() {
-        mTex2.setTextColor(Color.parseColor("#000000"));
-    }
-
-    public  void clickBack(View view){
+    public void clickBack(View view){
         switch (view.getId()){
             case R.id.back_icon:
                 finish();
         }
     }
 
+    private void fundSearchResult() {
+        /*FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
+        fundGeneralList.add(fundGeneral1);*/
 
+        System.out.println(123321);
+        fundGeneralList.clear();
+
+        int size = stockList1.size();
+        for (int i = 0; i < size; i++) {
+            Stock value = stockList1.get(i);
+            FundGeneral fundGeneral1=new FundGeneral((String) value.getId(),(String) value.getName(),(String) value.getPrice());
+            fundGeneral1.setStock(value);
+            fundGeneralList.add(fundGeneral1);
+        }
+
+        listView.setAdapter(new FundAdapter(addStockActivity.this,R.layout.fund_item,fundGeneralList));
+
+        //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
+//        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
+//
+//        listView = (ListView) mView.findViewById(R.id.list_search2);
+//        listView.setAdapter(fundAdapter);
+
+        //BB.performClick();
+        System.out.println(fundGeneralList.size());
+        fundAdapter.notifyDataSetChanged();
+    }
+
+    private void hasSelectedUpdate() {
+        System.out.println(123321);
+        int size = stockList.size();
+        for (int i = 0; i < size; i++) {
+            Stock value = stockList.get(i);
+            System.out.println(value.getName());
+        }
+        System.out.println(123321);
+    }
 
     private void initbtn_login5() {
         searchBut.setOnClickListener(new View.OnClickListener() {
@@ -273,8 +220,8 @@ public class addStockActivity extends FragmentActivity implements View.OnClickLi
                         }
                     }
                 });
-                addStockFragment.update(stockList1);
-                addStockFragment.hasSelectedUpdate(stockList);
+                fundSearchResult();
+                hasSelectedUpdate();
             }
         });
     }

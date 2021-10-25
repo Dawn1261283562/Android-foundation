@@ -6,25 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-<!--    <include layout="@layout/title_layout"></include>-->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="30dp"
-        android:text="股票搜索"/>
+
+<!--这个布局文件应该可以删了?-->
 
 
-    <ListView
-        android:id="@+id/list_search2"
-        android:layout_width="match_parent"
-        android:layout_height="266dp">
-
-    </ListView>
-
-    <Button
-        android:id="@+id/BB"
-        android:layout_width="35dp"
-        android:layout_height="23dp"
-        android:text="BB" />
 </LinearLayout>
