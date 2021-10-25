@@ -39,7 +39,7 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
     private View mView;
 
     ListView listView;
-    FundAdapter fundAdapter;
+//    FundAdapter fundAdapter;
     private List<FundGeneral> fundGeneralList=new ArrayList<>();
 
     @Override
@@ -56,14 +56,14 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
 
 
         //获取持仓搜索结果
-        fundSearchResult();
+        /*fundSearchResult();
 
         System.out.println("okkkkkkkkkkkkkkkkkkk3333");
-        fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
+        fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);*/
         //fundAdapter.notifyDataSetChanged();
 
         listView = mView.findViewById(R.id.list_search1);
-        listView.setAdapter(fundAdapter);
+        //listView.setAdapter(fundAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -89,6 +89,7 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
                 System.out.println(temp.get(i).getId()+" "+temp.get(i).getName()+" "+temp.get(i).getManager());
                 fundGeneralList.add(fundGeneral);
             }
+            listView.setAdapter(new  FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList));
         }
         System.out.println("okkkkkkkkkkkkkkkkkkk2222");
 
