@@ -250,6 +250,8 @@ public class addStockActivity extends FragmentActivity implements View.OnClickLi
                             System.out.println(stockBean.getHits());
                             System.out.println("这上面是 股票的代码、名字、板块集、股价、热度");
                         }
+
+
                         System.out.println(stockBeanList);
                         stockList1 =stockBeanList;
 
@@ -272,6 +274,7 @@ public class addStockActivity extends FragmentActivity implements View.OnClickLi
                     }
                 });
                 addStockFragment.update(stockList1);
+                
 
 
 

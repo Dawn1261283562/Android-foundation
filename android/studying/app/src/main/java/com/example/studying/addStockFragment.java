@@ -128,6 +128,8 @@ public class addStockFragment extends androidx.fragment.app.Fragment {
 
         }
 
+        listView.setAdapter(new FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList));
+
         //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
 //        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
 //
@@ -136,7 +138,7 @@ public class addStockFragment extends androidx.fragment.app.Fragment {
 
         //BB.performClick();
         System.out.println(fundGeneralList.size());
-        //fundAdapter.notifyDataSetChanged();
+        fundAdapter.notifyDataSetChanged();
 //        FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
 //        fundGeneralList.add(fundGeneral1);
 
