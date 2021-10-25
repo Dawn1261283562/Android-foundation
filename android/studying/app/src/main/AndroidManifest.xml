@@ -28,6 +28,9 @@
         <activity
             android:name=".addStockActivity"
             android:exported="true" />
+        <activity
+            android:name=".addTypeActivity"
+            android:exported="true" />
     </application>
 
 

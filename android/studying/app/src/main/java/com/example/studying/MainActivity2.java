@@ -61,6 +61,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
     private TextView titleTex;
 
 
+    private ArrayList<FundHeavyInfo> fundInfoList=new ArrayList<FundHeavyInfo>();
 
 
     SearchFragment1 searchFragment1;
@@ -71,6 +72,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
 
     private    ArrayList<FundHeavyInfo> temp;
     private ArrayList<Stock> stockList=new ArrayList<Stock>();
+    private ArrayList<String> typeList=new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,15 +162,23 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         int i=getIntent().getIntExtra("i",0);
         Intent intent = this.getIntent();
         stockList = (ArrayList<Stock>) intent.getSerializableExtra("stockList");
+        typeList = (ArrayList<String>) intent.getSerializableExtra("typeList");
         initData();
         mViewPager.setCurrentItem(i);
+
 
         resetTab();
         selectTab(i);
 
+
         if(stockList!=null){
 
             selectTab(2);
+        }
+        else if(typeList!=null){
+
+            System.out.println(typeList.get(0));
+            selectTab(3);
         }
         else return;
         //System.out.println(stockList.get(1).getName());
@@ -178,7 +188,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         searchFragment1=new SearchFragment1();
         searchFragment2=new SearchFragment2();
         searchFragment3_1=new SearchFragment3_1(stockList);
-        searchFragment3_2=new SearchFragment3_2();
+        searchFragment3_2=new SearchFragment3_2(typeList);
         searchFragment3_10=new SearchFragment3_10();
 
         mFragments = new ArrayList<>();
@@ -372,6 +382,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         ResponseBody data = response.body();
+                        //if(response.body().string()==null)return;
                         String strByJson = response.body().string();
 
                         JsonParser parser = new JsonParser();
@@ -389,7 +400,12 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                             //使用GSON，直接转成Bean对象
                             FundHeavyInfo fundHeavyInfoBean = gson.fromJson(fundHeavyInfo, FundHeavyInfo.class);
                             fundHeavyInfoList.add(fundHeavyInfoBean);
-
+                            if(fundHeavyInfoBean==null){
+                                Looper.prepare();
+                                //System.out.println(data);
+                                Toast.makeText(MainActivity2.this, "暂无相关信息", Toast.LENGTH_SHORT).show();
+                                Looper.loop();
+                            }
                             System.out.println("这下面是 基金信息的代码、名字、全名、法人公司名、管理者");
                             System.out.println(fundHeavyInfoBean.getId());
                             System.out.println(fundHeavyInfoBean.getName());
@@ -408,6 +424,8 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 fundHeavyInfoBean.setFull_nameame("eee");
                 fundHeavyInfoList.add(fundHeavyInfoBean);*/
                         temp=fundHeavyInfoList;
+                        fundInfoList =fundHeavyInfoList;
+                        //System.out.println(stockList1);
 
 
 //                Toast.makeText(MainActivity2.this, fundHeavyInfoList.get(0).getName(), Toast.LENGTH_SHORT).show();
@@ -419,6 +437,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                     }
                 });
                 searchFragment1.fundSearchResult();
+                searchFragment1.update(fundInfoList);
             }
         });
     }
