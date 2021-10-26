@@ -214,6 +214,8 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
 //        fundGeneralList.add(fundGeneral2);
         if(stockList==null)stockList=new ArrayList<Stock>();
         int size = stockList.size();
+        System.out.println(12);
+        System.out.println(size);
         for (int i = 0; i < size; i++) {
             Stock value = stockList.get(i);
             FundGeneral fundGeneral1=new FundGeneral((String) value.getId(),(String) value.getName(),(String) value.getPrice());

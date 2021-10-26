@@ -34,7 +34,7 @@ public class addTypeFragment extends androidx.fragment.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mView == null) {
-            mView = inflater.inflate(R.layout.add_stock_fragment, container, false);
+            mView = inflater.inflate(R.layout.add_type_fragment, container, false);
         }
         //获取持仓搜索结果
         //fundSearchResult();
@@ -44,7 +44,7 @@ public class addTypeFragment extends androidx.fragment.app.Fragment {
         editText=(EditText)mView.findViewById(R.id.search_edit1);
         BB=mView.findViewById(R.id.search_but1);
 
-        listView = (ListView) mView.findViewById(R.id.list_search2);
+        listView = (ListView) mView.findViewById(R.id.list_search1);
         listView.setAdapter(fundAdapter);
 
         //initbtn_login5();

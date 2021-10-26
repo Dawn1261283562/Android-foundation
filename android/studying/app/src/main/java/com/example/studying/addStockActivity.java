@@ -58,6 +58,10 @@ public class addStockActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_stock);
+
+        Intent intent = this.getIntent();
+        stockList = (ArrayList<Stock>) intent.getSerializableExtra("stockList");
+        if(stockList==null)stockList=new ArrayList<Stock>();
         initViews();
         initEvents();
         initData();
@@ -92,12 +96,34 @@ public class addStockActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 FundGeneral fundGeneral =fundGeneralList.get(i);
                 System.out.println(122);
+                //fundSearchResult();
+                //fundAdapter.notifyDataSetChanged();
+                //FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
+                //fundGeneralList.add(fundGeneral1);
+                stockList.add( fundGeneral.getStock());
 
-                stockList.add(fundGeneral.getStock());
+                Intent intent = new Intent();
+
+                intent.setClass(addStockActivity.this,MainActivity2.class);
+
+                intent.putExtra("stockList",stockList);
+
+                startActivity(intent);
 
                 fundAdapter.notifyDataSetChanged();
             }
         });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                FundGeneral fundGeneral =fundGeneralList.get(i);
+//                System.out.println(122);
+//
+//                stockList.add(fundGeneral.getStock());
+//
+//                fundAdapter.notifyDataSetChanged();
+//            }
+//        });
     }
 
     private void initViews() {
