@@ -153,10 +153,27 @@ public class FlowLayout extends ViewGroup {
     }
 
     public static abstract class Adapter {
+/*
+        private OnDataChangedListener mOnDataChangedListener;*/
+
         //获取view的数量
         public abstract int getCount();
+
         //获取View
         public abstract View getView(int position, ViewGroup parent);
+
+        /*static interface OnDataChangedListener {
+            void onChanged();
+        }
+
+        void setOnDataChangedListener(OnDataChangedListener listener) {
+            mOnDataChangedListener = listener;
+        }
+
+        public void notifyDataChanged() {
+            mOnDataChangedListener.onChanged();
+
+        }*/
     }
 
     /*public void setAdapter(Adapter adapter) {

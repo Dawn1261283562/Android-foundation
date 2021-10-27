@@ -2,11 +2,14 @@
 
 package com.example.studying;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Looper;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -44,9 +47,11 @@ public class addStockActivity extends AppCompatActivity {
 
     private EditText editText;
     private Button searchBut;
+    private Button addMoreBut;
+    private Button finishAddBut;
 
-    private ArrayList<Stock> stockList=new ArrayList<Stock>();
-    private ArrayList<Stock> stockList1=new ArrayList<Stock>();
+    private ArrayList<Stock> stockList=new ArrayList<Stock>();//选择的股票
+    private ArrayList<Stock> stockList1=new ArrayList<Stock>();//搜索到的所有股票
     private ArrayList<FundHeavyInfo> temp;
 
     private List<FundGeneral> fundGeneralList=new ArrayList<>();
@@ -62,15 +67,34 @@ public class addStockActivity extends AppCompatActivity {
         initEvents();
         initData();
 
+        Intent intent=getIntent();
+        Bundle bundle=intent.getExtras();
+        stockList=(ArrayList<Stock>) bundle.getSerializable("stockList3_1");
+        if(stockList!=null){
+            for(int a=0;a<stockList.size();a++){
+
+                Log.d("传过去的stocklist", stockList.get(a).getName().toString());
+
+            }
+        }
+
+        Intent intent2=new Intent();
+        Bundle bundle2=new Bundle();
+        bundle2.putSerializable("stockListAdd", stockList);
+        intent2.putExtras(bundle2);
+        setResult(Activity.RESULT_OK,intent2);
+
+        fundSearchResult();
         initbtn_login5();
         //System.out.println(stockList);
     }
 
     private void initData() {
+        fundAdapter=new FundAdapter(addStockActivity.this,R.layout.fund_item,fundGeneralList);
+
         editText.setHint("股票名称");
         listView.setAdapter(fundAdapter);
 
-        fundAdapter=new FundAdapter(addStockActivity.this,R.layout.fund_item,fundGeneralList);
     }
 
     private void initEvents() {
@@ -93,9 +117,36 @@ public class addStockActivity extends AppCompatActivity {
                 FundGeneral fundGeneral =fundGeneralList.get(i);
                 System.out.println(122);
 
-                stockList.add(fundGeneral.getStock());
-
+                if(fundGeneralList.get(i).getSelectFund()){
+                    fundGeneralList.get(i).setSelectFund(false);
+                    stockList.remove(fundGeneral.getStock());
+                    System.out.println(1223);
+                }
+                else{
+                    fundGeneralList.get(i).setSelectFund(true);
+                    stockList.add(fundGeneral.getStock());
+                    System.out.println(1224);
+                    if(stockList!=null) {
+                        System.out.println(stockList.size());
+                        for(int j=0;j<stockList.size();j++){
+                            System.out.println(stockList.get(j).getName());
+                        }
+                    }
+                }
                 fundAdapter.notifyDataSetChanged();
+            }
+        });
+
+        addMoreBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editText.setText("");
+            }
+        });
+        finishAddBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }
@@ -103,7 +154,9 @@ public class addStockActivity extends AppCompatActivity {
     private void initViews() {
         editText=(EditText)findViewById(R.id.search_edit1);
         searchBut=findViewById(R.id.search_but1);
-        listView = (ListView) findViewById(R.id.list_search2);
+        listView = (ListView) findViewById(R.id.list_search3_2_2);
+        addMoreBut=(Button) findViewById(R.id.add_stock_but1);
+        finishAddBut=(Button) findViewById(R.id.add_stock_but2);
     }
 
     public void clickBack(View view){
@@ -119,7 +172,8 @@ public class addStockActivity extends AppCompatActivity {
 
         System.out.println(123321);
         fundGeneralList.clear();
-
+//        FundGeneral fundGeneral=new FundGeneral("000001.SZ","平安银行","20.04");
+//        fundGeneralList.add(fundGeneral);
         int size = stockList1.size();
         for (int i = 0; i < size; i++) {
             Stock value = stockList1.get(i);
@@ -128,7 +182,7 @@ public class addStockActivity extends AppCompatActivity {
             fundGeneralList.add(fundGeneral1);
         }
 
-        listView.setAdapter(new FundAdapter(addStockActivity.this,R.layout.fund_item,fundGeneralList));
+//        listView.setAdapter(new FundAdapter(addStockActivity.this,R.layout.fund_item,fundGeneralList));
 
         //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
 //        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
@@ -157,6 +211,10 @@ public class addStockActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println(123);
+                InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm.isActive()) {
+                    imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
+                }
 
                 String url = "http://localhost:8080/user/lgoin";
                 url = "http://43m486x897.yicp.fun/stock/searchStock?id=平安";

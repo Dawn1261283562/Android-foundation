@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,8 +62,6 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
             mView = inflater.inflate(R.layout.search_fragment3_1, container, false);
         }
 
-        //获取用户选择的股票
-        stockSlected();
 
         //获取持仓搜索结果
         fundSearchResult();
@@ -76,42 +76,6 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
         return mView;
     }
 
-    private void stockSlected() {
-        strList = new ArrayList<>();
-        strList.add("阿里巴巴");
-        strList.add("阿巴阿巴");
-        strList.add("阿巴巴巴巴");
-        strList.add("阿里巴巴阿里巴巴阿里巴巴阿里巴巴阿里巴巴阿里巴巴");
-        strList.add("阿巴阿巴阿巴");
-        strList.add("阿巴阿");
-        strList.add("阿巴阿巴");
-        strList.add("阿巴阿巴");
-        strList.add("阿巴阿巴");
-        strList.add("巴阿巴");
-        strList.add("阿巴阿");
-
-        flowLayout = (FlowLayout) mView.findViewById(R.id.flowlayout3_1);
-        layoutInflater = LayoutInflater.from(getContext());
-
-        flowLayout.setAdapter(new FlowLayout.Adapter() {
-            @Override
-            public int getCount() {
-                return strList.size();
-            }
-
-            @Override
-            public View getView(int position, ViewGroup parent) {
-                View view = layoutInflater.inflate(R.layout.flow_item3_1,parent,false);
-                // 给 View 设置 margin
-                ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(view.getLayoutParams());
-                mlp.setMargins(5, 5, 5, 5);
-                view.setLayoutParams(mlp);
-                ((TextView)view.findViewById(R.id.flow_text3_1)).setText(strList.get(position));
-                return view;
-            }
-        });
-    }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -122,16 +86,17 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
 
 
                 Intent intent = new Intent();
-
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("stockList3_1",stockList);
+                intent.putExtras(bundle);
                 intent.setClass(getActivity(),addStockActivity.class);
 
                 if(stockList==null)stockList=new ArrayList<Stock>();
-                intent.putExtra("stockList",stockList);
 //                Stock temp =new Stock();temp.setId("写死的假股票");
 //                temp.setName("每次添加");
 //                temp.setPrice("测试用例用于");
 //                stockList.add(temp);
-                startActivity(intent);
+                startActivityForResult(intent,31);
             }
         });
 
@@ -200,10 +165,68 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
                     }
                 });
             }
-
-
         });
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode){
+            case 31:
+                if(resultCode==Activity.RESULT_OK){
+                    Bundle bundle=data.getExtras();
+                    stockList=(ArrayList<Stock>) bundle.getSerializable("stockListAdd");
+                    if(stockList!=null){
+                        for(int a=0;a<stockList.size();a++){
+                            Log.d("传回来的stocklist", stockList.get(a).getName().toString());
+
+                        }
+                    }
+
+                    //获取用户选择的股票
+                    stockSlected();
+                }
+                break;
+            default:
+        }
+    }
+
+    private void stockSlected() {
+        strList = new ArrayList<>();
+        for(Stock stock:stockList){
+            strList.add(stock.getName().toString());
+        }
+        /*strList.add("阿里巴巴");
+        strList.add("阿巴阿巴");
+        strList.add("阿巴巴巴巴");
+        strList.add("阿里巴巴阿里巴巴阿里巴巴阿里巴巴阿里巴巴阿里巴巴");
+        strList.add("阿巴阿巴阿巴");
+        strList.add("阿巴阿");
+        strList.add("阿巴阿巴");
+        strList.add("阿巴阿巴");
+        strList.add("阿巴阿巴");
+        strList.add("巴阿巴");
+        strList.add("阿巴阿");*/
+
+        flowLayout = (FlowLayout) mView.findViewById(R.id.flowlayout3_1);
+        layoutInflater = LayoutInflater.from(getContext());
+
+        flowLayout.setAdapter(new FlowLayout.Adapter() {
+            @Override
+            public int getCount() {
+                return strList.size();
+            }
+
+            @Override
+            public View getView(int position, ViewGroup parent) {
+                View view = layoutInflater.inflate(R.layout.flow_item3_1,parent,false);
+                // 给 View 设置 margin
+                ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(view.getLayoutParams());
+                mlp.setMargins(5, 5, 5, 5);
+                view.setLayoutParams(mlp);
+                ((TextView)view.findViewById(R.id.flow_text3_1)).setText(strList.get(position));
+                return view;
+            }
+        });
     }
 
     private void fundSearchResult(){

@@ -15,6 +15,8 @@ import java.util.List;
 
 public class SearchFragment2 extends androidx.fragment.app.Fragment {
     private View mView;
+    ListView listView;
+    FundAdapter fundAdapter;
 
     private List<FundGeneral> fundGeneralList=new ArrayList<>();
 
@@ -23,21 +25,43 @@ public class SearchFragment2 extends androidx.fragment.app.Fragment {
         if (mView == null) {
             mView = inflater.inflate(R.layout.search_fragment2, container, false);
         }
+        initViews();
+        initEvents();
+        initDate();
+
         //获取持仓搜索结果
         fundSearchResult();
+        return mView;
+    }
 
-        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
+    private void initDate() {
+        fundAdapter =new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
 
-        ListView listView = (ListView) mView.findViewById(R.id.list_search2);
         listView.setAdapter(fundAdapter);
+    }
+
+    private void initEvents() {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 FundGeneral fundGeneral=fundGeneralList.get(i);
                 Toast.makeText(getContext(),fundGeneral.getFund2().toString(),Toast.LENGTH_SHORT).show();
+
+                if(fundGeneralList.get(i).getSelectFund()){
+                    fundGeneralList.get(i).setSelectFund(false);
+                    System.out.println(22222);
+                }
+                else{
+                    fundGeneralList.get(i).setSelectFund(true);
+                    System.out.println(33333);
+                }
+                fundAdapter.notifyDataSetChanged();
             }
         });
-        return mView;
+    }
+
+    private void initViews() {
+        listView = (ListView) mView.findViewById(R.id.list_search2);
     }
 
     private void fundSearchResult() {
