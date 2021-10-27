@@ -1,9 +1,11 @@
 package com.example.studying;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -43,7 +45,9 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
     private Button addBtn;
     private Button searchBtn;
     private FundAdapter fundAdapter;
-    private List<FundGeneral> fundGeneralList=new ArrayList<>();
+    private ListView listView;
+    private List<FundGeneral> fundGeneralList;
+    private FlowLayout.Adapter flowAdapter;
 
     public SearchFragment3_2(ArrayList<String> typeList) {
         System.out.println(typeList);
@@ -55,35 +59,25 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
         if (mView == null) {
             mView = inflater.inflate(R.layout.search_fragment3_2, container, false);
         }
+        initViews();
+        initEvents();
+        initData();
 
         //获取用户选择的板块
         sectorSelected();
 
         //获取持仓搜索结果
         fundSearchResult();
-
-        fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
-
-        addBtn =(Button)mView.findViewById(R.id.frag3_2_but1);
-        searchBtn=(Button)mView.findViewById(R.id.frag3_2_but2);
-        ListView listView = (ListView) mView.findViewById(R.id.list_search3_2);
-        listView.setAdapter(fundAdapter);
-
         return mView;
     }
 
-    private void sectorSelected() {
+    private void initData() {
+        fundGeneralList=new ArrayList<>();
+        fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
+        listView.setAdapter(fundAdapter);
         strList = new ArrayList<>();
-        strList.add("今天好冷好冷好冷");
-        strList.add("好冷好冷好冷好冷好冷好冷");
-        strList.add("好冷好冷好冷");
-        strList.add("好冷好冷好冷好冷好冷好冷好冷好冷好冷");
-        strList.add("好冷好冷好冷");
 
-        flowLayout = (FlowLayout) mView.findViewById(R.id.flowlayout3_2);
-        layoutInflater = LayoutInflater.from(getContext());
-
-        flowLayout.setAdapter(new FlowLayout.Adapter() {
+        flowAdapter=new FlowLayout.Adapter() {
             @Override
             public int getCount() {
                 return strList.size();
@@ -96,10 +90,47 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
                 ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(view.getLayoutParams());
                 mlp.setMargins(5, 5, 5, 5);
                 view.setLayoutParams(mlp);
-                ((TextView)view.findViewById(R.id.flow_text3_1)).setText(strList.get(position));
+                TextView textView= (TextView)view.findViewById(R.id.flow_text3_1);
+                textView.setText(strList.get(position));
+                textView.setOnTouchListener(new View.OnTouchListener(){
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event){
+                        Drawable drawable=textView.getCompoundDrawables()[2];
+                        if ((event.getX() > textView.getWidth()-drawable.getIntrinsicWidth()-textView.getPaddingRight())
+                                &&(event.getX() < textView.getWidth()-textView.getPaddingRight())){
+                            strList.remove(position);
+                            flowLayout.setAdapter(flowAdapter);
+                        }
+                        return false;
+                    }
+                });
                 return view;
             }
-        });
+        };
+        flowLayout.setAdapter(flowAdapter);
+    }
+
+    private void initEvents() {
+    }
+
+    private void initViews() {
+        addBtn =(Button)mView.findViewById(R.id.frag3_2_but1);
+        searchBtn=(Button)mView.findViewById(R.id.frag3_2_but2);
+        listView= (ListView) mView.findViewById(R.id.list_search3_2);
+        flowLayout = (FlowLayout) mView.findViewById(R.id.flowlayout3_2);
+        layoutInflater = LayoutInflater.from(getContext());
+
+    }
+
+    private void sectorSelected() {
+        strList = new ArrayList<>();
+        strList.add("今天好冷好冷好冷");
+        strList.add("好冷好冷好冷好冷好冷好冷");
+        strList.add("好冷好冷好冷");
+        strList.add("好冷好冷好冷好冷好冷好冷好冷好冷好冷");
+        strList.add("好冷好冷好冷");
+
+        flowLayout.setAdapter(flowAdapter);
     }
 
 

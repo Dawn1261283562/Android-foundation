@@ -145,6 +145,10 @@ public class addStockActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 editText.setText("");
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (!(imm.isActive())) {
+                    imm.showSoftInput(view,InputMethodManager.SHOW_FORCED);
+                }
             }
         });
         finishAddBut.setOnClickListener(new View.OnClickListener() {
