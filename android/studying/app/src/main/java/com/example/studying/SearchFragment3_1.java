@@ -2,11 +2,13 @@ package com.example.studying;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -46,10 +48,13 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
     private LayoutInflater layoutInflater;
     private Button addBtn;
     private Button searchBtn;
+    private Button prorateBtn;
+    private Button checkProBtn;
     private ArrayList<Stock> stockList=new ArrayList<Stock>();
     private List<FundGeneral> fundGeneralList=new ArrayList<>();
 
     private ListView listView;
+    private FlowLayout.Adapter flowAdapter;
 
     public SearchFragment3_1(ArrayList<Stock> stockList) {
         System.out.println(stockList);
@@ -62,24 +67,55 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
             mView = inflater.inflate(R.layout.search_fragment3_1, container, false);
         }
 
+        initViews();
+        initEvents();
+        initData();
 
         //获取持仓搜索结果
         fundSearchResult();
 
-        fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
-        addBtn =(Button)mView.findViewById(R.id.frag3_1_but1);
-        searchBtn=(Button)mView.findViewById(R.id.frag3_1_but2);
-        listView = (ListView) mView.findViewById(R.id.list_search3_1);
-        listView.setAdapter(fundAdapter);
-
-
         return mView;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    private void initData() {
+        fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
+        listView.setAdapter(fundAdapter);
+        strList = new ArrayList<>();
+        flowAdapter=new FlowLayout.Adapter() {
+            @Override
+            public int getCount() {
+                return strList.size();
+            }
 
+            @Override
+            public View getView(int position, ViewGroup parent) {
+                View view = layoutInflater.inflate(R.layout.flow_item3_1,parent,false);
+                // 给 View 设置 margin
+                ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(view.getLayoutParams());
+                mlp.setMargins(5, 5, 5, 5);
+                view.setLayoutParams(mlp);
+                TextView textView= (TextView)view.findViewById(R.id.flow_text3_1);
+                textView.setText(strList.get(position));
+                textView.setOnTouchListener(new View.OnTouchListener(){
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event){
+                        Drawable drawable=textView.getCompoundDrawables()[2];
+                        if ((event.getX() > textView.getWidth()-drawable.getIntrinsicWidth()-textView.getPaddingRight())
+                                &&(event.getX() < textView.getWidth()-textView.getPaddingRight())){
+                            strList.remove(position);
+                            stockList.remove(position);
+                            flowLayout.setAdapter(flowAdapter);
+                        }
+                        return false;
+                    }
+                });
+                return view;
+            }
+        };
+        flowLayout.setAdapter(flowAdapter);
+    }
+
+    private void initEvents() {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,6 +203,16 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
         });
     }
 
+    private void initViews() {
+        addBtn =(Button)mView.findViewById(R.id.frag3_1_but1);
+        searchBtn=(Button)mView.findViewById(R.id.frag3_1_but2);
+        prorateBtn=(Button)mView.findViewById(R.id.prorate_but);
+        checkProBtn=(Button)mView.findViewById(R.id.check_prorate);
+        listView = (ListView) mView.findViewById(R.id.list_search3_1);
+        flowLayout = (FlowLayout) mView.findViewById(R.id.flowlayout3_1);
+        layoutInflater = LayoutInflater.from(getContext());
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode){
@@ -200,26 +246,7 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
         strList.add("巴阿巴");
         strList.add("阿巴阿");*/
 
-        flowLayout = (FlowLayout) mView.findViewById(R.id.flowlayout3_1);
-        layoutInflater = LayoutInflater.from(getContext());
-
-        flowLayout.setAdapter(new FlowLayout.Adapter() {
-            @Override
-            public int getCount() {
-                return strList.size();
-            }
-
-            @Override
-            public View getView(int position, ViewGroup parent) {
-                View view = layoutInflater.inflate(R.layout.flow_item3_1,parent,false);
-                // 给 View 设置 margin
-                ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(view.getLayoutParams());
-                mlp.setMargins(5, 5, 5, 5);
-                view.setLayoutParams(mlp);
-                ((TextView)view.findViewById(R.id.flow_text3_1)).setText(strList.get(position));
-                return view;
-            }
-        });
+        flowLayout.setAdapter(flowAdapter);
     }
 
     private void fundSearchResult(){
