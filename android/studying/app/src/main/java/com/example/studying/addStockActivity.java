@@ -63,20 +63,15 @@ public class addStockActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_stock);
+
+        Intent intent = this.getIntent();
+        Bundle bundle=intent.getExtras();
+        stockList=(ArrayList<Stock>) bundle.getSerializable("stockList3_1");
+        if(stockList==null)stockList=new ArrayList<Stock>();
         initViews();
         initEvents();
         initData();
 
-        Intent intent=getIntent();
-        Bundle bundle=intent.getExtras();
-        stockList=(ArrayList<Stock>) bundle.getSerializable("stockList3_1");
-        if(stockList!=null){
-            for(int a=0;a<stockList.size();a++){
-
-                Log.d("传过去的stocklist", stockList.get(a).getName().toString());
-
-            }
-        }
 
         Intent intent2=new Intent();
         Bundle bundle2=new Bundle();
@@ -116,6 +111,15 @@ public class addStockActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 FundGeneral fundGeneral =fundGeneralList.get(i);
                 System.out.println(122);
+                //fundSearchResult();
+                //fundAdapter.notifyDataSetChanged();
+                //FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
+                //fundGeneralList.add(fundGeneral1);
+/*                stockList.add( fundGeneral.getStock());
+
+                Intent intent = new Intent();
+
+                intent.setClass(addStockActivity.this,MainActivity2.class);*/
 
                 if(fundGeneralList.get(i).getSelectFund()){
                     fundGeneralList.get(i).setSelectFund(false);
@@ -149,6 +153,17 @@ public class addStockActivity extends AppCompatActivity {
                 finish();
             }
         });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                FundGeneral fundGeneral =fundGeneralList.get(i);
+//                System.out.println(122);
+//
+//                stockList.add(fundGeneral.getStock());
+//
+//                fundAdapter.notifyDataSetChanged();
+//            }
+//        });
     }
 
     private void initViews() {

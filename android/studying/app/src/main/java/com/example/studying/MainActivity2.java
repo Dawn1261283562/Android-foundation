@@ -82,13 +82,15 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
 
         initViews();
         initEvents();
-        initData();
+
 
 
         int i=getIntent().getIntExtra("i",0);
         Intent intent = this.getIntent();
         stockList = (ArrayList<Stock>) intent.getSerializableExtra("stockList");
         typeList = (ArrayList<String>) intent.getSerializableExtra("typeList");
+        initData();
+
         mViewPager.setCurrentItem(i);
 
 
@@ -98,6 +100,8 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
 
         if(stockList!=null){
 
+            System.out.println(11111111);
+            System.out.println(stockList.get(0).getName());
             selectTab(2);
         }
         else if(typeList!=null){

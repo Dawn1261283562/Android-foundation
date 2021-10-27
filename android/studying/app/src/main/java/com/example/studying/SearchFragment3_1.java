@@ -84,7 +84,6 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
             @Override
             public void onClick(View view) {
 
-
                 Intent intent = new Intent();
                 Bundle bundle=new Bundle();
                 bundle.putSerializable("stockList3_1",stockList);
@@ -175,12 +174,6 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
                 if(resultCode==Activity.RESULT_OK){
                     Bundle bundle=data.getExtras();
                     stockList=(ArrayList<Stock>) bundle.getSerializable("stockListAdd");
-                    if(stockList!=null){
-                        for(int a=0;a<stockList.size();a++){
-                            Log.d("传回来的stocklist", stockList.get(a).getName().toString());
-
-                        }
-                    }
 
                     //获取用户选择的股票
                     stockSlected();
@@ -237,6 +230,8 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
 //        fundGeneralList.add(fundGeneral2);
         if(stockList==null)stockList=new ArrayList<Stock>();
         int size = stockList.size();
+        System.out.println(12);
+        System.out.println(size);
         for (int i = 0; i < size; i++) {
             Stock value = stockList.get(i);
             FundGeneral fundGeneral1=new FundGeneral((String) value.getId(),(String) value.getName(),(String) value.getPrice());
