@@ -12,6 +12,8 @@ public class FundGeneral {
     private Stock stock;
     private String type;
 
+    private boolean selectFund=false;
+
     public void setFundHeavyInfo(FundHeavyInfo fundHeavyInfo) {
         this.fundHeavyInfo = fundHeavyInfo;
     }
@@ -52,5 +54,13 @@ public class FundGeneral {
 
     public String getFund3() {
         return fund3;
+    }
+
+    public void setSelectFund(boolean selectFund) {
+        this.selectFund = selectFund;
+    }
+
+    public Boolean getSelectFund() {
+        return selectFund;
     }
 }
