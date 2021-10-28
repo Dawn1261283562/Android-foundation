@@ -7,9 +7,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="30dp"
-        android:text="基金搜索"/>
+        android:layout_gravity="left"
+        android:layout_marginLeft="15dp"
+        android:textSize="15dp"
+        android:text="搜索历史"/>
 
     <ListView
         android:id="@+id/list_search1"
