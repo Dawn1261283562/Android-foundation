@@ -19,6 +19,13 @@ public class FundHeavy implements Serializable {
     //因为每只基金有10只股票，可能两只股票有相同的板块，所以用HashSet自动去重
     public int hits = 0;
 
+    public String getName() {
+        return name;
+    }
+
+    public String getId() {
+        return id;
+    }
 
     public String getScore() {
         return score;
