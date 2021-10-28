@@ -1,5 +1,6 @@
 package com.example.studying;
 
+import com.example.studying.entity.FundHeavy;
 import com.example.studying.entity.FundHeavyInfo;
 import com.example.studying.entity.Stock;
 
@@ -11,6 +12,11 @@ public class FundGeneral {
     private FundHeavyInfo fundHeavyInfo;
     private Stock stock;
     private String type;
+    private FundHeavy fundHeavy;
+
+    public void setFundHeavy(FundHeavy fundHeavy) {
+        this.fundHeavy = fundHeavy;
+    }
 
     private boolean selectFund=false;
 

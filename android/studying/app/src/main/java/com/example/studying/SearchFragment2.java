@@ -15,6 +15,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.example.studying.entity.FundHeavyInfo;
+import com.example.studying.entity.Stock;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -186,6 +189,38 @@ public class SearchFragment2 extends androidx.fragment.app.Fragment {
         fundGeneralList.add(fundGeneral1);
         FundGeneral fundGeneral2=new FundGeneral("000001.SZ","平安银行平安银行","20.04");
         fundGeneralList.add(fundGeneral2);
+    }
+
+    public void update(ArrayList<Stock> stockList) {
+
+        System.out.println(123321);
+        fundGeneralList.clear();
+
+        int size = stockList.size();
+        for (int i = 0; i < size; i++) {
+            Stock value = stockList.get(i);
+            FundGeneral fundGeneral1=new FundGeneral((String)value.getId(),(String) value.getName(),(String) value.getPrice());
+            fundGeneral1.setStock(value);
+            fundGeneralList.add(fundGeneral1);
+
+
+        }
+
+        listView.setAdapter(new FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList));
+
+        //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
+//        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
+//
+//        listView = (ListView) mView.findViewById(R.id.list_search2);
+//        listView.setAdapter(fundAdapter);
+
+        //BB.performClick();
+        System.out.println(fundGeneralList.size());
+        fundAdapter.notifyDataSetChanged();
+//        FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
+//        fundGeneralList.add(fundGeneral1);
+
+
     }
 
     @Override
