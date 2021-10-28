@@ -1,0 +1,79 @@
+package com.example.studying;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.example.studying.entity.Stock;
+
+import java.util.ArrayList;
+
+public class ProrateActivity extends AppCompatActivity {
+
+    private ArrayList<Stock> stockList;//选择的股票
+    private TextView titleTex;
+    private ListView listView;
+    private StockAdapter1 stockAdapter;
+
+    private Button buttonBack;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_prorate);
+
+        System.out.println("自选分配比例这里也可科技的方式的国防杀戮光环");
+        initView();
+        initEvent();
+        initDate();
+
+
+        Intent intent=new Intent();
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("stockListProrated",stockList);
+        intent.putExtras(bundle);
+        setResult(Activity.RESULT_OK,intent);
+
+    }
+
+    private void initDate() {
+        titleTex.setVisibility(View.VISIBLE);
+        titleTex.setText("自选比例");
+
+        Bundle bundle=getIntent().getExtras();
+        stockList=(ArrayList<Stock>)bundle.getSerializable("stockListToProrate");
+        if(stockList==null) stockList = new ArrayList<Stock>();
+
+        stockAdapter =new StockAdapter1(this,R.layout.prorate_item,stockList);
+        listView.setAdapter(stockAdapter);
+
+    }
+
+    private void initEvent() {
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    private void initView() {
+        titleTex = (TextView) findViewById(R.id.title_text);
+        listView = (ListView) findViewById(R.id.prorate_list);
+        buttonBack=(Button) findViewById(R.id.but_prorateback);
+    }
+
+    public void clickBack(View view){
+        switch (view.getId()){
+            case R.id.back_icon:
+                finish();
+        }
+    }
+}

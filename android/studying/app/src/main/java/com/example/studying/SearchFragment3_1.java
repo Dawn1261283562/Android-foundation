@@ -44,22 +44,22 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
 
     private FundAdapter fundAdapter;
     private FlowLayout flowLayout;
+    private FlowLayout.Adapter flowAdapter;
     private ArrayList<String> strList;
     private LayoutInflater layoutInflater;
     private Button addBtn;
     private Button searchBtn;
     private Button prorateBtn;
     private Button checkProBtn;
-    private ArrayList<Stock> stockList=new ArrayList<Stock>();
-    private List<FundGeneral> fundGeneralList=new ArrayList<>();
-
+    private ArrayList<Stock> stockList;
+    private List<FundGeneral> fundGeneralList;
     private ListView listView;
-    private FlowLayout.Adapter flowAdapter;
 
-    public SearchFragment3_1(ArrayList<Stock> stockList) {
+
+    /*public SearchFragment3_1(ArrayList<Stock> stockList) {
         System.out.println(stockList);
         this.stockList=stockList;
-    }
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -78,6 +78,8 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
     }
 
     private void initData() {
+        stockList=new ArrayList<Stock>();
+        fundGeneralList=new ArrayList<>();
         fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
         listView.setAdapter(fundAdapter);
         strList = new ArrayList<>();
@@ -90,7 +92,7 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
             @Override
             public View getView(int position, ViewGroup parent) {
                 View view = layoutInflater.inflate(R.layout.flow_item3_1,parent,false);
-                // 给 View 设置 margin
+                // 给View设置margin
                 ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(view.getLayoutParams());
                 mlp.setMargins(5, 5, 5, 5);
                 view.setLayoutParams(mlp);
@@ -103,7 +105,6 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
                         if ((event.getX() > textView.getWidth()-drawable.getIntrinsicWidth()-textView.getPaddingRight())
                                 &&(event.getX() < textView.getWidth()-textView.getPaddingRight())){
                             strList.remove(position);
-                            stockList.remove(position);
                             flowLayout.setAdapter(flowAdapter);
                         }
                         return false;
@@ -120,13 +121,18 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
             @Override
             public void onClick(View view) {
 
+                /*
+                这里不知道干嘛stockList是空的
+                */
                 Intent intent = new Intent();
                 Bundle bundle=new Bundle();
                 bundle.putSerializable("stockList3_1",stockList);
                 intent.putExtras(bundle);
                 intent.setClass(getActivity(),addStockActivity.class);
 
-                if(stockList==null)stockList=new ArrayList<Stock>();
+                if(null==stockList) {
+                    stockList = new ArrayList<Stock>();
+                }
 //                Stock temp =new Stock();temp.setId("写死的假股票");
 //                temp.setName("每次添加");
 //                temp.setPrice("测试用例用于");
@@ -201,6 +207,34 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
                 });
             }
         });
+        prorateBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                /*
+                这里不知道干嘛stockList是空的，null
+                */
+                if(null!=stockList){
+                    for(int a=0;a<stockList.size();a++){
+                        Log.d("xxxxxxxxxxxxxxx", stockList.get(a).getName().toString());
+                    }
+                }
+
+                Stock stock=new Stock();
+                stock.setExpectRadio(1);
+                stock.setName("平安银行");
+                stock.setHits(23);
+                stock.setId("000001.sz");
+                stock.setPrice("343");
+                stock.setType("w2e");
+                stockList.add(stock);
+                Intent intent=new Intent();
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("stockListToProrate",stockList);
+                intent.putExtras(bundle);
+                intent.setClass(getActivity(),ProrateActivity.class);
+                startActivityForResult(intent,32);
+            }
+        });
     }
 
     private void initViews() {
@@ -221,8 +255,18 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
                     Bundle bundle=data.getExtras();
                     stockList=(ArrayList<Stock>) bundle.getSerializable("stockListAdd");
 
+                    if(null!=stockList){
+                        for(int a=0;a<stockList.size();a++){
+                            Log.d("yyyyyyyyyyyy", stockList.get(a).getName().toString());
+                        }
+                    }
                     //获取用户选择的股票
                     stockSlected();
+                }
+            case 32:
+                if (resultCode == Activity.RESULT_OK) {
+                    Bundle bundle=data.getExtras();
+                    stockList=(ArrayList<Stock>) bundle.getSerializable("stockListProrated");
                 }
                 break;
             default:
@@ -255,7 +299,9 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
 //        fundGeneralList.add(fundGeneral1);
 //        FundGeneral fundGeneral2=new FundGeneral("000001.SZ","平安银行平安银行平安银行平安银行","张三");
 //        fundGeneralList.add(fundGeneral2);
-        if(stockList==null)stockList=new ArrayList<Stock>();
+        if(null==stockList) {
+            stockList = new ArrayList<Stock>();
+        }
         int size = stockList.size();
         System.out.println(12);
         System.out.println(size);
