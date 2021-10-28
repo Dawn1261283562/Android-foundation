@@ -1,10 +1,16 @@
 package com.example.studying;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -16,6 +22,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.studying.entity.FundHeavy;
 import com.example.studying.entity.FundHeavyInfo;
 import com.example.studying.entity.Stock;
 import com.example.studying.utils.HttpGetRequest;
@@ -50,34 +57,76 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
     private TextView mTex5;
 
     private EditText editText;
-    private TextView searchBut;
-    private Button searchButTrue;
+    private Button searchBut;
     private TextView titleTex;
+
+
+    private ArrayList<FundHeavyInfo> fundInfoList=new ArrayList<FundHeavyInfo>();
+
+
+    SearchFragment1 searchFragment1;
+    SearchFragment2 searchFragment2;
+    SearchFragment3_1 searchFragment3_1;
+    SearchFragment3_2 searchFragment3_2;
+    SearchFragment3_10 searchFragment3_10;
+
+    private    ArrayList<FundHeavyInfo> temp;
+    private ArrayList<Stock> stockList=new ArrayList<Stock>();
+    private ArrayList<String> typeList=new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main2);
+
         initViews();
         initEvents();
-        initData();
+
+
 
         int i=getIntent().getIntExtra("i",0);
+        Intent intent = this.getIntent();
+        stockList = (ArrayList<Stock>) intent.getSerializableExtra("stockList");
+        typeList = (ArrayList<String>) intent.getSerializableExtra("typeList");
+        initData();
+
         mViewPager.setCurrentItem(i);
+
+
         resetTab();
         selectTab(i);
 
+
+        if(stockList!=null){
+
+            System.out.println(11111111);
+            System.out.println(stockList.get(0).getName());
+            selectTab(2);
+        }
+        else if(typeList!=null){
+
+            System.out.println(typeList.get(0));
+            selectTab(3);
+        }
+        else return;
+        //System.out.println(stockList.get(1).getName());
     }
 
     private void initData() {
+        searchFragment1=new SearchFragment1();
+        searchFragment2=new SearchFragment2();
+        searchFragment3_1=new SearchFragment3_1(stockList);
+        searchFragment3_2=new SearchFragment3_2(typeList);
+        searchFragment3_10=new SearchFragment3_10();
+
         mFragments = new ArrayList<>();
 
-        mFragments.add(new SearchFragment1());
-        mFragments.add(new SearchFragment2());
-        mFragments.add(new SearchFragment3_1());
-        mFragments.add(new SearchFragment3_2());
-        mFragments.add(new SearchFragment3_10());
+        mFragments.add(searchFragment1);
+        mFragments.add(searchFragment2);
+        mFragments.add(searchFragment3_1);
+        mFragments.add(searchFragment3_2);
+        mFragments.add(searchFragment3_10);
 
         //初始化适配器
         mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -93,6 +142,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         };
         //设置ViewPager的适配器
         mViewPager.setAdapter(mAdapter);
+        mViewPager.setOffscreenPageLimit(5);
         //设置ViewPager的切换监听
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -125,6 +175,25 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         mTex3.setOnClickListener(this);
         mTex4.setOnClickListener(this);
         mTex5.setOnClickListener(this);
+
+        editText.setOnKeyListener(new View.OnKeyListener(){
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent keyEvent) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm.isActive()) {
+                        imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
+                    }
+                }
+                return false;
+            }
+        });
+        /*editText.setOnEditorActionListener(new TextView.OnEditorActionListener(){
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i == EditorInfo.IME_ACTION_SEARCH)
+            }
+        });*/
     }
 
     private void initViews() {
@@ -140,9 +209,14 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         mTex5 = (TextView) findViewById(R.id.top_tab5);
 
         editText=(EditText)findViewById(R.id.search_edit1);
-        searchBut=(TextView)findViewById(R.id.search_but1);
-        searchButTrue=findViewById(R.id.button);
+        searchBut=findViewById(R.id.search_but1);
         titleTex = (TextView) findViewById(R.id.title_text);
+
+
+    }
+
+    public ArrayList<FundHeavyInfo> getTemp(){
+        return temp;
     }
 
     @Override
@@ -232,7 +306,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
     }
 
     private void initbtn_login4() {
-        searchButTrue.setOnClickListener(new View.OnClickListener() {
+        searchBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String url = "http://localhost:8080/user/lgoin";
@@ -241,6 +315,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 //请求传入的参数
                 String urlAdd= editText.getText().toString();
                 System.out.println(urlAdd);
+
                 RequestBody requestBody = new FormBody.Builder().build();
                 url=url+urlAdd;
                 HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
@@ -253,6 +328,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         ResponseBody data = response.body();
+                        //if(response.body().string()==null)return;
                         String strByJson = response.body().string();
 
                         JsonParser parser = new JsonParser();
@@ -260,6 +336,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                         JsonArray jsonArray = parser.parse(strByJson).getAsJsonArray();
 
                         Gson gson = new Gson();
+
                         ArrayList<FundHeavyInfo> fundHeavyInfoList = new ArrayList<>();
 
                         System.out.println(strByJson);
@@ -269,7 +346,12 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                             //使用GSON，直接转成Bean对象
                             FundHeavyInfo fundHeavyInfoBean = gson.fromJson(fundHeavyInfo, FundHeavyInfo.class);
                             fundHeavyInfoList.add(fundHeavyInfoBean);
-
+                            if(fundHeavyInfoBean==null){
+                                Looper.prepare();
+                                //System.out.println(data);
+                                Toast.makeText(MainActivity2.this, "暂无相关信息", Toast.LENGTH_SHORT).show();
+                                Looper.loop();
+                            }
                             System.out.println("这下面是 基金信息的代码、名字、全名、法人公司名、管理者");
                             System.out.println(fundHeavyInfoBean.getId());
                             System.out.println(fundHeavyInfoBean.getName());
@@ -278,17 +360,35 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                             System.out.println(fundHeavyInfoBean.getManager());
                             System.out.println("这上面是 基金信息的代码、名字、全名、法人公司名、管理者");
                         }
+                        //
+         /*       ArrayList<FundHeavyInfo> fundHeavyInfoList = new ArrayList<>();
+                FundHeavyInfo fundHeavyInfoBean=new FundHeavyInfo();
+                fundHeavyInfoBean.setLegal_person("aaa");
+                fundHeavyInfoBean.setName("bbb");
+                fundHeavyInfoBean.setManager("ccc");
+                fundHeavyInfoBean.setId("ddd");
+                fundHeavyInfoBean.setFull_nameame("eee");
+                fundHeavyInfoList.add(fundHeavyInfoBean);*/
+                        temp=fundHeavyInfoList;
+                        fundInfoList =fundHeavyInfoList;
+                        //System.out.println(stockList1);
+
+
+//                Toast.makeText(MainActivity2.this, fundHeavyInfoList.get(0).getName(), Toast.LENGTH_SHORT).show();
+
                         Looper.prepare();
                         System.out.println(data);
                         Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
                         Looper.loop();
                     }
                 });
+                searchFragment1.fundSearchResult();
+                searchFragment1.update(fundInfoList);
             }
         });
     }
     private void initbtn_login5() {
-        searchButTrue.setOnClickListener(new View.OnClickListener() {
+        searchBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String url = "http://localhost:8080/user/lgoin";

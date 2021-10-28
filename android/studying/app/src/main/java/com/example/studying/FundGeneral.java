@@ -1,20 +1,47 @@
 package com.example.studying;
 
+import com.example.studying.entity.FundHeavyInfo;
+import com.example.studying.entity.Stock;
+
 public class FundGeneral {
     private String fund1;
     private String fund2;
-    private double fund3;
-    private double fund4;
-    private double fund5;
-    private double fund6;
+    private String fund3;
 
-    public FundGeneral(String fund1,String fund2,double fund3,double fund4,double fund5,double fund6){
+    private FundHeavyInfo fundHeavyInfo;
+    private Stock stock;
+    private String type;
+
+    private boolean selectFund=false;
+
+    public void setFundHeavyInfo(FundHeavyInfo fundHeavyInfo) {
+        this.fundHeavyInfo = fundHeavyInfo;
+    }
+
+    public FundHeavyInfo getFundHeavyInfo() {
+        return fundHeavyInfo;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public FundGeneral(String fund1, String fund2, String fund3){
         this.fund1=fund1;
         this.fund2=fund2;
         this.fund3=fund3;
-        this.fund4=fund4;
-        this.fund5=fund5;
-        this.fund6=fund6;
+    }
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
+    public Stock getStock() {
+        return stock;
     }
 
     public String getFund1(){
@@ -25,19 +52,15 @@ public class FundGeneral {
         return fund2;
     }
 
-    public double getFund3() {
+    public String getFund3() {
         return fund3;
     }
 
-    public double getFund4() {
-        return fund4;
+    public void setSelectFund(boolean selectFund) {
+        this.selectFund = selectFund;
     }
 
-    public double getFund5() {
-        return fund5;
-    }
-
-    public double getFund6() {
-        return fund6;
+    public Boolean getSelectFund() {
+        return selectFund;
     }
 }

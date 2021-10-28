@@ -116,6 +116,7 @@ public class SearchFragment3_10 extends androidx.fragment.app.Fragment {
                             System.out.println(userBean.hits);
                             System.out.println("这上面是 基金代码、名字、评分、十股票代码、十股票比例、二号股票比例、热度");
                         }
+
                         Looper.prepare();
                         System.out.println(data);
                         Toast.makeText(getActivity(), strByJson, Toast.LENGTH_SHORT).show();
