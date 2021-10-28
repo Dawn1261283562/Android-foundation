@@ -5,18 +5,24 @@ package com.example.studying;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +40,7 @@ import com.google.gson.JsonParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.Call;
@@ -44,11 +51,13 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public class addStockActivity extends AppCompatActivity {
+    public static final String SEARCH_HISTORY = "search_history_3_1";
 
     private EditText editText;
     private Button searchBut;
     private Button addMoreBut;
     private Button finishAddBut;
+    private ImageButton deleteAllHisBut;
 
     private ArrayList<Stock> stockList=new ArrayList<Stock>();//选择的股票
     private ArrayList<Stock> stockList1=new ArrayList<Stock>();//搜索到的所有股票
@@ -58,6 +67,10 @@ public class addStockActivity extends AppCompatActivity {
 
     private ListView listView;
     private FundAdapter fundAdapter;
+    private FlowLayout flowLayout;
+    private FlowLayout.Adapter flowAdapter;
+    private LayoutInflater layoutInflater;
+    private ArrayList<String> strList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +80,11 @@ public class addStockActivity extends AppCompatActivity {
         Intent intent = this.getIntent();
         Bundle bundle=intent.getExtras();
         stockList=(ArrayList<Stock>) bundle.getSerializable("stockList3_1");
+  /*      if(stockList!=null){
+            for(int a=0;a<stockList.size();a++){
+                Log.d("zzzzzzzzzzzzz", stockList.get(a).getName().toString());
+            }
+        }*/
         if(stockList==null)stockList=new ArrayList<Stock>();
         initViews();
         initEvents();
@@ -80,6 +98,7 @@ public class addStockActivity extends AppCompatActivity {
         setResult(Activity.RESULT_OK,intent2);
 
         fundSearchResult();
+        getsearchHistory();
         initbtn_login5();
         //System.out.println(stockList);
     }
@@ -87,9 +106,57 @@ public class addStockActivity extends AppCompatActivity {
     private void initData() {
         fundAdapter=new FundAdapter(addStockActivity.this,R.layout.fund_item,fundGeneralList);
 
+        editText.setVisibility(View.VISIBLE);
+        searchBut.setVisibility(View.VISIBLE);
         editText.setHint("股票名称");
         listView.setAdapter(fundAdapter);
+        strList = new ArrayList<>();
+        flowAdapter=new FlowLayout.Adapter() {
+            @Override
+            public int getCount() {
+                return strList.size();
+            }
 
+            @Override
+            public View getView(int position, ViewGroup parent) {
+                View view = layoutInflater.inflate(R.layout.flow_item3_1,parent,false);
+                // 给 View 设置 margin
+                ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(view.getLayoutParams());
+                mlp.setMargins(5, 5, 5, 5);
+                view.setLayoutParams(mlp);
+                TextView textView= (TextView)view.findViewById(R.id.flow_text3_1);
+                textView.setText(strList.get(position));
+                textView.setOnTouchListener(new View.OnTouchListener(){
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event){
+                        Drawable drawable=textView.getCompoundDrawables()[2];
+                        if ((event.getX() > textView.getWidth()-drawable.getIntrinsicWidth()-textView.getPaddingRight())
+                                &&(event.getX() < textView.getWidth()-textView.getPaddingRight())){
+                            strList.remove(position);
+
+                            SharedPreferences sp=getSharedPreferences(SEARCH_HISTORY,MODE_PRIVATE);
+                            String longhistory = sp.getString(SEARCH_HISTORY, "");
+                            String[] tmpHistory = longhistory.split(",");//用逗号拆分字符串
+                            ArrayList<String> history = new ArrayList<String>(Arrays.asList(tmpHistory));
+                            history.remove(position);
+                            if (history.size() > 0) {
+                                StringBuilder sb = new StringBuilder();
+                                for (int i = 0; i < history.size(); i++) {
+                                    sb.append(history.get(i) + ",");
+                                }
+                                sp.edit().putString(SEARCH_HISTORY, sb.toString()).commit();
+                            } else {
+                                sp.edit().clear().commit();
+                            }
+                            flowLayout.setAdapter(flowAdapter);
+                        }
+                        return false;
+                    }
+                });
+                return view;
+            }
+        };
+        flowLayout.setAdapter(flowAdapter);
     }
 
     private void initEvents() {
@@ -168,20 +235,71 @@ public class addStockActivity extends AppCompatActivity {
 //                fundAdapter.notifyDataSetChanged();
 //            }
 //        });
+
+        deleteAllHisBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sp=getSharedPreferences(SEARCH_HISTORY,MODE_PRIVATE);
+                strList.clear();
+                sp.edit().clear().commit();
+                flowLayout.setAdapter(flowAdapter);
+            }
+        });
     }
 
     private void initViews() {
-        editText=(EditText)findViewById(R.id.search_edit1);
+        editText=findViewById(R.id.search_edit1);
         searchBut=findViewById(R.id.search_but1);
-        listView = (ListView) findViewById(R.id.list_search3_2_2);
-        addMoreBut=(Button) findViewById(R.id.add_stock_but1);
-        finishAddBut=(Button) findViewById(R.id.add_stock_but2);
+        listView = findViewById(R.id.list_search3_2_2);
+        addMoreBut= findViewById(R.id.add_stock_but1);
+        finishAddBut=findViewById(R.id.add_stock_but2);
+        deleteAllHisBut=findViewById(R.id.delete_all_history);
+        flowLayout = findViewById(R.id.addstock_history_flow);
+        layoutInflater = LayoutInflater.from(this);
     }
 
-    public void clickBack(View view){
-        switch (view.getId()){
-            case R.id.back_icon:
-                finish();
+    private void getsearchHistory() {
+        SharedPreferences sp = getSharedPreferences(SEARCH_HISTORY, 0);
+        String longhistory = sp.getString(SEARCH_HISTORY, "");
+        String[] hisArrays = longhistory.split(",");
+        if (hisArrays[0]=="") {
+            return;
+        }
+        strList = new ArrayList<>();
+        for (int i = 0; i < hisArrays.length; i++) {
+            strList.add(hisArrays[i]);
+        }
+        flowLayout.setAdapter(flowAdapter);
+    }
+
+    private void saveSearchHistory(String text){
+        if(text.length()<1) {
+            return;
+        }
+        SharedPreferences sp=getSharedPreferences(SEARCH_HISTORY,MODE_PRIVATE);
+        String longhistory = sp.getString(SEARCH_HISTORY, "");
+        String[] tmpHistory = longhistory.split(",");//用逗号拆分字符串
+        ArrayList<String> history = new ArrayList<String>(Arrays.asList(tmpHistory));
+        //这里检查是否有重复
+        if (history.size() > 0) {
+            int i;
+            for (i = 0; i < history.size(); i++) {
+                if (text.equals(history.get(i))) {
+                    history.remove(i);
+                    break;
+                }
+            }
+            history.add(0, text);
+        }
+        //这里保存数据
+        if (history.size() > 0) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < history.size(); i++) {
+                sb.append(history.get(i) + ",");
+            }
+            sp.edit().putString(SEARCH_HISTORY, sb.toString()).commit();
+        } else {
+            sp.edit().putString(SEARCH_HISTORY, text + ",").commit();
         }
     }
 
@@ -239,7 +357,11 @@ public class addStockActivity extends AppCompatActivity {
                 url = "http://43m486x897.yicp.fun/stock/searchStock?id=平安";
                 url = "http://43m486x897.yicp.fun/stock/searchStock?id=";
                 //请求传入的参数
-                String urlAdd= editText.getText().toString();
+                String urlAdd= editText.getText().toString().trim();
+                System.out.println(urlAdd);
+                saveSearchHistory(urlAdd);
+                getsearchHistory();
+
                 RequestBody requestBody = new FormBody.Builder().build();
                 url+=urlAdd;
                 HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
@@ -301,5 +423,12 @@ public class addStockActivity extends AppCompatActivity {
                 hasSelectedUpdate();
             }
         });
+    }
+
+    public void clickBack(View view){
+        switch (view.getId()){
+            case R.id.back_icon:
+                finish();
+        }
     }
 }

@@ -116,7 +116,8 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
     private void initData() {
         searchFragment1=new SearchFragment1();
         searchFragment2=new SearchFragment2();
-        searchFragment3_1=new SearchFragment3_1(stockList);
+//        searchFragment3_1=new SearchFragment3_1(stockList);
+        searchFragment3_1=new SearchFragment3_1();
         searchFragment3_2=new SearchFragment3_2(typeList);
         searchFragment3_10=new SearchFragment3_10();
 
@@ -274,6 +275,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 titleTex.setVisibility(View.VISIBLE);
                 editText.setVisibility(View.INVISIBLE);
                 searchBut.setVisibility(View.INVISIBLE);
+                titleTex.setText("基金筛选");
                 break;
             case 3:
                 mLir1.setVisibility(View.GONE);
@@ -283,6 +285,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 titleTex.setVisibility(View.VISIBLE);
                 editText.setVisibility(View.INVISIBLE);
                 searchBut.setVisibility(View.INVISIBLE);
+                titleTex.setText("基金筛选");
                 break;
         }
         //设置当前点击的Tab所对应的页面
@@ -313,8 +316,10 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 url = "http://43m486x897.yicp.fun/fundHeavy/getListByGeneralSearch?id=000013";
                 url = "http://43m486x897.yicp.fun/fundHeavy/getListByGeneralSearch?id=";
                 //请求传入的参数
-                String urlAdd= editText.getText().toString();
+                String urlAdd= editText.getText().toString().trim();
                 System.out.println(urlAdd);
+                searchFragment1.saveSearchHistory1(urlAdd);
+                searchFragment1.getsearchHistory1();
 
                 RequestBody requestBody = new FormBody.Builder().build();
                 url=url+urlAdd;
@@ -398,6 +403,8 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 String urlAdd= editText.getText().toString();
                 RequestBody requestBody = new FormBody.Builder().build();
                 url+=urlAdd;
+                searchFragment2.saveSearchHistory2(urlAdd);
+                searchFragment2.getsearchHistory2();
 
                 HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
                     @Override

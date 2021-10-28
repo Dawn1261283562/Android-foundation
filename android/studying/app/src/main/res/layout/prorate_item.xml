@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/stock_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:paddingBottom="2dp"
+        app:layout_constraintTop_toTopOf="@+id/ratio_edit"
+        app:layout_constraintBottom_toTopOf="@id/stock_id"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:text="平安银行"/>
+    <TextView
+        android:id="@+id/stock_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/stock_name"
+        app:layout_constraintBottom_toBottomOf="@id/ratio_edit"
+        app:layout_constraintLeft_toLeftOf="@id/stock_name"
+        android:textSize="15sp"
+        android:text="000001.sz"/>
+    <EditText
+        android:id="@+id/ratio_edit"
+        android:layout_width="80dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintRight_toRightOf="@id/percent_character"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:inputType="number"
+        android:digits="1234567890."
+        android:background="@drawable/edit_background"
+        android:paddingEnd="5dp"
+        android:gravity="right|center_vertical"/>
+    <TextView
+        android:id="@+id/percent_character"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toTopOf="@+id/ratio_edit"
+        app:layout_constraintBottom_toBottomOf="@id/ratio_edit"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="23sp"
+        android:textColor="@color/black"
+        android:text="%"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

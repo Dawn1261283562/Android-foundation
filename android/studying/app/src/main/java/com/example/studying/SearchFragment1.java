@@ -1,15 +1,19 @@
 package com.example.studying;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,6 +31,7 @@ import com.google.gson.JsonParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.Call;
@@ -68,53 +73,161 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 public class SearchFragment1 extends androidx.fragment.app.Fragment {
+    public static final String SEARCH_HISTORY = "search_history_1";
+
     private View mView;
 
     private ListView listView1;
     private FundAdapter fundAdapter1;
+    private FlowLayout flowLayout;
+    private FlowLayout.Adapter flowAdapter;
+    private LayoutInflater layoutInflater;
+    private ArrayList<String> strList;
 
-    private List<FundGeneral> fundGeneralList1=new ArrayList<>();
+    private List<FundGeneral> fundGeneralList1;
 
+    private FlowLayout flowLayout1;
+    private FlowLayout.Adapter flowAdapter1;
+    private LayoutInflater layoutInflater1;
+    private ArrayList<String> strList1;
+    ImageButton deleteAllHisBut1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mView == null) {
             mView = inflater.inflate(R.layout.search_fragment1, container, false);
         }
+        initView();
+        initEvent();
+        initDate();
 
-        /*Bundle bundle=getArguments();
-        if (bundle != null) {
-            fundHeavyInfoList = bundle.getParcelableArrayList("initbtn_login4");
-            System.out.println(fundHeavyInfoList.get(0).getId());
-        }*/
+        getsearchHistory1();//获取历史搜索记录
+        return mView;
+    }
 
-
+    private void initDate() {
+        fundGeneralList1=new ArrayList<>();
         fundAdapter1=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList1);
-        //获取持仓搜索结果
-        //fundSearchResult();
-
-        //System.out.println("okkkkkkkkkkkkkkkkkkk3333");
-        listView1 = (ListView) mView.findViewById(R.id.list_search1);
         listView1.setAdapter(fundAdapter1);
-        //fundAdapter.notifyDataSetChanged();
+        strList1 = new ArrayList<>();
+        flowAdapter1=new FlowLayout.Adapter() {
+            @Override
+            public int getCount() {
+                return strList1.size();
+            }
 
-        //listView = mView.findViewById(R.id.list_search1);
-        //listView.setAdapter(fundAdapter);
+            @Override
+            public View getView(int position, ViewGroup parent) {
+                View view = layoutInflater1.inflate(R.layout.flow_item3_1,parent,false);
+                // 给 View 设置 margin
+                ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(view.getLayoutParams());
+                mlp.setMargins(5, 5, 5, 5);
+                view.setLayoutParams(mlp);
+                TextView textView= (TextView)view.findViewById(R.id.flow_text3_1);
+                textView.setText(strList1.get(position));
+                textView.setOnTouchListener(new View.OnTouchListener(){
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event){
+                        Drawable drawable=textView.getCompoundDrawables()[2];
+                        if ((event.getX() > textView.getWidth()-drawable.getIntrinsicWidth()-textView.getPaddingRight())
+                                &&(event.getX() < textView.getWidth()-textView.getPaddingRight())){
+                            strList1.remove(position);
+
+                            SharedPreferences sp=getActivity().getApplicationContext().getSharedPreferences(SEARCH_HISTORY,getActivity().MODE_PRIVATE);
+                            String longhistory = sp.getString(SEARCH_HISTORY, "");
+                            String[] tmpHistory = longhistory.split(",");//用逗号拆分字符串
+                            ArrayList<String> history = new ArrayList<String>(Arrays.asList(tmpHistory));
+                            history.remove(position);
+                            if (history.size() > 0) {
+                                StringBuilder sb = new StringBuilder();
+                                for (int i = 0; i < history.size(); i++) {
+                                    sb.append(history.get(i) + ",");
+                                }
+                                sp.edit().putString(SEARCH_HISTORY, sb.toString()).commit();
+                            } else {
+                                sp.edit().clear().commit();
+                            }
+                            flowLayout1.setAdapter(flowAdapter1);
+                        }
+                        return false;
+                    }
+                });
+                return view;
+            }
+        };
+        flowLayout1.setAdapter(flowAdapter1);
+    }
+
+    private void initEvent() {
         listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                /*Intent intent=new Intent(getActivity(),);
-                intent.putExtra("item1",i);
-                startActivity(intent);*/
 
                 FundGeneral fundGeneral = fundGeneralList1.get(i);
                 Toast.makeText(getContext(), fundGeneral.getFund2().toString(), Toast.LENGTH_SHORT).show();
             }
         });
-
-
-        return mView;
+        deleteAllHisBut1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sp=getActivity().getApplicationContext().getSharedPreferences(SEARCH_HISTORY,getActivity().MODE_PRIVATE);
+                strList1.clear();
+                sp.edit().clear().commit();
+                flowLayout1.setAdapter(flowAdapter1);
+            }
+        });
     }
+
+    private void initView() {
+        listView1 = (ListView) mView.findViewById(R.id.list_search1);
+        flowLayout1 = mView.findViewById(R.id.frag1_history_flow);
+        layoutInflater1 = LayoutInflater.from(getActivity());
+        deleteAllHisBut1=mView.findViewById(R.id.delete_all_history1);
+    }
+    public void getsearchHistory1() {
+        SharedPreferences sp = getActivity().getApplicationContext().getSharedPreferences(SEARCH_HISTORY, 0);
+        String longhistory = sp.getString(SEARCH_HISTORY, "");
+        String[] hisArrays = longhistory.split(",");
+        if (hisArrays[0]=="") {
+            return;
+        }
+        strList1 = new ArrayList<>();
+        for (int i = 0; i < hisArrays.length; i++) {
+            strList1.add(hisArrays[i]);
+        }
+        flowLayout1.setAdapter(flowAdapter1);
+    }
+    public void saveSearchHistory1(String text){
+        if(text.length()<1) {
+            return;
+        }
+        SharedPreferences sp=getActivity().getApplicationContext().getSharedPreferences(SEARCH_HISTORY,getActivity().MODE_PRIVATE);
+        String longhistory = sp.getString(SEARCH_HISTORY, "");
+        String[] tmpHistory = longhistory.split(",");//用逗号拆分字符串
+        ArrayList<String> history = new ArrayList<String>(Arrays.asList(tmpHistory));
+        //这里检查是否有重复
+        if (history.size() > 0) {
+            int i;
+            for (i = 0; i < history.size(); i++) {
+                if (text.equals(history.get(i))) {
+                    history.remove(i);
+                    break;
+                }
+            }
+            history.add(0, text);
+        }
+        //这里保存数据
+        if (history.size() > 0) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < history.size(); i++) {
+                sb.append(history.get(i) + ",");
+            }
+            sp.edit().putString(SEARCH_HISTORY, sb.toString()).commit();
+        } else {
+            sp.edit().putString(SEARCH_HISTORY, text + ",").commit();
+        }
+    }
+
     public void fundSearchResult() {
         fundGeneralList1.clear();
         MainActivity2 activity2=(MainActivity2)getActivity();
@@ -127,7 +240,6 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
             }
             listView1.setAdapter(new  FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList1));
         }
-        System.out.println("okkkkkkkkkkkkkkkkkkk2222");
 
         /*FundGeneral fundGeneral1=new FundGeneral("22222","平安银行平安银行平安银行平安银行","管理者");
         fundGeneralList.add(fundGeneral1);

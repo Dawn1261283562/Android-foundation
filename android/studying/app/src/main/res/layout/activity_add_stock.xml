@@ -1,37 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <include layout="@layout/title_layout"></include>
+    <include layout="@layout/title_layout"
+        android:id="@+id/title_in_addstock"></include>
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/history_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:text="基金筛选-添加心仪股票"
-        android:gravity="center"
-        android:background="#DDD190"/>
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_in_addstock"
+        android:text="搜索历史"
+        android:textSize="15dp" />
+
+    <ImageButton
+        android:id="@+id/delete_all_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintTop_toTopOf="@id/history_text"
+        app:layout_constraintBottom_toBottomOf="@id/history_text"
+        app:layout_constraintRight_toRightOf="parent"
+        android:src="@mipmap/icon1_5"/>
+
+    <com.example.studying.FlowLayout
+        android:id="@+id/addstock_history_flow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/history_text"/>
 
     <ListView
         android:id="@+id/list_search3_2_2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintTop_toBottomOf="@id/addstock_history_flow"
+        app:layout_constraintBottom_toTopOf="@id/add_stock_but1">
     </ListView>
 
     <Button
-        android:id="@+id/add_stock_but1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="继续添加"
-        android:textSize="30dp"/>
-
-    <Button
         android:id="@+id/add_stock_but2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/add_stock_but1"
         android:text="完成添加"
-        android:textSize="30dp"/>
-</LinearLayout>
+        android:textSize="20dp"
+        android:background="@drawable/search_background"/>
+    <Button
+        android:id="@+id/add_stock_but1"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/add_stock_but2"
+        app:layout_constraintTop_toTopOf="@id/add_stock_but2"
+        app:layout_constraintBottom_toBottomOf="@id/add_stock_but2"
+        android:text="继续添加"
+        android:textSize="20dp"
+        android:background="@drawable/search_background"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
