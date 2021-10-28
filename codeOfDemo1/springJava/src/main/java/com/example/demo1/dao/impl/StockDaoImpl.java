@@ -20,6 +20,8 @@ public class StockDaoImpl implements StockDao {
     private JdbcTemplate jdbcTemplate;
     @Override
     public Stock getById(String id) {
+        //增加热度
+        updateHitsBySearch(id);
         //System.out.println(id);
         String sql="select * from m_stock where id = ?";
         Stock result = null;
