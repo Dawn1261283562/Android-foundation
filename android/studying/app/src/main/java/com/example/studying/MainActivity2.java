@@ -56,7 +56,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
     private TextView mTex4;
     private TextView mTex5;
 
-    private EditText editText;
+    public static EditText editText;
     private Button searchBut;
     private TextView titleTex;
 

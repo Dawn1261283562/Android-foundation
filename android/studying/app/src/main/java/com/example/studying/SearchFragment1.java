@@ -149,6 +149,11 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
                             }
                             flowLayout1.setAdapter(flowAdapter1);
                         }
+                        else if ((event.getX() < textView.getWidth()-drawable.getIntrinsicWidth()-textView.getPaddingRight())
+                                &&(event.getX() > 0)){
+                            MainActivity2.editText.setText(strList1.get(position));
+                            MainActivity2.editText.setSelection(strList1.get(position).length());
+                        }
                         return false;
                     }
                 });

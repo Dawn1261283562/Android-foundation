@@ -150,6 +150,11 @@ public class addStockActivity extends AppCompatActivity {
                             }
                             flowLayout.setAdapter(flowAdapter);
                         }
+                        else if ((event.getX() < textView.getWidth()-drawable.getIntrinsicWidth()-textView.getPaddingRight())
+                                &&(event.getX() > 0)){
+                            editText.setText(strList.get(position));
+                            MainActivity2.editText.setSelection(strList.get(position).length());
+                        }
                         return false;
                     }
                 });

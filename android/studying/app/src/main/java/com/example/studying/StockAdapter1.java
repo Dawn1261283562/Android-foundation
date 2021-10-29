@@ -39,6 +39,7 @@ public class StockAdapter1 extends ArrayAdapter<Stock> {
         stockName.setText(stock.getName().toString());
         stockId.setText(stock.getId().toString());
         stockRadio.setText(String.valueOf(stock.getExpectRadio()));
+        stockRadio.setSelection(stockRadio.getText().length());
 
         return view;
     }

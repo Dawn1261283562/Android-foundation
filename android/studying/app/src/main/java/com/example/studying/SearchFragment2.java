@@ -59,12 +59,12 @@ public class SearchFragment2 extends androidx.fragment.app.Fragment {
 
             @Override
             public View getView(int position, ViewGroup parent) {
-                View view = layoutInflater2.inflate(R.layout.flow_item3_1,parent,false);
+                View view = layoutInflater2.inflate(R.layout.historysearch_flow_item,parent,false);
                 // 给 View 设置 margin
                 ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(view.getLayoutParams());
                 mlp.setMargins(5, 5, 5, 5);
                 view.setLayoutParams(mlp);
-                TextView textView= (TextView)view.findViewById(R.id.flow_text3_1);
+                TextView textView= (TextView)view.findViewById(R.id.flow_text_history);
                 textView.setText(strList2.get(position));
                 textView.setOnTouchListener(new View.OnTouchListener(){
                     @Override
@@ -89,6 +89,11 @@ public class SearchFragment2 extends androidx.fragment.app.Fragment {
                                 sp.edit().clear().commit();
                             }
                             flowLayout2.setAdapter(flowAdapter2);
+                        }
+                        else if ((event.getX() < textView.getWidth()-drawable.getIntrinsicWidth()-textView.getPaddingRight())
+                                &&(event.getX() > 0)){
+                            MainActivity2.editText.setText(strList2.get(position));
+                            MainActivity2.editText.setSelection(strList2.get(position).length());
                         }
                         return false;
                     }

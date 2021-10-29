@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/flow_text_history"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:drawableRight="@mipmap/icon1_5"
+    android:drawablePadding="3dp"
+    android:background="@drawable/searchhistory_background"
+    android:padding="5dp"
+    android:gravity="center_vertical"
+    android:textSize="10dp"/>
