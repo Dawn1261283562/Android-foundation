@@ -144,22 +144,60 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
             @Override
             public void onClick(View v) {
 
-                String url = "http://localhost:8080/user/lgoin";
-                //url = "http://43m486x897.yicp.fun/fundHeavy/getListByStockList?num=4&stockIdList=000001.SZ,000858.SZ,002475.SZ,002050.SZ";
-                url = "http://43m486x897.yicp.fun/fundHeavy/getListByStockList?num=";
-                String urlNext="&stockIdList=";
-                int num=stockList.size();
-                url=url+num+urlNext;
-                for(int i=0;i<num;i++){
-                    String id=stockList.get(i).getId().toString();
-                    if(i!=num-1){
-                        url=url+id+',';
-                    }
-                    else{
-                        url=url+id;
-                    }
+                int checkboxFlag=1;
+                if(checkProBtn.getBackground().getConstantState().equals(getResources().getDrawable(R.mipmap.checkbox1).getConstantState())){
+                    checkboxFlag=1;
+
+                }
+                else{
+                    checkboxFlag=2;
                 }
 
+                String url = "http://localhost:8080/user/lgoin";
+
+                if(checkboxFlag==1) {
+                    System.out.println(121);
+                    //url = "http://43m486x897.yicp.fun/fundHeavy/getListByStockList?num=4&stockIdList=000001.SZ,000858.SZ,002475.SZ,002050.SZ";
+                    url = "http://43m486x897.yicp.fun/fundHeavy/getListByStockList?num=";
+                    String urlNext = "&stockIdList=";
+                    int num = stockList.size();
+                    url = url + num + urlNext;
+                    for (int i = 0; i < num; i++) {
+                        String id = stockList.get(i).getId().toString();
+                        if (i != num - 1) {
+                            url = url + id + ',';
+                        } else {
+                            url = url + id;
+                        }
+                    }
+                }
+                else{
+                    System.out.println(212);
+                    url = "http://43m486x897.yicp.fun/fundHeavy/getListByStockScore?num=";
+                    String urlNext = "&stockIdList=";
+                    String urlNextNext = "&stockRadioList=";
+                    //4&stockIdList=000001.SZ,000858.SZ,002475.SZ,002050.SZ&stockRadioList=0.55,0.74,0.47,0.50
+                    int num = stockList.size();
+                    url = url + num + urlNext;
+                    for (int i = 0; i < num; i++) {
+                        String id = stockList.get(i).getId().toString();
+                        if (i != num - 1) {
+                            url = url + id + ',';
+                        } else {
+                            url = url + id;
+                        }
+                    }
+                    url= url+urlNextNext;
+                    for (int i = 0; i < num; i++) {
+                        String id = ""+stockList.get(i).getExpectRadio();
+                        if (i != num - 1) {
+                            url = url + id + ',';
+                        } else {
+                            url = url + id;
+                        }
+                    }
+
+                }
                 //请求传入的参数
 //                Vector<Thread>threadVector=new Vector<Thread>();
 //                Thread childThread =new Thread(new Runnable()){
@@ -257,11 +295,13 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
                 startActivityForResult(intent,32);
             }
         });
+        checkProBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox1));
         checkProBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(checkProBtn.getBackground().getConstantState().equals(getResources().getDrawable(R.mipmap.checkbox1).getConstantState())){
                     checkProBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox2));
+
                 }
                 else{
                     checkProBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox1));

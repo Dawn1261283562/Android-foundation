@@ -8,7 +8,7 @@ public class Stock<String> implements Serializable {
     private String type;
     private String price;
     private int hits;
-    private double expectRadio=0.005;
+    private double expectRadio=0.5;
 
     public double getExpectRadio() {
         return expectRadio;
