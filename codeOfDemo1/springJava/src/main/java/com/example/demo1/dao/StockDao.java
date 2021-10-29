@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface StockDao {
     Stock getById(String id);
-    int updateHitsBySearch(String id);
+    int updateHitsBySearch(Stock stock);
     int update(Stock stock);
 
     List<Stock> getByOther(String id);

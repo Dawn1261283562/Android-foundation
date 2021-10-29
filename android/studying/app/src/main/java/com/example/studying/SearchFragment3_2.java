@@ -1,5 +1,6 @@
 package com.example.studying;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import com.google.gson.JsonParser;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.Call;
@@ -48,6 +50,7 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
     private ListView listView;
     private List<FundGeneral> fundGeneralList;
     private FlowLayout.Adapter flowAdapter;
+    private ArrayList<FundHeavy> fundHeavyList=new ArrayList<FundHeavy>();
 
     public SearchFragment3_2(ArrayList<String> typeList) {
         System.out.println(typeList);
@@ -161,16 +164,21 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
 
 
                 Intent intent = new Intent();
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("typeList",typeList);
+                intent.putExtras(bundle);
+                intent.setClass(getActivity(),addTypeActivity.class);
 
-                intent.setClass(getActivity(), addTypeActivity.class);
+                //if(stockList==null)stockList=new ArrayList<Stock>();
 
                 if (typeList == null) typeList = new ArrayList<String>();
-                intent.putExtra("typeList", typeList);
+                //intent.putExtra("typeList", typeList);
 //                Stock temp =new Stock();temp.setId("写死的假股票");
 //                temp.setName("每次添加");
 //                temp.setPrice("测试用例用于");
 //                stockList.add(temp);
-                startActivity(intent);
+                //startActivity(intent);
+                startActivityForResult(intent,31);
             }
         });
 
@@ -232,17 +240,114 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
                             System.out.println(userBean.hits);
                             System.out.println("这上面是 基金代码、名字、评分、十股票代码、十股票比例、二号股票比例、热度");
                         }
-
+                        fundHeavyList=userBeanList;
                         Looper.prepare();
                         System.out.println(data);
                         Toast.makeText(getActivity(), strByJson, Toast.LENGTH_SHORT).show();
                         Looper.loop();
                     }
                 });
+                Thread closeActivity = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(1450);
+                            hasSelectedUpdate();
+                            // Do some stuff
+                        } catch (Exception e) {
+                            e.getLocalizedMessage();
+                        }
+                    }});
+                closeActivity.run();
             }
 
 
         });
+    }
+
+    private void hasSelectedUpdate() {
+    /*FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
+        fundGeneralList.add(fundGeneral1);*/
+
+        System.out.println(123321);
+        fundGeneralList.clear();
+        //        FundGeneral fundGeneral=new FundGeneral("000001.SZ","平安银行","20.04");
+//        fundGeneralList.add(fundGeneral);
+        int size = fundHeavyList.size();
+        for (int i = 0; i < size; i++) {
+            FundHeavy value = fundHeavyList.get(i);
+            FundGeneral fundGeneral1=new FundGeneral((String) value.getId(),(String) value.getName(),(String) value.getScore());
+            fundGeneral1.setFundHeavy(value);
+            fundGeneralList.add(fundGeneral1);
+        }
+
+//        listView.setAdapter(new FundAdapter(addStockActivity.this,R.layout.fund_item,fundGeneralList));
+
+        //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
+//        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
+//
+//        listView = (ListView) mView.findViewById(R.id.list_search2);
+//        listView.setAdapter(fundAdapter);
+
+        //BB.performClick();
+        System.out.println(fundGeneralList.size());
+        fundAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode){
+            case 31:
+                if(resultCode== Activity.RESULT_OK){
+                    Bundle bundle=data.getExtras();
+                    typeList=(ArrayList<String>) bundle.getSerializable("typeListAdd");
+
+                    typeList =typeListDuplicatesRemove(typeList);
+
+                    //获取用户选择的股票
+                    typeSlected();
+                }
+                break;
+            default:
+        }
+    }
+
+    private void typeSlected() {
+        strList = new ArrayList<>();
+        for(String type:typeList){
+            strList.add(type.toString());
+        }
+        /*strList.add("阿里巴巴");
+        strList.add("阿巴阿巴");
+        strList.add("阿巴巴巴巴");
+        strList.add("阿里巴巴阿里巴巴阿里巴巴阿里巴巴阿里巴巴阿里巴巴");
+        strList.add("阿巴阿巴阿巴");
+        strList.add("阿巴阿");
+        strList.add("阿巴阿巴");
+        strList.add("阿巴阿巴");
+        strList.add("阿巴阿巴");
+        strList.add("巴阿巴");
+        strList.add("阿巴阿");*/
+
+        flowLayout.setAdapter(flowAdapter);
+    }
+
+    private ArrayList<String> typeListDuplicatesRemove(ArrayList<String> typeList){
+        HashMap<String,String> stockMap=new HashMap<>() ;
+
+        for(int k=typeList.size()-1;k>=0;k--){
+
+            stockMap.put(typeList.get(k).toString(),typeList.get(k)) ;
+        }
+        ArrayList<String> stockListNew=new ArrayList<String>();
+
+        for (String value : stockMap.values()) {
+            stockListNew.add(value);
+        }
+
+
+        typeList=stockListNew;
+        return typeList;
     }
 
 
