@@ -119,12 +119,12 @@ public class addStockActivity extends AppCompatActivity {
 
             @Override
             public View getView(int position, ViewGroup parent) {
-                View view = layoutInflater.inflate(R.layout.flow_item3_1,parent,false);
+                View view = layoutInflater.inflate(R.layout.historysearch_flow_item,parent,false);
                 // 给 View 设置 margin
                 ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(view.getLayoutParams());
                 mlp.setMargins(5, 5, 5, 5);
                 view.setLayoutParams(mlp);
-                TextView textView= (TextView)view.findViewById(R.id.flow_text3_1);
+                TextView textView= (TextView)view.findViewById(R.id.flow_text_history);
                 textView.setText(strList.get(position));
                 textView.setOnTouchListener(new View.OnTouchListener(){
                     @Override
@@ -149,6 +149,11 @@ public class addStockActivity extends AppCompatActivity {
                                 sp.edit().clear().commit();
                             }
                             flowLayout.setAdapter(flowAdapter);
+                        }
+                        else if ((event.getX() < textView.getWidth()-drawable.getIntrinsicWidth()-textView.getPaddingRight())
+                                &&(event.getX() > 0)){
+                            editText.setText(strList.get(position));
+                            editText.setSelection(strList.get(position).length());
                         }
                         return false;
                     }

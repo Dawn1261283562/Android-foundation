@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +51,7 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
     private Button addBtn;
     private Button searchBtn;
     private Button prorateBtn;
-    private Button checkProBtn;
+    private ImageButton checkProBtn;
     private ArrayList<Stock> stockList=new ArrayList<Stock>();
     private List<FundGeneral> fundGeneralList=new ArrayList<>();
     private ArrayList<FundHeavy> fundHeavyList=new ArrayList<FundHeavy>();
@@ -229,14 +230,15 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
         prorateBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                checkProBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox2));
                 /*
                 这里不知道干嘛stockList是空的，null
                 */
-                if(null!=stockList){
+                /*if(null!=stockList){
                     for(int a=0;a<stockList.size();a++){
-                        Log.d("xxxxxxxxxxxxxxx", stockList.get(a).getName().toString());
+                        System.out.println(stockList.get(a).getName().toString());
                     }
-                }
+                }*/
 
 //                Stock stock=new Stock();
 //                stock.setExpectRadio(1);
@@ -246,12 +248,24 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
 //                stock.setPrice("343");
 //                stock.setType("w2e");
 //                stockList.add(stock);
+
                 Intent intent=new Intent();
                 Bundle bundle=new Bundle();
                 bundle.putSerializable("stockListToProrate",stockList);
                 intent.putExtras(bundle);
                 intent.setClass(getActivity(),ProrateActivity.class);
                 startActivityForResult(intent,32);
+            }
+        });
+        checkProBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(checkProBtn.getBackground().getConstantState().equals(getResources().getDrawable(R.mipmap.checkbox1).getConstantState())){
+                    checkProBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox2));
+                }
+                else{
+                    checkProBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox1));
+                }
             }
         });
     }
@@ -287,13 +301,13 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
     }
 
     private void initViews() {
-        addBtn =(Button)mView.findViewById(R.id.frag3_1_but1);
-        searchBtn=(Button)mView.findViewById(R.id.frag3_1_but2);
-        prorateBtn=(Button)mView.findViewById(R.id.prorate_but);
-        prorateBtn=(Button)mView.findViewById(R.id.prorate_but);
-        checkProBtn=(Button)mView.findViewById(R.id.check_prorate);
-        listView = (ListView) mView.findViewById(R.id.list_search3_1);
-        flowLayout = (FlowLayout) mView.findViewById(R.id.flowlayout3_1);
+        addBtn =mView.findViewById(R.id.frag3_1_but1);
+        searchBtn=mView.findViewById(R.id.frag3_1_but2);
+        prorateBtn=mView.findViewById(R.id.prorate_but);
+        prorateBtn=mView.findViewById(R.id.prorate_but);
+        checkProBtn=mView.findViewById(R.id.check_prorate);
+        listView =  mView.findViewById(R.id.list_search3_1);
+        flowLayout = mView.findViewById(R.id.flowlayout3_1);
         layoutInflater = LayoutInflater.from(getContext());
     }
 
@@ -317,7 +331,9 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
                     stockList=(ArrayList<Stock>) bundle.getSerializable("stockListProrated");
 
                     stockList =stockListDuplicatesRemove(stockList);
-
+                    for(int a=0;a<stockList.size();a++){
+                        System.out.println(String.valueOf(stockList.get(a).getExpectRadio()));
+                    }
                     //获取用户选择的股票
                     stockSlected();
                 }

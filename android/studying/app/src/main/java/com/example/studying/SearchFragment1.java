@@ -4,17 +4,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,56 +17,11 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.example.studying.entity.FundHeavyInfo;
-import com.example.studying.entity.Stock;
-import com.example.studying.utils.HttpGetRequest;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Looper;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import androidx.annotation.Nullable;
-
-import com.example.studying.entity.Stock;
-import com.example.studying.utils.HttpGetRequest;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 public class SearchFragment1 extends androidx.fragment.app.Fragment {
     public static final String SEARCH_HISTORY = "search_history_1";
 
@@ -118,12 +68,12 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
 
             @Override
             public View getView(int position, ViewGroup parent) {
-                View view = layoutInflater1.inflate(R.layout.flow_item3_1,parent,false);
+                View view = layoutInflater1.inflate(R.layout.historysearch_flow_item,parent,false);
                 // 给 View 设置 margin
                 ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(view.getLayoutParams());
                 mlp.setMargins(5, 5, 5, 5);
                 view.setLayoutParams(mlp);
-                TextView textView= (TextView)view.findViewById(R.id.flow_text3_1);
+                TextView textView= (TextView)view.findViewById(R.id.flow_text_history);
                 textView.setText(strList1.get(position));
                 textView.setOnTouchListener(new View.OnTouchListener(){
                     @Override
@@ -148,6 +98,11 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
                                 sp.edit().clear().commit();
                             }
                             flowLayout1.setAdapter(flowAdapter1);
+                        }
+                        else if ((event.getX() < textView.getWidth()-drawable.getIntrinsicWidth()-textView.getPaddingRight())
+                                &&(event.getX() > 0)){
+                            MainActivity2.editText.setText(strList1.get(position));
+                            MainActivity2.editText.setSelection(strList1.get(position).length());
                         }
                         return false;
                     }

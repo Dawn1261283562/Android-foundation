@@ -56,7 +56,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
     private TextView mTex4;
     private TextView mTex5;
 
-    private EditText editText;
+    public static EditText editText;
     private Button searchBut;
     private TextView titleTex;
 
@@ -150,7 +150,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         };
         //设置ViewPager的适配器
         mViewPager.setAdapter(mAdapter);
-        mViewPager.setOffscreenPageLimit(5);
+        mViewPager.setOffscreenPageLimit(4);
         //设置ViewPager的切换监听
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
