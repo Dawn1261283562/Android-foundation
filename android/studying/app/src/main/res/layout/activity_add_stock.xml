@@ -32,16 +32,63 @@
         android:id="@+id/addstock_history_flow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/history_text"/>
+
+    <View
+        android:id="@+id/back_view_addstock"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/addstock_history_flow"
+        android:background="#E6E6E6"/>
+    <TextView
+        android:id="@+id/textaddstock_1"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/back_view_addstock"
+        app:layout_constraintBottom_toBottomOf="@id/back_view_addstock"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:text="代码"/>
+
+    <TextView
+        android:id="@+id/textaddstock_2"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textaddstock_1"
+        app:layout_constraintBottom_toBottomOf="@id/textaddstock_1"
+        android:text="股票名"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:gravity="center"/>
+    <TextView
+        android:id="@+id/textaddstock_3"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textaddstock_1"
+        app:layout_constraintBottom_toBottomOf="@id/textaddstock_1"
+        android:text="股价"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:gravity="center"/>
 
     <ListView
         android:id="@+id/list_search3_2_2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintVertical_weight="1"
-        app:layout_constraintTop_toBottomOf="@id/addstock_history_flow"
+        app:layout_constraintTop_toBottomOf="@id/back_view_addstock"
         app:layout_constraintBottom_toTopOf="@id/add_stock_but1">
     </ListView>
 
