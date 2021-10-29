@@ -28,7 +28,6 @@ public class ProrateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prorate);
 
-        System.out.println("自选分配比例这里也可科技的方式的国防杀戮光环");
         initView();
         initEvent();
         initDate();
@@ -64,16 +63,15 @@ public class ProrateActivity extends AppCompatActivity {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 finish();
             }
         });
     }
 
     private void initView() {
-        titleTex = (TextView) findViewById(R.id.title_text);
-        listView = (ListView) findViewById(R.id.prorate_list);
-        buttonBack=(Button) findViewById(R.id.but_prorateback);
+        titleTex = findViewById(R.id.title_text);
+        listView = findViewById(R.id.prorate_list);
+        buttonBack= findViewById(R.id.but_prorateback);
     }
 
     public void clickBack(View view){
