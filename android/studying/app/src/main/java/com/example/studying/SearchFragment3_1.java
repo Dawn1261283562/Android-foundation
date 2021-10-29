@@ -134,6 +134,7 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
 //                temp.setPrice("测试用例用于");
 //                stockList.add(temp);
                 startActivityForResult(intent,31);
+
             }
         });
         searchBtn.setOnClickListener(new View.OnClickListener() {
@@ -284,6 +285,7 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
         System.out.println(fundGeneralList.size());
         fundAdapter.notifyDataSetChanged();
     }
+
     private void initViews() {
         addBtn =(Button)mView.findViewById(R.id.frag3_1_but1);
         searchBtn=(Button)mView.findViewById(R.id.frag3_1_but2);
@@ -309,6 +311,16 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
                     stockSlected();
                 }
                 break;
+            case 32:
+                if(resultCode==Activity.RESULT_OK){
+                    Bundle bundle=data.getExtras();
+                    stockList=(ArrayList<Stock>) bundle.getSerializable("stockListProrated");
+
+                    stockList =stockListDuplicatesRemove(stockList);
+
+                    //获取用户选择的股票
+                    stockSlected();
+                }
             default:
         }
     }

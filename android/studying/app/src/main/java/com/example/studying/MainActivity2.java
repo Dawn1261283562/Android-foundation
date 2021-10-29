@@ -91,6 +91,10 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         Intent intent = this.getIntent();
         stockList = (ArrayList<Stock>) intent.getSerializableExtra("stockList");
         typeList = (ArrayList<String>) intent.getSerializableExtra("typeList");
+        if((ArrayList<Stock>) intent.getSerializableExtra("stockListProrated")!=null){
+            stockList = (ArrayList<Stock>) intent.getSerializableExtra("stockListProrated");
+        }
+
         initData();
 
         mViewPager.setCurrentItem(i);
@@ -108,6 +112,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         }
         else if(typeList!=null){
 
+            System.out.println(2222222);
             System.out.println(typeList.get(0));
             selectTab(3);
         }

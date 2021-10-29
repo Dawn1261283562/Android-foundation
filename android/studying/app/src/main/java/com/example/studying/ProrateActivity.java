@@ -33,6 +33,11 @@ public class ProrateActivity extends AppCompatActivity {
         initEvent();
         initDate();
 
+//        Stock stock =new Stock();
+//        stock.setId(1111);
+//        stock.setPrice(111);
+//        stock.setName(111);
+//        stockList.add(stock);
 
         Intent intent=new Intent();
         Bundle bundle=new Bundle();
@@ -59,6 +64,7 @@ public class ProrateActivity extends AppCompatActivity {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 finish();
             }
         });

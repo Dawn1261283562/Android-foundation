@@ -21,7 +21,7 @@ public class StockDaoImpl implements StockDao {
     @Override
     public Stock getById(String id) {
         //增加热度
-        updateHitsBySearch(id);
+
         //System.out.println(id);
         String sql="select * from m_stock where id = ?";
         Stock result = null;
@@ -44,13 +44,13 @@ public class StockDaoImpl implements StockDao {
             //System.out.println(5555);
             result=null;
         }
-
+        updateHitsBySearch(result);
         return result;
     }
 
     @Override
-    public int updateHitsBySearch(String id) {
-        Stock stock = getById(id);
+    public int updateHitsBySearch(Stock stock) {
+        //Stock stock = getById(id);
         String sql = "update m_stock set hits = ? where id = ?";
         return this.jdbcTemplate.update(
                 sql,
