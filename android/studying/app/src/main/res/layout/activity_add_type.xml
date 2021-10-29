@@ -1,56 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <include layout="@layout/title_layout"></include>
+    <include layout="@layout/title_layout"
+        android:id="@+id/title_in_addType"></include>
 
-    <LinearLayout
-        android:id="@+id/top_Tab1"
-        android:visibility="gone"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/history_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/top_tab1"
-            style="@style/topTabText"
-            android:text="@string/sear_tab1"/>
-        <TextView
-            android:id="@+id/top_tab2"
-            style="@style/topTabText"
-            android:text="@string/sear_tab2"/>
-        <TextView
-            android:id="@+id/top_tab3"
-            style="@style/topTabText"
-            android:text="@string/sear_tab3"/>
-    </LinearLayout>
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_in_addType"
+        android:text="搜索历史"
+        android:textSize="15dp" />
 
-    <LinearLayout
-        android:id="@+id/top_Tab2"
-        android:visibility="gone"
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/delete_all_history"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/top_tab4"
-            style="@style/topTabText"
-            android:text="持仓搜索"/>
-        <TextView
-            android:id="@+id/top_tab5"
-            style="@style/topTabText"
-            android:text="板块搜索"/>
-    </LinearLayout>
+        android:layout_marginEnd="30dp"
+        app:layout_constraintTop_toTopOf="@id/history_text"
+        app:layout_constraintBottom_toBottomOf="@id/history_text"
+        app:layout_constraintRight_toRightOf="parent"
+        android:src="@mipmap/icon1_5"/>
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vPager"
+    <com.example.studying.FlowLayout
+        android:id="@+id/addstock_history_flow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/history_text"/>
+
+    <ListView
+        android:id="@+id/list_search3_2_2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_weight="1" />
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintTop_toBottomOf="@id/addstock_history_flow"
+        app:layout_constraintBottom_toTopOf="@id/add_stock_but1">
+    </ListView>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/add_stock_but2"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/add_stock_but1"
+        android:text="完成添加"
+        android:textSize="20dp"
+        android:background="@drawable/search_background"/>
+    <Button
+        android:id="@+id/add_stock_but1"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/add_stock_but2"
+        app:layout_constraintTop_toTopOf="@id/add_stock_but2"
+        app:layout_constraintBottom_toBottomOf="@id/add_stock_but2"
+        android:text="继续添加"
+        android:textSize="20dp"
+        android:background="@drawable/search_background"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:orientation="vertical">-->
+
+<!--    <include layout="@layout/title_layout"></include>-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/top_Tab1"-->
+<!--        android:visibility="gone"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:paddingTop="10dp"-->
+<!--        android:paddingBottom="10dp"-->
+<!--        android:orientation="horizontal">-->
+<!--        <TextView-->
+<!--            android:id="@+id/top_tab1"-->
+<!--            style="@style/topTabText"-->
+<!--            android:text="@string/sear_tab1"/>-->
+<!--        <TextView-->
+<!--            android:id="@+id/top_tab2"-->
+<!--            style="@style/topTabText"-->
+<!--            android:text="@string/sear_tab2"/>-->
+<!--        <TextView-->
+<!--            android:id="@+id/top_tab3"-->
+<!--            style="@style/topTabText"-->
+<!--            android:text="@string/sear_tab3"/>-->
+<!--    </LinearLayout>-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/top_Tab2"-->
+<!--        android:visibility="gone"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:paddingTop="10dp"-->
+<!--        android:paddingBottom="10dp"-->
+<!--        android:orientation="horizontal">-->
+<!--        <TextView-->
+<!--            android:id="@+id/top_tab4"-->
+<!--            style="@style/topTabText"-->
+<!--            android:text="持仓搜索"/>-->
+<!--        <TextView-->
+<!--            android:id="@+id/top_tab5"-->
+<!--            style="@style/topTabText"-->
+<!--            android:text="板块搜索"/>-->
+<!--    </LinearLayout>-->
+
+<!--    <androidx.viewpager.widget.ViewPager-->
+<!--        android:id="@+id/vPager"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_weight="1" />-->
+
+<!--</LinearLayout>-->

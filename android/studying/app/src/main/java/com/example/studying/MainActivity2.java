@@ -73,6 +73,8 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
     private    ArrayList<FundHeavyInfo> temp;
     private ArrayList<Stock> stockList=new ArrayList<Stock>();
     private ArrayList<String> typeList=new ArrayList<String>();
+    private ArrayList<Stock> stockListNormal=new ArrayList<Stock>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,10 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         Intent intent = this.getIntent();
         stockList = (ArrayList<Stock>) intent.getSerializableExtra("stockList");
         typeList = (ArrayList<String>) intent.getSerializableExtra("typeList");
+        if((ArrayList<Stock>) intent.getSerializableExtra("stockListProrated")!=null){
+            stockList = (ArrayList<Stock>) intent.getSerializableExtra("stockListProrated");
+        }
+
         initData();
 
         mViewPager.setCurrentItem(i);
@@ -106,6 +112,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         }
         else if(typeList!=null){
 
+            System.out.println(2222222);
             System.out.println(typeList.get(0));
             selectTab(3);
         }
@@ -117,7 +124,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         searchFragment1=new SearchFragment1();
         searchFragment2=new SearchFragment2();
 //        searchFragment3_1=new SearchFragment3_1(stockList);
-        searchFragment3_1=new SearchFragment3_1();
+        searchFragment3_1=new SearchFragment3_1(stockList);
         searchFragment3_2=new SearchFragment3_2(typeList);
         searchFragment3_10=new SearchFragment3_10();
 
@@ -387,8 +394,20 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                         Looper.loop();
                     }
                 });
-                searchFragment1.fundSearchResult();
-                searchFragment1.update(fundInfoList);
+                Thread closeActivity = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(1000);
+                            searchFragment1.fundSearchResult();
+                            searchFragment1.update(fundInfoList);
+                            // Do some stuff
+                        } catch (Exception e) {
+                            e.getLocalizedMessage();
+                        }
+                    }});
+                closeActivity.run();
+
             }
         });
     }
@@ -440,10 +459,24 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                             System.out.println("这上面是 股票的代码、名字、板块集、股价、热度");
                         }
                         Looper.prepare();
+                        stockListNormal=stockBeanList;
                         Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
                         Looper.loop();
                     }
                 });
+                Thread closeActivity = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(1000);
+                            //searchFragment2.fundSearchResult();
+                            searchFragment2.update(stockListNormal);
+                            // Do some stuff
+                        } catch (Exception e) {
+                            e.getLocalizedMessage();
+                        }
+                    }});
+                closeActivity.run();
             }
         });
     }

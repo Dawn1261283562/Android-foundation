@@ -424,8 +424,20 @@ public class addStockActivity extends AppCompatActivity {
                         }
                     }
                 });
-                fundSearchResult();
-                hasSelectedUpdate();
+                Thread closeActivity = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(1000);
+                            fundSearchResult();
+                            hasSelectedUpdate();
+                            // Do some stuff
+                        } catch (Exception e) {
+                            e.getLocalizedMessage();
+                        }
+                    }});
+                closeActivity.run();
+
             }
         });
     }

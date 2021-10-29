@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.Call;
@@ -44,22 +45,23 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
 
     private FundAdapter fundAdapter;
     private FlowLayout flowLayout;
-    private FlowLayout.Adapter flowAdapter;
     private ArrayList<String> strList;
     private LayoutInflater layoutInflater;
     private Button addBtn;
     private Button searchBtn;
     private Button prorateBtn;
     private Button checkProBtn;
-    private ArrayList<Stock> stockList;
-    private List<FundGeneral> fundGeneralList;
+    private ArrayList<Stock> stockList=new ArrayList<Stock>();
+    private List<FundGeneral> fundGeneralList=new ArrayList<>();
+    private ArrayList<FundHeavy> fundHeavyList=new ArrayList<FundHeavy>();
+
     private ListView listView;
+    private FlowLayout.Adapter flowAdapter;
 
-
-    /*public SearchFragment3_1(ArrayList<Stock> stockList) {
+    public SearchFragment3_1(ArrayList<Stock> stockList) {
         System.out.println(stockList);
         this.stockList=stockList;
-    }*/
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -78,8 +80,6 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
     }
 
     private void initData() {
-        stockList=new ArrayList<Stock>();
-        fundGeneralList=new ArrayList<>();
         fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
         listView.setAdapter(fundAdapter);
         strList = new ArrayList<>();
@@ -92,7 +92,7 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
             @Override
             public View getView(int position, ViewGroup parent) {
                 View view = layoutInflater.inflate(R.layout.flow_item3_1,parent,false);
-                // 给View设置margin
+                // 给 View 设置 margin
                 ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(view.getLayoutParams());
                 mlp.setMargins(5, 5, 5, 5);
                 view.setLayoutParams(mlp);
@@ -105,6 +105,7 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
                         if ((event.getX() > textView.getWidth()-drawable.getIntrinsicWidth()-textView.getPaddingRight())
                                 &&(event.getX() < textView.getWidth()-textView.getPaddingRight())){
                             strList.remove(position);
+                            stockList.remove(position);
                             flowLayout.setAdapter(flowAdapter);
                         }
                         return false;
@@ -121,30 +122,27 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
             @Override
             public void onClick(View view) {
 
-                /*
-                这里不知道干嘛stockList是空的
-                */
                 Intent intent = new Intent();
                 Bundle bundle=new Bundle();
                 bundle.putSerializable("stockList3_1",stockList);
                 intent.putExtras(bundle);
                 intent.setClass(getActivity(),addStockActivity.class);
 
-                if(null==stockList) {
-                    stockList = new ArrayList<Stock>();
-                }
+                if(stockList==null)stockList=new ArrayList<Stock>();
 //                Stock temp =new Stock();temp.setId("写死的假股票");
 //                temp.setName("每次添加");
 //                temp.setPrice("测试用例用于");
 //                stockList.add(temp);
                 startActivityForResult(intent,31);
+
             }
         });
-
         searchBtn.setOnClickListener(new View.OnClickListener() {
+
 
             @Override
             public void onClick(View v) {
+
                 String url = "http://localhost:8080/user/lgoin";
                 //url = "http://43m486x897.yicp.fun/fundHeavy/getListByStockList?num=4&stockIdList=000001.SZ,000858.SZ,002475.SZ,002050.SZ";
                 url = "http://43m486x897.yicp.fun/fundHeavy/getListByStockList?num=";
@@ -162,6 +160,11 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
                 }
 
                 //请求传入的参数
+//                Vector<Thread>threadVector=new Vector<Thread>();
+//                Thread childThread =new Thread(new Runnable()){
+//
+//                }
+
                 RequestBody requestBody = new FormBody.Builder().build();
                 HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
                     @Override
@@ -199,12 +202,28 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
                             System.out.println(userBean.hits);
                             System.out.println("这上面是 基金代码、名字、评分、十股票代码、十股票比例、二号股票比例、热度");
                         }
+                        fundHeavyList=userBeanList;
                         Looper.prepare();
+
                         System.out.println(data);
                         Toast.makeText(getActivity(), strByJson, Toast.LENGTH_SHORT).show();
                         Looper.loop();
                     }
                 });
+                Thread closeActivity = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(1450);
+                            hasSelectedUpdate();
+                            // Do some stuff
+                        } catch (Exception e) {
+                            e.getLocalizedMessage();
+                        }
+                    }});
+                closeActivity.run();
+                //fundSearchResult();
+
             }
         });
         prorateBtn.setOnClickListener(new View.OnClickListener(){
@@ -219,14 +238,14 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
                     }
                 }
 
-                Stock stock=new Stock();
-                stock.setExpectRadio(1);
-                stock.setName("平安银行");
-                stock.setHits(23);
-                stock.setId("000001.sz");
-                stock.setPrice("343");
-                stock.setType("w2e");
-                stockList.add(stock);
+//                Stock stock=new Stock();
+//                stock.setExpectRadio(1);
+//                stock.setName("平安银行");
+//                stock.setHits(23);
+//                stock.setId("000001.sz");
+//                stock.setPrice("343");
+//                stock.setType("w2e");
+//                stockList.add(stock);
                 Intent intent=new Intent();
                 Bundle bundle=new Bundle();
                 bundle.putSerializable("stockListToProrate",stockList);
@@ -237,9 +256,40 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
         });
     }
 
+
+    private void hasSelectedUpdate() {
+    /*FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
+        fundGeneralList.add(fundGeneral1);*/
+
+        System.out.println(123321);
+        fundGeneralList.clear();
+        //        FundGeneral fundGeneral=new FundGeneral("000001.SZ","平安银行","20.04");
+//        fundGeneralList.add(fundGeneral);
+        int size = fundHeavyList.size();
+        for (int i = 0; i < size; i++) {
+            FundHeavy value = fundHeavyList.get(i);
+            FundGeneral fundGeneral1=new FundGeneral((String) value.getId(),(String) value.getName(),(String) value.getScore());
+            fundGeneral1.setFundHeavy(value);
+            fundGeneralList.add(fundGeneral1);
+        }
+
+//        listView.setAdapter(new FundAdapter(addStockActivity.this,R.layout.fund_item,fundGeneralList));
+
+        //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
+//        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
+//
+//        listView = (ListView) mView.findViewById(R.id.list_search2);
+//        listView.setAdapter(fundAdapter);
+
+        //BB.performClick();
+        System.out.println(fundGeneralList.size());
+        fundAdapter.notifyDataSetChanged();
+    }
+
     private void initViews() {
         addBtn =(Button)mView.findViewById(R.id.frag3_1_but1);
         searchBtn=(Button)mView.findViewById(R.id.frag3_1_but2);
+        prorateBtn=(Button)mView.findViewById(R.id.prorate_but);
         prorateBtn=(Button)mView.findViewById(R.id.prorate_but);
         checkProBtn=(Button)mView.findViewById(R.id.check_prorate);
         listView = (ListView) mView.findViewById(R.id.list_search3_1);
@@ -255,22 +305,42 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
                     Bundle bundle=data.getExtras();
                     stockList=(ArrayList<Stock>) bundle.getSerializable("stockListAdd");
 
-                    if(null!=stockList){
-                        for(int a=0;a<stockList.size();a++){
-                            Log.d("yyyyyyyyyyyy", stockList.get(a).getName().toString());
-                        }
-                    }
+                    stockList =stockListDuplicatesRemove(stockList);
+
                     //获取用户选择的股票
                     stockSlected();
                 }
+                break;
             case 32:
-                if (resultCode == Activity.RESULT_OK) {
+                if(resultCode==Activity.RESULT_OK){
                     Bundle bundle=data.getExtras();
                     stockList=(ArrayList<Stock>) bundle.getSerializable("stockListProrated");
+
+                    stockList =stockListDuplicatesRemove(stockList);
+
+                    //获取用户选择的股票
+                    stockSlected();
                 }
-                break;
             default:
         }
+    }
+
+    private ArrayList<Stock> stockListDuplicatesRemove(ArrayList<Stock> stockList){
+        HashMap<String,Stock> stockMap=new HashMap<>() ;
+
+        for(int k=stockList.size()-1;k>=0;k--){
+
+            stockMap.put(stockList.get(k).getName().toString(),stockList.get(k)) ;
+        }
+        ArrayList<Stock> stockListNew=new ArrayList<Stock>();
+
+        for (Stock value : stockMap.values()) {
+            stockListNew.add(value);
+        }
+
+
+        stockList=stockListNew;
+        return stockList;
     }
 
     private void stockSlected() {
@@ -299,9 +369,7 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
 //        fundGeneralList.add(fundGeneral1);
 //        FundGeneral fundGeneral2=new FundGeneral("000001.SZ","平安银行平安银行平安银行平安银行","张三");
 //        fundGeneralList.add(fundGeneral2);
-        if(null==stockList) {
-            stockList = new ArrayList<Stock>();
-        }
+        if(stockList==null)stockList=new ArrayList<Stock>();
         int size = stockList.size();
         System.out.println(12);
         System.out.println(size);
