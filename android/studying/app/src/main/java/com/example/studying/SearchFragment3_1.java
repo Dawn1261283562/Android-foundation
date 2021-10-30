@@ -347,7 +347,6 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
         addBtn =mView.findViewById(R.id.frag3_1_but1);
         searchBtn=mView.findViewById(R.id.frag3_1_but2);
         prorateBtn=mView.findViewById(R.id.prorate_but);
-        prorateBtn=mView.findViewById(R.id.prorate_but);
         checkProBtn=mView.findViewById(R.id.check_prorate);
         listView =  mView.findViewById(R.id.list_search3_1);
         flowLayout = mView.findViewById(R.id.flowlayout3_1);
@@ -380,6 +379,7 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
                     //获取用户选择的股票
                     stockSlected();
                 }
+                break;
             default:
         }
     }
