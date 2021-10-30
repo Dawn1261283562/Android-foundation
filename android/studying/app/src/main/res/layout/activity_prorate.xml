@@ -13,12 +13,33 @@
         android:id="@+id/prorate_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
-    <Button
-        android:id="@+id/but_prorateback"
+        android:layout_weight="1"
+        android:layout_marginBottom="5dp"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:text="完成分配"/>
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp">
+        <Button
+            android:id="@+id/but_defaultratio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="5dp"
+            android:textSize="20sp"
+            android:text="默认比例"
+            android:background="@drawable/search_background"/>
+        <Button
+            android:id="@+id/but_prorateback"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="5dp"
+            android:textSize="20sp"
+            android:text="完成分配"
+            android:background="@drawable/search_background"/>
+    </LinearLayout>
 
 </LinearLayout>

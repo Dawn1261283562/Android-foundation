@@ -41,7 +41,6 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
     private View mView;
 
     private FlowLayout flowLayout;
-    private ArrayList<String> strList;
     private LayoutInflater layoutInflater;
     private ArrayList<String> typeList;
     private Button addBtn;
@@ -66,11 +65,7 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
         initEvents();
         initData();
 
-        //获取用户选择的板块
-        sectorSelected();
-
-        //获取持仓搜索结果
-        fundSearchResult();
+        fundSearchResult();//获取持仓搜索结果
         return mView;
     }
 
@@ -78,12 +73,12 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
         fundGeneralList=new ArrayList<>();
         fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
         listView.setAdapter(fundAdapter);
-        strList = new ArrayList<>();
+        typeList = new ArrayList<>();
 
         flowAdapter=new FlowLayout.Adapter() {
             @Override
             public int getCount() {
-                return strList.size();
+                return typeList.size();
             }
 
             @Override
@@ -94,14 +89,14 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
                 mlp.setMargins(5, 5, 5, 5);
                 view.setLayoutParams(mlp);
                 TextView textView= (TextView)view.findViewById(R.id.flow_text3_1);
-                textView.setText(strList.get(position));
+                textView.setText(typeList.get(position));
                 textView.setOnTouchListener(new View.OnTouchListener(){
                     @Override
                     public boolean onTouch(View v, MotionEvent event){
                         Drawable drawable=textView.getCompoundDrawables()[2];
                         if ((event.getX() > textView.getWidth()-drawable.getIntrinsicWidth()-textView.getPaddingRight())
                                 &&(event.getX() < textView.getWidth()-textView.getPaddingRight())){
-                            strList.remove(position);
+                            typeList.remove(position);
                             flowLayout.setAdapter(flowAdapter);
                         }
                         return false;
@@ -124,18 +119,6 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
         layoutInflater = LayoutInflater.from(getContext());
 
     }
-
-    private void sectorSelected() {
-        strList = new ArrayList<>();
-        strList.add("今天好冷好冷好冷");
-        strList.add("好冷好冷好冷好冷好冷好冷");
-        strList.add("好冷好冷好冷");
-        strList.add("好冷好冷好冷好冷好冷好冷好冷好冷好冷");
-        strList.add("好冷好冷好冷");
-
-        flowLayout.setAdapter(flowAdapter);
-    }
-
 
 
     private void fundSearchResult(){
@@ -178,7 +161,7 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
 //                temp.setPrice("测试用例用于");
 //                stockList.add(temp);
                 //startActivity(intent);
-                startActivityForResult(intent,31);
+                startActivityForResult(intent,33);
             }
         });
 
@@ -297,39 +280,18 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode){
-            case 31:
+            case 33:
                 if(resultCode== Activity.RESULT_OK){
                     Bundle bundle=data.getExtras();
                     typeList=(ArrayList<String>) bundle.getSerializable("typeListAdd");
 
                     typeList =typeListDuplicatesRemove(typeList);
 
-                    //获取用户选择的股票
-                    typeSlected();
+                    flowLayout.setAdapter(flowAdapter);
                 }
                 break;
             default:
         }
-    }
-
-    private void typeSlected() {
-        strList = new ArrayList<>();
-        for(String type:typeList){
-            strList.add(type.toString());
-        }
-        /*strList.add("阿里巴巴");
-        strList.add("阿巴阿巴");
-        strList.add("阿巴巴巴巴");
-        strList.add("阿里巴巴阿里巴巴阿里巴巴阿里巴巴阿里巴巴阿里巴巴");
-        strList.add("阿巴阿巴阿巴");
-        strList.add("阿巴阿");
-        strList.add("阿巴阿巴");
-        strList.add("阿巴阿巴");
-        strList.add("阿巴阿巴");
-        strList.add("巴阿巴");
-        strList.add("阿巴阿");*/
-
-        flowLayout.setAdapter(flowAdapter);
     }
 
     private ArrayList<String> typeListDuplicatesRemove(ArrayList<String> typeList){
