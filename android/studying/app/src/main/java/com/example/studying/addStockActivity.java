@@ -255,7 +255,7 @@ public class addStockActivity extends AppCompatActivity {
     private void initViews() {
         editText=findViewById(R.id.search_edit1);
         searchBut=findViewById(R.id.search_but1);
-        listView = findViewById(R.id.list_search3_2_2);
+        listView = findViewById(R.id.list_search3_1_2);
         addMoreBut= findViewById(R.id.add_stock_but1);
         finishAddBut=findViewById(R.id.add_stock_but2);
         deleteAllHisBut=findViewById(R.id.delete_all_history);

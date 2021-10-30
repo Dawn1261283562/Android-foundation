@@ -265,10 +265,13 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
 
             }
         });
+
         prorateBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                checkProBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox2));
+                if(checkProBtn.getBackground().getConstantState().equals(getResources().getDrawable(R.mipmap.checkbox1).getConstantState())){
+                    checkProBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox2));
+                }
                 /*
                 这里不知道干嘛stockList是空的，null
                 */

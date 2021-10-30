@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -16,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -24,6 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -49,7 +53,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class addTypeActivity extends FragmentActivity implements View.OnClickListener {
+public class addTypeActivity extends AppCompatActivity {
     private String setOfAllType="2025规划,3D玻璃,3D打印,3D摄像头,5G概念,6G概念,AB股,AH股,C2M概念,CAR-T细胞疗法,CRO,EDA概念," +
             "eSIM,ETC,GDR,HIT电池,HS300_,IPO受益,IPv6,LED,MicroLED,MiniLED,MLCC,MSCI中国,NFT概念,OLED,PCB,PPP模式,QFII重仓," +
             "RCEP概念,RCS概念,REITs概念,ST股,UWB概念,VPN,WiFi,阿里概念,阿兹海默,白酒,百度概念,半导体,保险业,北斗导航,北交所概念,北京冬奥," +
@@ -83,46 +87,20 @@ public class addTypeActivity extends FragmentActivity implements View.OnClickLis
             "猪肉概念,住宿业,注册制次新股,注射器概念,专精特新,专业技术服务业,专用设备制造业,转基因,转债标的,装配建筑,装卸搬运和运输代理业," +
             "资本市场服务,字节概念,综合,租赁业,租售同权";
 
+
     private EditText editText;
     private Button searchBut;
     private Button addMoreBut;
     private Button finishAddBut;
-    private ImageButton deleteAllHisBut;
 
     private String[] setOfAllTypeArray;
-    private ViewPager mViewPager;
-    private FragmentPagerAdapter mAdapter;
-    private List<Fragment> mFragments;
-    addTypeFragment addTypeFragment;
-    addStockFragment addStockFragment;
+    private ArrayList<String> typeList;
+    private ArrayList<String> selectedTypeList;
 
-    private LinearLayout mLir1;
-    private LinearLayout mLir2;
-
-    private TextView mTex1;
-    private TextView mTex2;
-    private TextView mTex3;
-    private TextView mTex4;
-    private TextView mTex5;
-
-    private TextView titleTex;
-    private ArrayList<Stock> stockList=new ArrayList<Stock>();
-    private ArrayList<Stock> stockList1=new ArrayList<Stock>();
-    private ArrayList<String> typeList=new ArrayList<String>();
-    private ArrayList<String> selectedTypeList=new ArrayList<String>();
-    private ArrayList<FundHeavyInfo> temp;
-
-    public static final String SEARCH_HISTORY = "search_history_3_2";
-
-    private List<FundGeneral> fundGeneralList=new ArrayList<>();
 
     private ListView listView;
-    private FundAdapter fundAdapter;
-    private FlowLayout flowLayout;
-    private FlowLayout.Adapter flowAdapter;
-    private LayoutInflater layoutInflater;
-    private ArrayList<String> strList;
 
+    private ArrayAdapter<String> arrayAdapter;
 
 
     @Override
@@ -130,150 +108,35 @@ public class addTypeActivity extends FragmentActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_add_type);
-        initViews();
-        initEvents();
-        initData();
 
-        searchBut=findViewById(R.id.search_but1);
-        setOfAllTypeArray= setOfAllType.split(",");
-        System.out.println("the size of setOfAllTypeArray is: "+setOfAllTypeArray.length);
-        Intent intent = this.getIntent();
-        selectedTypeList = (ArrayList<String>) intent.getSerializableExtra("typeList");
-        if(selectedTypeList==null)selectedTypeList=new ArrayList<String>();
+        initView();
+        initEvent();
+        initDate();
 
         Intent intent2=new Intent();
         Bundle bundle2=new Bundle();
         bundle2.putSerializable("typeListAdd", selectedTypeList);
         intent2.putExtras(bundle2);
         setResult(Activity.RESULT_OK,intent2);
-
-        //selectTab(1);
-        fundSearchResult();
-        getsearchHistory();
-        initbtn_login5();
-        //System.out.println(stockList);
-
     }
 
-    private void initData() {
-        fundAdapter=new FundAdapter(addTypeActivity.this,R.layout.fund_item,fundGeneralList);
-
+    private void initDate() {
         editText.setVisibility(View.VISIBLE);
         searchBut.setVisibility(View.VISIBLE);
         editText.setHint("板块名称");
-        listView.setAdapter(fundAdapter);
-        strList = new ArrayList<>();
-        flowAdapter=new FlowLayout.Adapter() {
-            @Override
-            public int getCount() {
-                return strList.size();
-            }
 
-            @Override
-            public View getView(int position, ViewGroup parent) {
-                View view = layoutInflater.inflate(R.layout.flow_item3_1,parent,false);
-                // 给 View 设置 margin
-                ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(view.getLayoutParams());
-                mlp.setMargins(5, 5, 5, 5);
-                view.setLayoutParams(mlp);
-                TextView textView= (TextView)view.findViewById(R.id.flow_text3_1);
-                textView.setText(strList.get(position));
-                textView.setOnTouchListener(new View.OnTouchListener(){
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event){
-                        Drawable drawable=textView.getCompoundDrawables()[2];
-                        if ((event.getX() > textView.getWidth()-drawable.getIntrinsicWidth()-textView.getPaddingRight())
-                                &&(event.getX() < textView.getWidth()-textView.getPaddingRight())){
-                            strList.remove(position);
+        setOfAllTypeArray= setOfAllType.split(",");
+        typeList=new ArrayList(Arrays.asList(setOfAllType.split(",")));
 
-                            SharedPreferences sp=getSharedPreferences(SEARCH_HISTORY,MODE_PRIVATE);
-                            String longhistory = sp.getString(SEARCH_HISTORY, "");
-                            String[] tmpHistory = longhistory.split(",");//用逗号拆分字符串
-                            ArrayList<String> history = new ArrayList<String>(Arrays.asList(tmpHistory));
-                            history.remove(position);
-                            if (history.size() > 0) {
-                                StringBuilder sb = new StringBuilder();
-                                for (int i = 0; i < history.size(); i++) {
-                                    sb.append(history.get(i) + ",");
-                                }
-                                sp.edit().putString(SEARCH_HISTORY, sb.toString()).commit();
-                            } else {
-                                sp.edit().clear().commit();
-                            }
-                            flowLayout.setAdapter(flowAdapter);
-                        }
-                        return false;
-                    }
-                });
-                return view;
-            }
-        };
-        flowLayout.setAdapter(flowAdapter);
+        Bundle bundle=getIntent().getExtras();
+        selectedTypeList = (ArrayList<String>) bundle.getSerializable("typeList");
+        if(selectedTypeList==null)selectedTypeList=new ArrayList<String>();
+
+        arrayAdapter=new ArrayAdapter<String>(this,R.layout.type_item,R.id.type_text,typeList);
+        listView.setAdapter(arrayAdapter);
     }
 
-    private void getsearchHistory() {
-        SharedPreferences sp = getSharedPreferences(SEARCH_HISTORY, 0);
-        String longhistory = sp.getString(SEARCH_HISTORY, "");
-        String[] hisArrays = longhistory.split(",");
-        if (hisArrays[0]=="") {
-            return;
-        }
-        strList = new ArrayList<>();
-        for (int i = 0; i < hisArrays.length; i++) {
-            strList.add(hisArrays[i]);
-        }
-        flowLayout.setAdapter(flowAdapter);
-    }
-
-//    private void initData() {
-//        mFragments = new ArrayList<>();
-//
-//
-//        mFragments.add(new addTypeFragment());
-//
-//        addTypeFragment= (addTypeFragment)mFragments.get(0);
-//
-//
-//        //初始化适配器
-//        mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-//            @Override
-//            public Fragment getItem(int position) {//从集合中获取对应位置的Fragment
-//                return mFragments.get(position);
-//            }
-//
-//            @Override
-//            public int getCount() {//获取集合中Fragment的总数
-//                return mFragments.size();
-//            }
-//        };
-//        //设置ViewPager的适配器
-//        mViewPager.setAdapter(mAdapter);
-//        //设置ViewPager的切换监听
-//        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            //页面滚动事件
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            //页面选中事件
-//            @Override
-//            public void onPageSelected(int position) {
-//                //设置position对应的集合中的Fragment页面
-//                mViewPager.setCurrentItem(position);
-//                resetTab();
-//                selectTab(position);
-//            }
-//
-//            @Override
-//            //页面滚动状态改变事件
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
-//    }
-
-    private void initEvents() {
+    private void initEvent() {
         editText.setOnKeyListener(new View.OnKeyListener(){
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent keyEvent) {
@@ -286,42 +149,49 @@ public class addTypeActivity extends FragmentActivity implements View.OnClickLis
                 return false;
             }
         });
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                arrayAdapter.getFilter().filter(charSequence);
+                String wanted= charSequence.toString();
 
+                ArrayList<String>selectedTypeList=new ArrayList<String>();
+                for(int j=0;j<setOfAllTypeArray.length;j++){
+                    if(setOfAllTypeArray[j].contains(wanted)){
+                        selectedTypeList.add(setOfAllTypeArray[j]);
+                    }
+                }
+                typeList.clear();
+                typeList.addAll(selectedTypeList);
+                arrayAdapter.notifyDataSetChanged();
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                FundGeneral fundGeneral =fundGeneralList.get(i);
-                System.out.println(122);
-                //fundSearchResult();
-                //fundAdapter.notifyDataSetChanged();
-                //FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
-                //fundGeneralList.add(fundGeneral1);
-/*                stockList.add( fundGeneral.getStock());
-
-                Intent intent = new Intent();
-
-                intent.setClass(addStockActivity.this,MainActivity2.class);*/
-
-                if(fundGeneralList.get(i).getSelectFund()){
-                    fundGeneralList.get(i).setSelectFund(false);
-                    selectedTypeList.remove(fundGeneral.getType());
-                    System.out.println(1223);
-                }
-                else{
-                    fundGeneralList.get(i).setSelectFund(true);
-                    selectedTypeList.add(fundGeneral.getType());
-                    System.out.println(1224);
-                    if(selectedTypeList!=null) {
-                        System.out.println(selectedTypeList.size());
-                        for(int j=0;j<selectedTypeList.size();j++){
-                            System.out.println(selectedTypeList.get(j));
-                        }
+                String typeSelected=typeList.get(i);
+                boolean hasSelect=false;
+                for(int j=0;j<selectedTypeList.size();j++){
+                    if(selectedTypeList.get(j)==typeSelected){
+                        hasSelect=true;
+                        Toast.makeText(getApplicationContext(),"板块已添加",Toast.LENGTH_SHORT).show();
+                        break;
                     }
                 }
-                fundAdapter.notifyDataSetChanged();
+                if(!hasSelect){
+                    selectedTypeList.add(typeSelected);
+                    Toast.makeText(getApplicationContext(),"添加成功！",Toast.LENGTH_SHORT).show();
+                }
+
+//                flowAdapter.notifyDataSetChanged();
             }
         });
-
         addMoreBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -335,183 +205,20 @@ public class addTypeActivity extends FragmentActivity implements View.OnClickLis
         finishAddBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent();
-//                Bundle bundle=new Bundle();
-//                bundle.putSerializable("typeList",typeList);
-//                intent.putExtras(bundle);
-//                intent.setClass(addTypeActivity.this,MainActivity2.class);
                 finish();
             }
         });
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                FundGeneral fundGeneral =fundGeneralList.get(i);
-//                System.out.println(122);
-//
-//                stockList.add(fundGeneral.getStock());
-//
-//                fundAdapter.notifyDataSetChanged();
-//            }
-//        });
-
-        deleteAllHisBut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences sp=getSharedPreferences(SEARCH_HISTORY,MODE_PRIVATE);
-                strList.clear();
-                sp.edit().clear().commit();
-                flowLayout.setAdapter(flowAdapter);
-            }
-        });
     }
-//    private void initEvents() {
-//        //设置3个按钮的点击事件
-//        mTex1.setOnClickListener(this);
-//        mTex2.setOnClickListener(this);
-//        mTex3.setOnClickListener(this);
-//        mTex4.setOnClickListener(this);
-//        mTex5.setOnClickListener(this);
-//    }
 
-    private void initViews() {
+    private void initView() {
         editText=findViewById(R.id.search_edit1);
         searchBut=findViewById(R.id.search_but1);
-        listView = findViewById(R.id.list_search3_2_2);
         addMoreBut= findViewById(R.id.add_stock_but1);
         finishAddBut=findViewById(R.id.add_stock_but2);
-        deleteAllHisBut=findViewById(R.id.delete_all_history);
-        flowLayout = findViewById(R.id.addstock_history_flow);
-        layoutInflater = LayoutInflater.from(this);
 
-//        mViewPager = (ViewPager) findViewById(R.id.vPager);
-//
-//        mLir1 = (LinearLayout) findViewById(R.id.top_Tab1);
-//        mLir2 = (LinearLayout) findViewById(R.id.top_Tab2);
-//
-//        mTex1 = (TextView) findViewById(R.id.top_tab1);
-//        mTex2 = (TextView) findViewById(R.id.top_tab2);
-//        mTex3 = (TextView) findViewById(R.id.top_tab3);
-//        mTex4 = (TextView) findViewById(R.id.top_tab4);
-//        mTex5 = (TextView) findViewById(R.id.top_tab5);
-//
-//        editText=(EditText)findViewById(R.id.search_edit1);
-//        searchBut=findViewById(R.id.search_but1);
-//        titleTex = (TextView) findViewById(R.id.title_text);
+        listView = findViewById(R.id.list_search3_2_2);
     }
 
-    @Override
-    public void onClick(View v) {
-        setTab(v.getId());
-    }
-
-    private void setTab(int i){
-        resetTab();
-
-        switch (i) {
-
-            case R.id.top_tab2:
-                selectTab(1);
-                break;
-
-
-
-        }
-    }
-
-    private void selectTab(int i) {
-//        switch (i) {
-//
-//            case 1:
-//                mLir1.setVisibility(View.VISIBLE);
-//                mLir2.setVisibility(View.GONE);
-//                mTex2.setTextColor(Color.parseColor("#FF0000"));
-//                editText.setHint("股票名称");
-//                editText.setVisibility(View.VISIBLE);
-//                searchBut.setVisibility(View.VISIBLE);
-//                titleTex.setVisibility(View.GONE);
-//                initbtn_login5();
-//                break;
-//
-//        }
-//        //设置当前点击的Tab所对应的页面
-//        mViewPager.setCurrentItem(i);
-    }
-
-    //设置默认的tab的图标
-    private void resetTab() {
-        mTex2.setTextColor(Color.parseColor("#000000"));
-    }
-
-
-
-
-
-    private void initbtn_login5() {
-        searchBut.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                String wanted= editText.getText().toString();
-
-
-                ArrayList<String>selectedTypeList=new ArrayList<String>();
-
-                for(int i=0;i<setOfAllTypeArray.length;i++){
-                    if(setOfAllTypeArray[i].contains(wanted)){
-                        selectedTypeList.add(setOfAllTypeArray[i]);
-                    }
-                }
-                typeList=selectedTypeList;
-
-
-                fundSearchResult();
-                //hasSelectedUpdate();
-//                addTypeFragment.update(selectedTypeList);
-//                addTypeFragment.hasSelectedUpdate(typeList);
-            }
-        });
-    }
-
-    private void fundSearchResult() {
-        /*FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
-        fundGeneralList.add(fundGeneral1);*/
-
-        System.out.println(123321);
-        fundGeneralList.clear();
-//        FundGeneral fundGeneral=new FundGeneral("000001.SZ","平安银行","20.04");
-//        fundGeneralList.add(fundGeneral);
-        int size = typeList.size();
-        for (int i = 0; i < size; i++) {
-            String value = typeList.get(i);
-            FundGeneral fundGeneral1=new FundGeneral("0",value,"0");
-            fundGeneral1.setType(value);
-            fundGeneralList.add(fundGeneral1);
-        }
-
-//        listView.setAdapter(new FundAdapter(addStockActivity.this,R.layout.fund_item,fundGeneralList));
-
-        //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
-//        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
-//
-//        listView = (ListView) mView.findViewById(R.id.list_search2);
-//        listView.setAdapter(fundAdapter);
-
-        //BB.performClick();
-        System.out.println(fundGeneralList.size());
-        fundAdapter.notifyDataSetChanged();
-    }
-
-//    private void hasSelectedUpdate() {
-//        System.out.println(123321);
-//        int size = stockList.size();
-//        for (int i = 0; i < size; i++) {
-//            Stock value = stockList.get(i);
-//            System.out.println(value.getName());
-//        }
-//        System.out.println(123321);
-//    }
     public void clickBack(View view){
         switch (view.getId()){
             case R.id.back_icon:
