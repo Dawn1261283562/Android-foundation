@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Studying">
         <activity
+            android:name=".AddCompanyActivity"
+            android:exported="true" />
+        <activity
             android:name=".ProrateActivity"
             android:exported="true" />
 

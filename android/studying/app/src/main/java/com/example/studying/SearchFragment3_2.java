@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,11 +46,15 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
     private ArrayList<String> typeList;
     private Button addBtn;
     private Button searchBtn;
+    private Button addCompanyBtn;
+    private  TextView textCompany;
+    private ImageButton checkComBtn;
     private FundAdapter fundAdapter;
     private ListView listView;
     private List<FundGeneral> fundGeneralList;
     private FlowLayout.Adapter flowAdapter;
     private ArrayList<FundHeavy> fundHeavyList=new ArrayList<FundHeavy>();
+    private String companySelected;
 
     public SearchFragment3_2(ArrayList<String> typeList) {
         System.out.println(typeList);
@@ -74,6 +79,8 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
         fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
         listView.setAdapter(fundAdapter);
         typeList = new ArrayList<>();
+        companySelected="";
+        textCompany.setVisibility(View.GONE);
 
         layoutInflater = LayoutInflater.from(getContext());
         flowAdapter=new FlowLayout.Adapter() {
@@ -110,11 +117,43 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
     }
 
     private void initEvents() {
+        addCompanyBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                if(checkComBtn.getBackground().getConstantState().equals(getResources().getDrawable(R.mipmap.checkbox1).getConstantState())){
+                    checkComBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox2));
+                    textCompany.setVisibility(View.VISIBLE);
+                    textCompany.setText("当前搜索公司："+companySelected);
+                }
+
+                Intent intent=new Intent(getActivity(),AddCompanyActivity.class);
+                startActivityForResult(intent,34);
+            }
+        });
+        checkComBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox1));
+        checkComBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(checkComBtn.getBackground().getConstantState().equals(getResources().getDrawable(R.mipmap.checkbox1).getConstantState())){
+                    checkComBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox2));
+                    textCompany.setVisibility(View.VISIBLE);
+                    textCompany.setText("当前搜索公司："+companySelected);
+
+                }
+                else{
+                    checkComBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox1));
+                    textCompany.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     private void initViews() {
         addBtn =(Button)mView.findViewById(R.id.frag3_2_but1);
         searchBtn=(Button)mView.findViewById(R.id.frag3_2_but2);
+        checkComBtn=mView.findViewById(R.id.check_company);
+        addCompanyBtn=mView.findViewById(R.id.add_compony_but);
+        textCompany=mView.findViewById(R.id.text_company_name);
         listView= (ListView) mView.findViewById(R.id.list_search3_2);
         flowLayout = (FlowLayout) mView.findViewById(R.id.flowlayout3_2);
     }
@@ -168,6 +207,19 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
 
             @Override
             public void onClick(View v) {
+                if(checkComBtn.getBackground().getConstantState().equals(getResources().getDrawable(R.mipmap.checkbox1).getConstantState())){
+                    //普通搜索，不进行公司的板块搜索
+                }
+                else{
+                    if(companySelected.equals("")){
+                        Toast.makeText(getActivity(),"您还没有选择公司",Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        //进行公司板块搜索
+                    }
+                }
+
+
                 String url = "http://localhost:8080/user/lgoin";
                 url = "http://43m486x897.yicp.fun/fundHeavy/getListByStockAllTypeRadio?num=2&TypeList=军工,计算机";
                 url = "http://43m486x897.yicp.fun/fundHeavy/getListByStockAllTypeRadio?num=";
@@ -277,16 +329,25 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
         switch (requestCode){
             case 33:
                 if(resultCode== Activity.RESULT_OK){
-                    Bundle bundle=data.getExtras();
+                    Bundle bundle=intent.getExtras();
                     typeList=(ArrayList<String>) bundle.getSerializable("typeListAdd");
 
                     typeList =typeListDuplicatesRemove(typeList);
 
                     flowLayout.setAdapter(flowAdapter);
+                }
+                break;
+            case 34:
+                if(resultCode==Activity.RESULT_OK){
+                    String temp= intent.getExtras().getString("companySelected");
+                    if(!temp.equals("")) {
+                        companySelected = temp;
+                        textCompany.setText("当前搜索公司："+companySelected);
+                    }
                 }
                 break;
             default:
