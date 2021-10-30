@@ -207,8 +207,11 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
 
             @Override
             public void onClick(View v) {
+                int checkboxFlag=1;
+
                 if(checkComBtn.getBackground().getConstantState().equals(getResources().getDrawable(R.mipmap.checkbox1).getConstantState())){
                     //普通搜索，不进行公司的板块搜索
+                    checkboxFlag=1;
                 }
                 else{
                     if(companySelected.equals("")){
@@ -216,25 +219,47 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
                     }
                     else{
                         //进行公司板块搜索
+                        checkboxFlag=2;
                     }
                 }
-
-
                 String url = "http://localhost:8080/user/lgoin";
-                url = "http://43m486x897.yicp.fun/fundHeavy/getListByStockAllTypeRadio?num=2&TypeList=军工,计算机";
-                url = "http://43m486x897.yicp.fun/fundHeavy/getListByStockAllTypeRadio?num=";
-                String urlNext ="&TypeList=";
-                int num=typeList.size();
-                url=url+num+urlNext;
-                for(int i=0;i<num;i++){
-                    String id=typeList.get(i).toString();
-                    if(i!=num-1){
-                        url=url+id+',';
-                    }
-                    else{
-                        url=url+id;
+                if(checkboxFlag==1){
+                    url = "http://43m486x897.yicp.fun/fundHeavy/getListByStockAllTypeRadio?num=2&TypeList=军工,计算机";
+                    url = "http://43m486x897.yicp.fun/fundHeavy/getListByStockAllTypeRadio?num=";
+                    String urlNext ="&TypeList=";
+                    int num=typeList.size();
+                    url=url+num+urlNext;
+                    for(int i=0;i<num;i++){
+                        String id=typeList.get(i).toString();
+                        if(i!=num-1){
+                            url=url+id+',';
+                        }
+                        else{
+                            url=url+id;
+                        }
                     }
                 }
+                else{
+                    url = "http://43m486x897.yicp.fun/fundHeavy/getListByCompanyAndTypeRadio?num=2&TypeList=军工,计算机";
+                    url = "http://43m486x897.yicp.fun/fundHeavy/getListByCompanyAndTypeRadio?num=";
+                    String urlNext ="&TypeList=";
+                    int num=typeList.size();
+                    url=url+num+urlNext;
+                    for(int i=0;i<num;i++){
+                        String id=typeList.get(i).toString();
+                        if(i!=num-1){
+                            url=url+id+',';
+                        }
+                        else{
+                            url=url+id;
+                        }
+                    }
+                    String urlNextNext="&company="+companySelected;
+                    url=url+num+urlNextNext;
+
+                }
+
+
 
 
                 //请求传入的参数
