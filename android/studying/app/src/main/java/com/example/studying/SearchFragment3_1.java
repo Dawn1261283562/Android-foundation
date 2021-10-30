@@ -156,7 +156,7 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
                 String url = "http://localhost:8080/user/lgoin";
 
                 if(checkboxFlag==1) {
-                    System.out.println(121);
+
                     //url = "http://43m486x897.yicp.fun/fundHeavy/getListByStockList?num=4&stockIdList=000001.SZ,000858.SZ,002475.SZ,002050.SZ";
                     url = "http://43m486x897.yicp.fun/fundHeavy/getListByStockList?num=";
                     String urlNext = "&stockIdList=";
@@ -172,7 +172,7 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
                     }
                 }
                 else{
-                    System.out.println(212);
+
                     url = "http://43m486x897.yicp.fun/fundHeavy/getListByStockScore?num=";
                     String urlNext = "&stockIdList=";
                     String urlNextNext = "&stockRadioList=";
