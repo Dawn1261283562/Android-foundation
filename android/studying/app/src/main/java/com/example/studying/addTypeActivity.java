@@ -87,7 +87,6 @@ public class addTypeActivity extends AppCompatActivity {
             "猪肉概念,住宿业,注册制次新股,注射器概念,专精特新,专业技术服务业,专用设备制造业,转基因,转债标的,装配建筑,装卸搬运和运输代理业," +
             "资本市场服务,字节概念,综合,租赁业,租售同权";
 
-
     private EditText editText;
     private Button searchBut;
     private Button addMoreBut;
@@ -97,11 +96,12 @@ public class addTypeActivity extends AppCompatActivity {
     private ArrayList<String> typeList;
     private ArrayList<String> selectedTypeList;
 
-
     private ListView listView;
-
     private ArrayAdapter<String> arrayAdapter;
 
+    private FlowLayout flowLayout;
+    private FlowLayout.Adapter flowAdapter;
+    private LayoutInflater layoutInflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +134,38 @@ public class addTypeActivity extends AppCompatActivity {
 
         arrayAdapter=new ArrayAdapter<String>(this,R.layout.type_item,R.id.type_text,typeList);
         listView.setAdapter(arrayAdapter);
+
+        layoutInflater = LayoutInflater.from(getApplicationContext());
+        flowAdapter=new FlowLayout.Adapter() {
+            @Override
+            public int getCount() {
+                return selectedTypeList.size();
+            }
+
+            @Override
+            public View getView(int position, ViewGroup parent) {
+                View view = layoutInflater.inflate(R.layout.flow_item3_1,parent,false);
+                ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(view.getLayoutParams());
+                mlp.setMargins(5, 5, 5, 5);
+                view.setLayoutParams(mlp);
+                TextView textView= (TextView)view.findViewById(R.id.flow_text3_1);
+                textView.setText(selectedTypeList.get(position));
+                textView.setOnTouchListener(new View.OnTouchListener(){
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event){
+                        Drawable drawable=textView.getCompoundDrawables()[2];
+                        if ((event.getX() > textView.getWidth()-drawable.getIntrinsicWidth()-textView.getPaddingRight())
+                                &&(event.getX() < textView.getWidth()-textView.getPaddingRight())){
+                            selectedTypeList.remove(position);
+                            flowLayout.setAdapter(flowAdapter);
+                        }
+                        return false;
+                    }
+                });
+                return view;
+            }
+        };
+        flowLayout.setAdapter(flowAdapter);
     }
 
     private void initEvent() {
@@ -178,7 +210,7 @@ public class addTypeActivity extends AppCompatActivity {
                 String typeSelected=typeList.get(i);
                 boolean hasSelect=false;
                 for(int j=0;j<selectedTypeList.size();j++){
-                    if(selectedTypeList.get(j)==typeSelected){
+                    if(selectedTypeList.get(j).equals(typeSelected)){
                         hasSelect=true;
                         Toast.makeText(getApplicationContext(),"板块已添加",Toast.LENGTH_SHORT).show();
                         break;
@@ -187,6 +219,7 @@ public class addTypeActivity extends AppCompatActivity {
                 if(!hasSelect){
                     selectedTypeList.add(typeSelected);
                     Toast.makeText(getApplicationContext(),"添加成功！",Toast.LENGTH_SHORT).show();
+                    flowLayout.setAdapter(flowAdapter);
                 }
 
 //                flowAdapter.notifyDataSetChanged();
@@ -217,6 +250,7 @@ public class addTypeActivity extends AppCompatActivity {
         finishAddBut=findViewById(R.id.add_stock_but2);
 
         listView = findViewById(R.id.list_search3_2_2);
+        flowLayout = findViewById(R.id.add_type_flow);
     }
 
     public void clickBack(View view){

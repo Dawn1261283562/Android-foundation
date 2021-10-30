@@ -75,6 +75,7 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
         listView.setAdapter(fundAdapter);
         typeList = new ArrayList<>();
 
+        layoutInflater = LayoutInflater.from(getContext());
         flowAdapter=new FlowLayout.Adapter() {
             @Override
             public int getCount() {
@@ -116,8 +117,6 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
         searchBtn=(Button)mView.findViewById(R.id.frag3_2_but2);
         listView= (ListView) mView.findViewById(R.id.list_search3_2);
         flowLayout = (FlowLayout) mView.findViewById(R.id.flowlayout3_2);
-        layoutInflater = LayoutInflater.from(getContext());
-
     }
 
 
