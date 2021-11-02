@@ -11,8 +11,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -29,7 +27,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.studying.entity.FundHeavyInfo;
@@ -73,6 +70,8 @@ public class addStockActivity extends AppCompatActivity {
     private FlowLayout.Adapter flowAdapter;
     private LayoutInflater layoutInflater;
     private ArrayList<String> strList;
+
+    private double flagForChooseOrSearch=530;//中间位置
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,6 +177,8 @@ public class addStockActivity extends AppCompatActivity {
         flowLayout.setAdapter(flowAdapter);
     }
 
+
+
     private void initEvents() {
         editText.setOnKeyListener(new View.OnKeyListener(){
             @Override
@@ -192,38 +193,72 @@ public class addStockActivity extends AppCompatActivity {
             }
         });
 
+
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
                 FundGeneral fundGeneral =fundGeneralList.get(i);
                 System.out.println(122);
-                //fundSearchResult();
-                //fundAdapter.notifyDataSetChanged();
-                //FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
-                //fundGeneralList.add(fundGeneral1);
-/*                stockList.add( fundGeneral.getStock());
+                //TextView textView= (TextView)view.findViewById(R.id.flow_text_history);
+                //textView.setText(strList.get(position));
 
-                Intent intent = new Intent();
+                listView.setOnTouchListener(new View.OnTouchListener(){
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event){
+                        //Drawable drawable=textView.getCompoundDrawables()[2];
+                        System.out.println(event.getX());
+                        flagForChooseOrSearch=event.getX();
 
-                intent.setClass(addStockActivity.this,MainActivity2.class);*/
 
-                if(fundGeneralList.get(i).getSelectFund()){
-                    fundGeneralList.get(i).setSelectFund(false);
-                    stockList.remove(fundGeneral.getStock());
-                    System.out.println(1223);
-                }
-                else{
-                    fundGeneralList.get(i).setSelectFund(true);
-                    stockList.add(fundGeneral.getStock());
-                    System.out.println(1224);
-                    if(stockList!=null) {
-                        System.out.println(stockList.size());
-                        for(int j=0;j<stockList.size();j++){
-                            System.out.println(stockList.get(j).getName());
+                        return false;
+                    }
+                });
+                if(flagForChooseOrSearch>530){
+                    if(fundGeneralList.get(i).getSelectFund()){
+                        fundGeneralList.get(i).setSelectFund(false);
+                        stockList.remove(fundGeneral.getStock());
+                        System.out.println(1223);
+                    }
+                    else{
+                        fundGeneralList.get(i).setSelectFund(true);
+                        stockList.add(fundGeneral.getStock());
+                        System.out.println(1224);
+                        if(stockList!=null) {
+                            System.out.println(stockList.size());
+                            for(int j=0;j<stockList.size();j++){
+                                System.out.println(stockList.get(j).getName());
+                            }
                         }
                     }
+                    fundAdapter.notifyDataSetChanged();
                 }
-                fundAdapter.notifyDataSetChanged();
+                else{
+                    Intent intent=new Intent(addStockActivity.this,Stockinfo.class);
+                    intent.putExtra("stockGet", fundGeneral.getStock());
+                    startActivity(intent);
+                }
+
+
+//                if(fundGeneralList.get(i).getSelectFund()){
+//                    fundGeneralList.get(i).setSelectFund(false);
+//                    stockList.remove(fundGeneral.getStock());
+//                    System.out.println(1223);
+//                }
+//                else{
+//                    fundGeneralList.get(i).setSelectFund(true);
+//                    stockList.add(fundGeneral.getStock());
+//                    System.out.println(1224);
+//                    if(stockList!=null) {
+//                        System.out.println(stockList.size());
+//                        for(int j=0;j<stockList.size();j++){
+//                            System.out.println(stockList.get(j).getName());
+//                        }
+//                    }
+//                }
+//                fundAdapter.notifyDataSetChanged();
             }
         });
 

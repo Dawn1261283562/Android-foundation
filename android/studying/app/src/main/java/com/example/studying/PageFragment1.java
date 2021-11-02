@@ -36,6 +36,7 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getActivity(),MainActivity2.class);
+                //Intent intent=new Intent(getActivity(),Stockinfo.class);
                 intent.putExtra("i",0);
                 startActivity(intent);
             }

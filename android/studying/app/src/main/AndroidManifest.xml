@@ -41,6 +41,9 @@
         <activity
             android:name=".addTypeActivity"
             android:exported="true" />
+        <activity
+            android:name=".Stockinfo"
+            android:exported="true" />
     </application>
 
 </manifest>
