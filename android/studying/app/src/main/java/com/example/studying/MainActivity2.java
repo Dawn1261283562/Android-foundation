@@ -354,58 +354,65 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         ResponseBody data = response.body();
-                        //if(response.body().string()==null)return;
-                        String strByJson = response.body().string();
+                        if(response.code()==200) {
+                            //if(response.body().string()==null)return;
+                            String strByJson = response.body().string();
 
-                        JsonParser parser = new JsonParser();
-                        //将JSON的String 转成一个JsonArray对象
-                        JsonArray jsonArray = parser.parse(strByJson).getAsJsonArray();
+                            JsonParser parser = new JsonParser();
+                            //将JSON的String 转成一个JsonArray对象
+                            JsonArray jsonArray = parser.parse(strByJson).getAsJsonArray();
 
-                        Gson gson = new Gson();
+                            Gson gson = new Gson();
 
-                        ArrayList<FundHeavyInfo> fundHeavyInfoList = new ArrayList<>();
+                            ArrayList<FundHeavyInfo> fundHeavyInfoList = new ArrayList<>();
 
-                        System.out.println(strByJson);
-                        //加强for循环遍历JsonArray
+                            System.out.println(strByJson);
+                            //加强for循环遍历JsonArray
 
-                        for (JsonElement fundHeavyInfo : jsonArray) {
-                            //使用GSON，直接转成Bean对象
-                            FundHeavyInfo fundHeavyInfoBean = gson.fromJson(fundHeavyInfo, FundHeavyInfo.class);
-                            fundHeavyInfoList.add(fundHeavyInfoBean);
-                            if(fundHeavyInfoBean==null){
-                                Looper.prepare();
-                                //System.out.println(data);
-                                Toast.makeText(MainActivity2.this, "暂无相关信息", Toast.LENGTH_SHORT).show();
-                                Looper.loop();
+                            for (JsonElement fundHeavyInfo : jsonArray) {
+                                //使用GSON，直接转成Bean对象
+                                FundHeavyInfo fundHeavyInfoBean = gson.fromJson(fundHeavyInfo, FundHeavyInfo.class);
+                                fundHeavyInfoList.add(fundHeavyInfoBean);
+                                if (fundHeavyInfoBean == null) {
+                                    Looper.prepare();
+                                    //System.out.println(data);
+                                    Toast.makeText(MainActivity2.this, "暂无相关信息", Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                }
+                                System.out.println("这下面是 基金信息的代码、名字、全名、法人公司名、管理者");
+                                System.out.println(fundHeavyInfoBean.getId());
+                                System.out.println(fundHeavyInfoBean.getName());
+                                System.out.println(fundHeavyInfoBean.getFull_name());
+                                System.out.println(fundHeavyInfoBean.getLegal_person());
+                                System.out.println(fundHeavyInfoBean.getManager());
+                                System.out.println("这上面是 基金信息的代码、名字、全名、法人公司名、管理者");
                             }
-                            System.out.println("这下面是 基金信息的代码、名字、全名、法人公司名、管理者");
-                            System.out.println(fundHeavyInfoBean.getId());
-                            System.out.println(fundHeavyInfoBean.getName());
-                            System.out.println(fundHeavyInfoBean.getFull_name());
-                            System.out.println(fundHeavyInfoBean.getLegal_person());
-                            System.out.println(fundHeavyInfoBean.getManager());
-                            System.out.println("这上面是 基金信息的代码、名字、全名、法人公司名、管理者");
+                            //
+             /*       ArrayList<FundHeavyInfo> fundHeavyInfoList = new ArrayList<>();
+                    FundHeavyInfo fundHeavyInfoBean=new FundHeavyInfo();
+                    fundHeavyInfoBean.setLegal_person("aaa");
+                    fundHeavyInfoBean.setName("bbb");
+                    fundHeavyInfoBean.setManager("ccc");
+                    fundHeavyInfoBean.setId("ddd");
+                    fundHeavyInfoBean.setFull_nameame("eee");
+                    fundHeavyInfoList.add(fundHeavyInfoBean);*/
+                            temp = fundHeavyInfoList;
+                            fundInfoList = fundHeavyInfoList;
+                            //System.out.println(stockList1);
+
+
+                            //                Toast.makeText(MainActivity2.this, fundHeavyInfoList.get(0).getName(), Toast.LENGTH_SHORT).show();
+
+                            Looper.prepare();
+                            System.out.println(data);
+                            Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
+                            Looper.loop();
                         }
-                        //
-         /*       ArrayList<FundHeavyInfo> fundHeavyInfoList = new ArrayList<>();
-                FundHeavyInfo fundHeavyInfoBean=new FundHeavyInfo();
-                fundHeavyInfoBean.setLegal_person("aaa");
-                fundHeavyInfoBean.setName("bbb");
-                fundHeavyInfoBean.setManager("ccc");
-                fundHeavyInfoBean.setId("ddd");
-                fundHeavyInfoBean.setFull_nameame("eee");
-                fundHeavyInfoList.add(fundHeavyInfoBean);*/
-                        temp=fundHeavyInfoList;
-                        fundInfoList =fundHeavyInfoList;
-                        //System.out.println(stockList1);
-
-
-//                Toast.makeText(MainActivity2.this, fundHeavyInfoList.get(0).getName(), Toast.LENGTH_SHORT).show();
-
-                        Looper.prepare();
-                        System.out.println(data);
-                        Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
-                        Looper.loop();
+                        else{
+                            Looper.prepare();
+                            Toast.makeText(MainActivity2.this, "无相关信息", Toast.LENGTH_SHORT).show();
+                            Looper.loop();
+                        }
                     }
                 });
                 Thread closeActivity = new Thread(new Runnable() {
@@ -449,33 +456,40 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         ResponseBody data = response.body();
-                        String strByJson = response.body().string();
-                        JsonParser parser = new JsonParser();
-                        //将JSON的String 转成一个JsonArray对象
-                        JsonArray jsonArray = parser.parse(strByJson).getAsJsonArray();
+                        if(response.code()==200) {
+                            String strByJson = response.body().string();
+                            JsonParser parser = new JsonParser();
+                            //将JSON的String 转成一个JsonArray对象
+                            JsonArray jsonArray = parser.parse(strByJson).getAsJsonArray();
 
-                        Gson gson = new Gson();
-                        ArrayList<Stock> stockBeanList = new ArrayList<Stock>();
+                            Gson gson = new Gson();
+                            ArrayList<Stock> stockBeanList = new ArrayList<Stock>();
 
-                        System.out.println(strByJson);
-                        //加强for循环遍历JsonArray
-                        for (JsonElement stock : jsonArray) {
-                            //使用GSON，直接转成Bean对象
-                            Stock stockBean = gson.fromJson(stock, Stock.class);
-                            stockBeanList.add(stockBean);
+                            System.out.println(strByJson);
+                            //加强for循环遍历JsonArray
+                            for (JsonElement stock : jsonArray) {
+                                //使用GSON，直接转成Bean对象
+                                Stock stockBean = gson.fromJson(stock, Stock.class);
+                                stockBeanList.add(stockBean);
 
-                            System.out.println("这下面是 股票的代码、名字、板块集、股价、热度");
-                            System.out.println(stockBean.getId());
-                            System.out.println(stockBean.getName());
-                            System.out.println(stockBean.getType());
-                            System.out.println(stockBean.getPrice());
-                            System.out.println(stockBean.getHits());
-                            System.out.println("这上面是 股票的代码、名字、板块集、股价、热度");
+                                System.out.println("这下面是 股票的代码、名字、板块集、股价、热度");
+                                System.out.println(stockBean.getId());
+                                System.out.println(stockBean.getName());
+                                System.out.println(stockBean.getType());
+                                System.out.println(stockBean.getPrice());
+                                System.out.println(stockBean.getHits());
+                                System.out.println("这上面是 股票的代码、名字、板块集、股价、热度");
+                            }
+                            Looper.prepare();
+                            stockListNormal=stockBeanList;
+                            Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
+                            Looper.loop();
                         }
-                        Looper.prepare();
-                        stockListNormal=stockBeanList;
-                        Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
-                        Looper.loop();
+                            else{
+                            Looper.prepare();
+                            Toast.makeText(MainActivity2.this, "无相关信息", Toast.LENGTH_SHORT).show();
+                            Looper.loop();
+                        }
                     }
                 });
                 Thread closeActivity = new Thread(new Runnable() {
