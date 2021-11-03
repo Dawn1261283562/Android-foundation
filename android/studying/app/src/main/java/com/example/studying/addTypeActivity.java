@@ -232,7 +232,6 @@ public class addTypeActivity extends AppCompatActivity {
                 }
                 if(!hasSelect){
                     selectedTypeList.add(typeSelected);
-                    Toast.makeText(getApplicationContext(),"添加成功！",Toast.LENGTH_SHORT).show();
                     flowLayout.setAdapter(flowAdapter);
                 }
 

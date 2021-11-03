@@ -116,11 +116,9 @@ public class SearchFragment2 extends androidx.fragment.app.Fragment {
 
                 if(fundGeneralList.get(i).getSelectFund()){
                     fundGeneralList.get(i).setSelectFund(false);
-                    System.out.println(22222);
                 }
                 else{
                     fundGeneralList.get(i).setSelectFund(true);
-                    System.out.println(33333);
                 }
                 fundAdapter.notifyDataSetChanged();
             }
