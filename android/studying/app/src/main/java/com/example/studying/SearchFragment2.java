@@ -1,5 +1,6 @@
 package com.example.studying;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -113,6 +114,21 @@ public class SearchFragment2 extends androidx.fragment.app.Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 FundGeneral fundGeneral=fundGeneralList.get(i);
                 Toast.makeText(getContext(),fundGeneral.getFund2().toString(),Toast.LENGTH_SHORT).show();
+
+                //Intent intent=new Intent(getActivity(),MainActivity2.class);
+                String regex = "\\d{6}.[a-zA-Z][a-zA-Z]";
+                String id=fundGeneral.getStock().getId().toString();
+                if(id.matches(regex)){
+                    //System.out.println(1233);
+                    String temp1=id.substring(0,6);String temp2=id.substring(7,9);
+                    //System.out.println(temp2+temp1);
+                    String id_restructure=temp2+temp1;
+                    id=id_restructure;
+                    //System.out.println(id);
+                    Intent intent=new Intent(getActivity(),Stockinfo.class);
+                    intent.putExtra("stockGet", fundGeneral.getStock());
+                    startActivity(intent);
+                }
 
                 if(fundGeneralList.get(i).getSelectFund()){
                     fundGeneralList.get(i).setSelectFund(false);
