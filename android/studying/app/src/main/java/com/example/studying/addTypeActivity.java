@@ -24,6 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -93,6 +94,8 @@ public class addTypeActivity extends AppCompatActivity {
     private Button searchBut;
     private Button addMoreBut;
     private Button finishAddBut;
+    private ImageView searchImageView;
+    private ImageButton clearTextButton;
 
     private String[] setOfAllTypeArray;
     private ArrayList<String> typeList;
@@ -137,6 +140,7 @@ public class addTypeActivity extends AppCompatActivity {
     private void initDate() {
         editText.setVisibility(View.VISIBLE);
         searchBut.setVisibility(View.VISIBLE);
+        searchImageView.setVisibility(View.VISIBLE);
         editText.setHint("板块名称");
 
         setOfAllTypeArray= setOfAllType.split(",");
@@ -216,6 +220,18 @@ public class addTypeActivity extends AppCompatActivity {
             }
             @Override
             public void afterTextChanged(Editable editable) {
+                if(editText.getText().length()>0){
+                    clearTextButton.setVisibility(View.VISIBLE);
+                }
+                else{
+                    clearTextButton.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+        clearTextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editText.setText("");
             }
         });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -232,7 +248,6 @@ public class addTypeActivity extends AppCompatActivity {
                 }
                 if(!hasSelect){
                     selectedTypeList.add(typeSelected);
-                    Toast.makeText(getApplicationContext(),"添加成功！",Toast.LENGTH_SHORT).show();
                     flowLayout.setAdapter(flowAdapter);
                 }
 
@@ -261,6 +276,8 @@ public class addTypeActivity extends AppCompatActivity {
         searchBut=findViewById(R.id.search_but1);
         addMoreBut= findViewById(R.id.add_stock_but1);
         finishAddBut=findViewById(R.id.add_stock_but2);
+        searchImageView=findViewById(R.id.search_icon);
+        clearTextButton=findViewById(R.id.clear_icon);
 
         listView = findViewById(R.id.list_search3_2_2);
         flowLayout = findViewById(R.id.add_type_flow);

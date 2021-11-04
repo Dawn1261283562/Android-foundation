@@ -3,6 +3,7 @@
 package com.example.studying;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +11,11 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,10 +28,13 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.studying.entity.FundHeavyInfo;
@@ -57,6 +65,10 @@ public class addStockActivity extends AppCompatActivity {
     private Button addMoreBut;
     private Button finishAddBut;
     private ImageButton deleteAllHisBut;
+    private ImageView searchImageView;
+    private ImageButton clearTextButton;
+
+    private ProgressBar progressBar;
 
     private ArrayList<Stock> stockList=new ArrayList<Stock>();//选择的股票
     private ArrayList<Stock> stockList1=new ArrayList<Stock>();//搜索到的所有股票
@@ -73,10 +85,11 @@ public class addStockActivity extends AppCompatActivity {
 
     private double flagForChooseOrSearch=530;//中间位置
 
+    Handler mHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_stock);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -89,6 +102,7 @@ public class addStockActivity extends AppCompatActivity {
             getWindow().getDecorView().setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
+        setContentView(R.layout.activity_add_stock);
 
         Intent intent = this.getIntent();
         Bundle bundle=intent.getExtras();
@@ -114,6 +128,7 @@ public class addStockActivity extends AppCompatActivity {
         getsearchHistory();
         initbtn_login5();
         //System.out.println(stockList);
+
     }
 
     private void initData() {
@@ -121,6 +136,7 @@ public class addStockActivity extends AppCompatActivity {
 
         editText.setVisibility(View.VISIBLE);
         searchBut.setVisibility(View.VISIBLE);
+        searchImageView.setVisibility(View.VISIBLE);
         editText.setHint("股票名称");
         listView.setAdapter(fundAdapter);
         strList = new ArrayList<>();
@@ -175,6 +191,19 @@ public class addStockActivity extends AppCompatActivity {
             }
         };
         flowLayout.setAdapter(flowAdapter);
+
+        mHandler=new Handler(Looper.getMainLooper()){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case 1:
+                        progressBar.setVisibility(View.GONE);
+                        fundSearchResult();
+                        hasSelectedUpdate();
+                }
+            }
+        };
     }
 
 
@@ -193,8 +222,33 @@ public class addStockActivity extends AppCompatActivity {
             }
         });
 
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
 
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(editText.getText().length()>0){
+                    clearTextButton.setVisibility(View.VISIBLE);
+                }
+                else{
+                    clearTextButton.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+        clearTextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editText.setText("");
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -316,6 +370,10 @@ public class addStockActivity extends AppCompatActivity {
     private void initViews() {
         editText=findViewById(R.id.search_edit1);
         searchBut=findViewById(R.id.search_but1);
+        searchImageView=findViewById(R.id.search_icon);
+        clearTextButton=findViewById(R.id.clear_icon);
+
+        progressBar=findViewById(R.id.addstock_progressbar);
         listView = findViewById(R.id.list_search3_1_2);
         addMoreBut= findViewById(R.id.add_stock_but1);
         finishAddBut=findViewById(R.id.add_stock_but2);
@@ -430,6 +488,8 @@ public class addStockActivity extends AppCompatActivity {
 
                 RequestBody requestBody = new FormBody.Builder().build();
                 url+=urlAdd;
+
+                progressBar.setVisibility(View.VISIBLE);
                 HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -462,7 +522,6 @@ public class addStockActivity extends AppCompatActivity {
                                     return;
                                 }
                                 stockBeanList.add(stockBean);
-
                                 System.out.println("这下面是 股票的代码、名字、板块集、股价、热度");
                                 System.out.println(stockBean.getId());
                                 System.out.println(stockBean.getName());
@@ -474,6 +533,22 @@ public class addStockActivity extends AppCompatActivity {
                             System.out.println(stockBeanList);
                             stockList1 =stockBeanList;
                             System.out.println(stockList1);
+
+
+                                /*runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        progressBar.setVisibility(View.GONE);
+                                        fundSearchResult();
+                                        hasSelectedUpdate();
+                                    }
+                                });*/
+
+                            Message message = new Message();
+                            message.what = 1;
+                            mHandler.sendMessage(message);
+
                             Looper.prepare();
                             Toast.makeText(addStockActivity.this, strByJson, Toast.LENGTH_SHORT).show();
                             Looper.loop();
@@ -485,11 +560,13 @@ public class addStockActivity extends AppCompatActivity {
                         }
                     }
                 });
-                Thread closeActivity = new Thread(new Runnable() {
+                /*Thread closeActivity = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
+//                            progressBar.setVisibility(View.VISIBLE);
                             Thread.sleep(1000);
+                            progressBar.setVisibility(View.GONE);
                             fundSearchResult();
                             hasSelectedUpdate();
                             // Do some stuff
@@ -497,7 +574,7 @@ public class addStockActivity extends AppCompatActivity {
                             e.getLocalizedMessage();
                         }
                     }});
-                closeActivity.run();
+                closeActivity.run();*/
 
             }
         });

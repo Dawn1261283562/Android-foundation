@@ -29,10 +29,6 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
 
     private ListView listView1;
     private FundAdapter fundAdapter1;
-    private FlowLayout flowLayout;
-    private FlowLayout.Adapter flowAdapter;
-    private LayoutInflater layoutInflater;
-    private ArrayList<String> strList;
 
     private List<FundGeneral> fundGeneralList1;
 
