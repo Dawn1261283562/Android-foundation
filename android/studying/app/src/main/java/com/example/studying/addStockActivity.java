@@ -489,6 +489,13 @@ public class addStockActivity extends AppCompatActivity {
                 RequestBody requestBody = new FormBody.Builder().build();
                 url+=urlAdd;
 
+                if(urlAdd.equals("")){
+
+                    Toast.makeText(addStockActivity.this, "请输入信息", Toast.LENGTH_SHORT).show();
+
+                    return;
+                }
+
                 progressBar.setVisibility(View.VISIBLE);
                 HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
                     @Override
