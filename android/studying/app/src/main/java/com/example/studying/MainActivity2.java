@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -23,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -82,6 +85,8 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
     private ArrayList<Stock> stockList=new ArrayList<Stock>();
     private ArrayList<String> typeList=new ArrayList<String>();
     private ArrayList<Stock> stockListNormal=new ArrayList<Stock>();
+
+    Handler mHandler;
 
 
     @Override
@@ -194,6 +199,23 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
 
             }
         });
+
+        mHandler=new Handler(Looper.getMainLooper()){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case 1:
+                        //progressBar.setVisibility(View.GONE);
+                        searchFragment1.fundSearchResult();
+                        searchFragment1.update(fundInfoList);
+                        break;
+                    case 2:
+                        searchFragment2.update(stockListNormal);
+                }
+            }
+        };
+
     }
 
     private void initEvents() {
@@ -450,6 +472,9 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
 
                             //                Toast.makeText(MainActivity2.this, fundHeavyInfoList.get(0).getName(), Toast.LENGTH_SHORT).show();
 
+                            Message message = new Message();
+                            message.what = 1;
+                            mHandler.sendMessage(message);
                             Looper.prepare();
                             System.out.println(data);
                             Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
@@ -462,19 +487,19 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                         }
                     }
                 });
-                Thread closeActivity = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(1000);
-                            searchFragment1.fundSearchResult();
-                            searchFragment1.update(fundInfoList);
-                            // Do some stuff
-                        } catch (Exception e) {
-                            e.getLocalizedMessage();
-                        }
-                    }});
-                closeActivity.run();
+//                Thread closeActivity = new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        try {
+//                            Thread.sleep(1000);
+//                            searchFragment1.fundSearchResult();
+//                            searchFragment1.update(fundInfoList);
+//                            // Do some stuff
+//                        } catch (Exception e) {
+//                            e.getLocalizedMessage();
+//                        }
+//                    }});
+//                closeActivity.run();
 
             }
         });
@@ -527,6 +552,11 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                                 System.out.println(stockBean.getHits());
                                 System.out.println("这上面是 股票的代码、名字、板块集、股价、热度");
                             }
+
+
+                            Message message = new Message();
+                            message.what = 2;
+                            mHandler.sendMessage(message);
                             Looper.prepare();
                             stockListNormal=stockBeanList;
                             Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
@@ -539,19 +569,19 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                         }
                     }
                 });
-                Thread closeActivity = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(1000);
-                            //searchFragment2.fundSearchResult();
-                            searchFragment2.update(stockListNormal);
-                            // Do some stuff
-                        } catch (Exception e) {
-                            e.getLocalizedMessage();
-                        }
-                    }});
-                closeActivity.run();
+//                Thread closeActivity = new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        try {
+//                            Thread.sleep(1000);
+//                            //searchFragment2.fundSearchResult();
+//                            searchFragment2.update(stockListNormal);
+//                            // Do some stuff
+//                        } catch (Exception e) {
+//                            e.getLocalizedMessage();
+//                        }
+//                    }});
+//                closeActivity.run();
             }
         });
     }
