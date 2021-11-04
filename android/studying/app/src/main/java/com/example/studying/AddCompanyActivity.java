@@ -23,6 +23,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +52,8 @@ public class AddCompanyActivity extends AppCompatActivity {
 
     private EditText editText;
     private Button searchBut;
+    private ImageView searchImageView;
+    private ImageButton clearTextButton;
 
     private String[] setOfAllCompanyArray;
     private ArrayList<String> companyList;
@@ -84,6 +88,7 @@ public class AddCompanyActivity extends AppCompatActivity {
     private void initDate() {
         editText.setVisibility(View.VISIBLE);
         searchBut.setVisibility(View.VISIBLE);
+        searchImageView.setVisibility(View.VISIBLE);
         editText.setHint("公司名称");
 
         setOfAllCompanyArray= setOfAllCompany.split(",");
@@ -130,6 +135,18 @@ public class AddCompanyActivity extends AppCompatActivity {
             }
             @Override
             public void afterTextChanged(Editable editable) {
+                if(editText.getText().length()>0){
+                    clearTextButton.setVisibility(View.VISIBLE);
+                }
+                else{
+                    clearTextButton.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+        clearTextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editText.setText("");
             }
         });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -147,6 +164,8 @@ public class AddCompanyActivity extends AppCompatActivity {
     private void initView() {
         editText=findViewById(R.id.search_edit1);
         searchBut=findViewById(R.id.search_but1);
+        searchImageView=findViewById(R.id.search_icon);
+        clearTextButton=findViewById(R.id.clear_icon);
 
         listView = findViewById(R.id.list_search3_2_3);
     }

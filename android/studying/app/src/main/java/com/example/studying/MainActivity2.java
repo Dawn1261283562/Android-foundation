@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,6 +17,8 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +65,8 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
     public static EditText editText;
     private Button searchBut;
     private TextView titleTex;
+    private ImageView searchImageView;
+    private ImageButton clearTextButton;
 
 
     private ArrayList<FundHeavyInfo> fundInfoList=new ArrayList<FundHeavyInfo>();
@@ -216,6 +222,35 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 if(i == EditorInfo.IME_ACTION_SEARCH)
             }
         });*/
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(editText.getText().length()>0){
+                    clearTextButton.setVisibility(View.VISIBLE);
+                }
+                else{
+                    clearTextButton.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+
+        clearTextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editText.setText("");
+            }
+        });
     }
 
     private void initViews() {
@@ -233,6 +268,8 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         editText=(EditText)findViewById(R.id.search_edit1);
         searchBut=findViewById(R.id.search_but1);
         titleTex = (TextView) findViewById(R.id.title_text);
+        searchImageView=(ImageView) findViewById(R.id.search_icon);
+        clearTextButton=(ImageButton) findViewById(R.id.clear_icon);
 
 
     }
@@ -275,7 +312,10 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 editText.setHint("基金名称");
                 editText.setVisibility(View.VISIBLE);
                 searchBut.setVisibility(View.VISIBLE);
+                searchImageView.setVisibility(View.VISIBLE);
                 titleTex.setVisibility(View.GONE);
+                if(editText.getText().length()>0)
+                    clearTextButton.setVisibility(View.VISIBLE);
                 initbtn_login4();
                 break;
             case 1:
@@ -285,7 +325,10 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 editText.setHint("股票名称");
                 editText.setVisibility(View.VISIBLE);
                 searchBut.setVisibility(View.VISIBLE);
+                searchImageView.setVisibility(View.VISIBLE);
                 titleTex.setVisibility(View.GONE);
+                if(editText.getText().length()>0)
+                    clearTextButton.setVisibility(View.VISIBLE);
                 initbtn_login5();
                 break;
             case 2:
@@ -296,6 +339,8 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 titleTex.setVisibility(View.VISIBLE);
                 editText.setVisibility(View.INVISIBLE);
                 searchBut.setVisibility(View.INVISIBLE);
+                searchImageView.setVisibility(View.GONE);
+                clearTextButton.setVisibility(View.GONE);
                 titleTex.setText("基金筛选");
                 break;
             case 3:
@@ -306,6 +351,8 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 titleTex.setVisibility(View.VISIBLE);
                 editText.setVisibility(View.INVISIBLE);
                 searchBut.setVisibility(View.INVISIBLE);
+                searchImageView.setVisibility(View.GONE);
+                clearTextButton.setVisibility(View.GONE);
                 titleTex.setText("基金筛选");
                 break;
         }
