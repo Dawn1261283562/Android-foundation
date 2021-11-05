@@ -211,5 +211,8 @@ public class StockController {
         }
     }
 
-
+    @RequestMapping("/getStockListByHot")
+    public List<Stock> getStockListByHot(int num){
+        return stockService.getStockListByHot(num);
+    }
 }
