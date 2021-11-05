@@ -373,7 +373,7 @@ public class addStockActivity extends AppCompatActivity {
         searchImageView=findViewById(R.id.search_icon);
         clearTextButton=findViewById(R.id.clear_icon);
 
-        progressBar=findViewById(R.id.addstock_progressbar);
+        progressBar=findViewById(R.id.progressbar);
         listView = findViewById(R.id.list_search3_1_2);
         addMoreBut= findViewById(R.id.add_stock_but1);
         finishAddBut=findViewById(R.id.add_stock_but2);

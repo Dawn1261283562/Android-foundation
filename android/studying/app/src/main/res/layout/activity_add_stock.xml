@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <include layout="@layout/title_layout"
         android:id="@+id/title_in_addstock"></include>
-
+    <include layout="@layout/progressbar"></include>
     <TextView
         android:id="@+id/history_text"
         android:layout_width="wrap_content"
@@ -123,13 +124,4 @@
         android:textSize="20sp"
         android:background="@drawable/search_background"/>
 
-    <ProgressBar
-        android:id="@+id/addstock_progressbar"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
