@@ -1,5 +1,6 @@
 package com.example.studying;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.example.studying.Data;
+import com.example.studying.entity.User;
 import com.example.studying.utils.HttpGetRequest;
 
 import java.io.IOException;
@@ -35,6 +38,8 @@ public class PageFragment2 extends androidx.fragment.app.Fragment {
     private EditText et_password;
     private Button btn_login;
 
+    private String username;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mView == null) {
@@ -52,13 +57,16 @@ public class PageFragment2 extends androidx.fragment.app.Fragment {
         et_username = (EditText) mView.findViewById(R.id.edit_username);
         et_password = (EditText) mView.findViewById(R.id.edit_pwd);
         btn_login = (Button) mView.findViewById(R.id.btn_login);
-        initView();
+        initData();
 
         return mView;
+
     }
 
     //Request 请求代码
-    private void initView() {
+    private void initData() {
+        Data data = (Data)getActivity().getApplicationContext();
+        username=data.getUsername();
 
         //为登录按钮设置点击事件
         btn_login.setOnClickListener(new View.OnClickListener() {

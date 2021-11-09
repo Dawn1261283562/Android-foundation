@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,6 +72,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
     private ImageView searchImageView;
     private ImageButton clearTextButton;
 
+    private ProgressBar progressBar;
 
     private ArrayList<FundHeavyInfo> fundInfoList=new ArrayList<FundHeavyInfo>();
 
@@ -206,11 +208,12 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 1:
-                        //progressBar.setVisibility(View.GONE);
+                        progressBarGone();
                         searchFragment1.fundSearchResult();
                         searchFragment1.update(fundInfoList);
                         break;
                     case 2:
+                        progressBarGone();
                         searchFragment2.update(stockListNormal);
                 }
             }
@@ -271,6 +274,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
             @Override
             public void onClick(View view) {
                 editText.setText("");
+                progressBarGone();
             }
         });
     }
@@ -280,6 +284,8 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
 
         mLir1 = (LinearLayout) findViewById(R.id.top_Tab1);
         mLir2 = (LinearLayout) findViewById(R.id.top_Tab2);
+
+        progressBar=findViewById(R.id.progressbar);
 
         mTex1 = (TextView) findViewById(R.id.top_tab1);
         mTex2 = (TextView) findViewById(R.id.top_tab2);
@@ -338,6 +344,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 titleTex.setVisibility(View.GONE);
                 if(editText.getText().length()>0)
                     clearTextButton.setVisibility(View.VISIBLE);
+                progressBarGone();
                 initbtn_login4();
                 break;
             case 1:
@@ -351,6 +358,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 titleTex.setVisibility(View.GONE);
                 if(editText.getText().length()>0)
                     clearTextButton.setVisibility(View.VISIBLE);
+                progressBarGone();
                 initbtn_login5();
                 break;
             case 2:
@@ -363,6 +371,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 searchBut.setVisibility(View.INVISIBLE);
                 searchImageView.setVisibility(View.GONE);
                 clearTextButton.setVisibility(View.GONE);
+                progressBarGone();
                 titleTex.setText("基金筛选");
                 break;
             case 3:
@@ -375,6 +384,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 searchBut.setVisibility(View.INVISIBLE);
                 searchImageView.setVisibility(View.GONE);
                 clearTextButton.setVisibility(View.GONE);
+                progressBarGone();
                 titleTex.setText("基金筛选");
                 break;
         }
@@ -398,6 +408,13 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
         }
     }
 
+    public void progressBarVisible(){
+        progressBar.setVisibility(View.VISIBLE);
+    }
+    public void progressBarGone(){
+        progressBar.setVisibility(View.GONE);
+    }
+
     private void initbtn_login4() {
         searchBut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -413,6 +430,14 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
 
                 RequestBody requestBody = new FormBody.Builder().build();
                 url=url+urlAdd;
+
+                if(urlAdd.equals("")){
+
+                    Toast.makeText(MainActivity2.this, "请输入信息", Toast.LENGTH_SHORT).show();
+
+                    return;
+                }
+                progressBarVisible();
                 HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -518,6 +543,13 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 searchFragment2.saveSearchHistory2(urlAdd);
                 searchFragment2.getsearchHistory2();
 
+                if(urlAdd.equals("")){
+
+                    Toast.makeText(MainActivity2.this, "请输入信息", Toast.LENGTH_SHORT).show();
+
+                    return;
+                }
+                progressBarVisible();
                 HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {

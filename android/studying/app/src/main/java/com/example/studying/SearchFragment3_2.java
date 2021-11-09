@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.studying.entity.FundHeavy;
@@ -55,6 +58,8 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
     private FlowLayout.Adapter flowAdapter;
     private ArrayList<FundHeavy> fundHeavyList=new ArrayList<FundHeavy>();
     private String companySelected;
+
+    Handler mHandler;
 
     public SearchFragment3_2(ArrayList<String> typeList) {
         System.out.println(typeList);
@@ -114,6 +119,17 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
             }
         };
         flowLayout.setAdapter(flowAdapter);
+        mHandler=new Handler(Looper.getMainLooper()){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case 1:
+                        hasSelectedUpdate();
+                        ((MainActivity2)getActivity()).progressBarGone();
+                }
+            }
+        };
     }
 
     private void initEvents() {
@@ -261,7 +277,14 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
 
 
 
+                if(typeList.size()==0){
 
+                    Toast.makeText(getActivity(), "请添加板块", Toast.LENGTH_SHORT).show();
+
+                    return;
+                }
+
+                ((MainActivity2)getActivity()).progressBarVisible();
                 //请求传入的参数
                 RequestBody requestBody = new FormBody.Builder().build();
                 HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
@@ -300,13 +323,18 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
                             System.out.println("这上面是 基金代码、名字、评分、十股票代码、十股票比例、二号股票比例、热度");
                         }
                         fundHeavyList=userBeanList;
+
+                        Message message = new Message();
+                        message.what = 1;
+                        mHandler.sendMessage(message);
+
                         Looper.prepare();
                         System.out.println(data);
                         Toast.makeText(getActivity(), strByJson, Toast.LENGTH_SHORT).show();
                         Looper.loop();
                     }
                 });
-                Thread closeActivity = new Thread(new Runnable() {
+                /*Thread closeActivity = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
@@ -317,7 +345,7 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
                             e.getLocalizedMessage();
                         }
                     }});
-                closeActivity.run();
+                closeActivity.run();*/
             }
 
 
