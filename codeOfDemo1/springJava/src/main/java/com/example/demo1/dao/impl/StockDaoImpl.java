@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Repository
@@ -140,5 +142,40 @@ public class StockDaoImpl implements StockDao {
         return result.getId();
     }
 
+    @Override
+    public int ReduceHit() {
+        String sql = "update m_stock set hits = hits-hits/3";
+        return this.jdbcTemplate.update(sql);
+    }
 
+    @Override
+    public List<Stock> getStockListByHot(int num) {
+        String sql="select * from m_stock";
+        List<Stock> result = null;
+        try{
+            result=this.jdbcTemplate.query(sql, new RowMapper<Stock>() {
+                @Override
+                public Stock mapRow(ResultSet resultSet, int i) throws SQLException {
+                    Stock stock=new Stock();
+                    stock.setId(resultSet.getString("id"));
+                    stock.setName(resultSet.getString("name"));
+                    stock.setType(resultSet.getString("type"));
+                    // stock.setPrice(resultSet.getString("price"));
+                    stock.setHits(resultSet.getInt("hits"));
+                    return stock;
+                }
+            });
+        } catch(DataAccessException e){
+            result=null;
+        }
+        Collections.sort(result, new Comparator<Stock>() {
+            @Override
+            public int compare(Stock o1, Stock o2) {
+                return o2.getHits()-o1.getHits();
+            }
+        });
+        List<Stock> ans=new ArrayList<Stock>();
+        for(int i=0;i<num;i++)ans.add(result.get(i));
+        return ans;
+    }
 }

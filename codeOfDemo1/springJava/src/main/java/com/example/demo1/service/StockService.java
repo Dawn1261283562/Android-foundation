@@ -14,4 +14,6 @@ public interface StockService {
     List<Stock> getByOther(String id);
 
     String getFormalId(String id);
+
+    List<Stock> getStockListByHot(int num);
 }
