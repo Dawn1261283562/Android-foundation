@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -76,6 +77,8 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
     private ImageButton mImg2;
     private ImageButton mImg3;
 
+    private String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,10 +100,12 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
         initViews();//初始化控件
         initEvents();//初始化事件
         initData();//初始化数据
-//        initView();
     }
 
     private void initData() {
+        Data data = (Data)getApplicationContext();
+        username=data.getUsername();
+
         mFragments = new ArrayList<>();
         //将3个Fragment加入集合中
         mFragments.add(new PageFragment1());
@@ -121,6 +126,7 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
         };
         //设置ViewPager的适配器
         mViewPager.setAdapter(mAdapter);
+        mViewPager.setOffscreenPageLimit(3);
         //设置ViewPager的切换监听
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -132,6 +138,11 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
             //页面选中事件
             @Override
             public void onPageSelected(int position) {
+                if(username==null){
+                    if(position==1||position==2) {
+                        login();
+                    }
+                }
                 //设置position对应的集合中的Fragment页面
                 mViewPager.setCurrentItem(position);
                 resetImg();
@@ -166,6 +177,19 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        username=((Data)getApplicationContext()).getUsername();
+
+        if(username==null){
+            mViewPager.setCurrentItem(0);
+            resetImg();
+            selectTab(0);
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         //调用resetImg设置默认图标
         resetImg();
@@ -197,7 +221,6 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
                 mImg3.setImageResource(R.mipmap.icon1_2);
                 break;
         }
-        //设置当前点击的Tab所对应的页面
         mViewPager.setCurrentItem(i);
     }
 
@@ -206,6 +229,11 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
         mImg1.setImageResource(R.mipmap.icon1_1);
         mImg2.setImageResource(R.mipmap.icon1_1);
         mImg3.setImageResource(R.mipmap.icon1_1);
+    }
+
+    private void login(){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
     //Request 请求代码
