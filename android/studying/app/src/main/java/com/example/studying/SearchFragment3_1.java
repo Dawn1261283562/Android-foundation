@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,9 +16,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.studying.entity.FundHeavy;
@@ -58,6 +62,8 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
 
     private ListView listView;
     private FlowLayout.Adapter flowAdapter;
+
+    Handler mHandler;
 
     public SearchFragment3_1(ArrayList<Stock> stockList) {
         System.out.println(stockList);
@@ -116,6 +122,17 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
             }
         };
         flowLayout.setAdapter(flowAdapter);
+        mHandler=new Handler(Looper.getMainLooper()){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case 1:
+                        hasSelectedUpdate();
+                        ((MainActivity2)getActivity()).progressBarGone();
+                }
+            }
+        };
     }
 
     private void initEvents() {
@@ -204,6 +221,13 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
 //
 //                }
 
+                if(stockList.size()==0){
+
+                    Toast.makeText(getActivity(), "请添加心仪股票", Toast.LENGTH_SHORT).show();
+
+                    return;
+                }
+                ((MainActivity2)getActivity()).progressBarVisible();
                 RequestBody requestBody = new FormBody.Builder().build();
                 HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
                     @Override
@@ -244,12 +268,16 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
                         fundHeavyList=userBeanList;
                         Looper.prepare();
 
+                        Message message = new Message();
+                        message.what = 1;
+                        mHandler.sendMessage(message);
+
                         System.out.println(data);
                         Toast.makeText(getActivity(), strByJson, Toast.LENGTH_SHORT).show();
                         Looper.loop();
                     }
                 });
-                Thread closeActivity = new Thread(new Runnable() {
+                /*Thread closeActivity = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
@@ -260,7 +288,7 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
                             e.getLocalizedMessage();
                         }
                     }});
-                closeActivity.run();
+                closeActivity.run();*/
                 //fundSearchResult();
 
             }
