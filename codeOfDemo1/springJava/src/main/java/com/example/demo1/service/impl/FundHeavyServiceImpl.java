@@ -16,7 +16,7 @@ public class FundHeavyServiceImpl implements FundHeavyService {
     @Autowired
     private FundHeavyDao fundHeavyDao;
 
-    int ten=10;
+    int sendNum=30;
     int toInt=1000;
     double concentrationRatio=1.25;
     @Override
@@ -46,7 +46,7 @@ public class FundHeavyServiceImpl implements FundHeavyService {
         
         //取十个（这里暂时硬编码，不好）
         List<FundHeavy> m_fund=new ArrayList<FundHeavy>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < sendNum; i++) {
             FundHeavy s = (FundHeavy)all_fund.get(i);
             m_fund.add(s);
         }
@@ -125,8 +125,8 @@ public class FundHeavyServiceImpl implements FundHeavyService {
         Collections.sort(m_fund);
         List<FundHeavy> m_m_fund=new ArrayList<FundHeavy>();
         //这里有可能不满十个，甚至一个都没有的情况，
-        if(m_fund.size()-1-10>=0){
-            for (int i = m_fund.size()-1; i > m_fund.size()-1-10; i--) {
+        if(m_fund.size()-1-sendNum>=0){
+            for (int i = m_fund.size()-1; i > m_fund.size()-1-sendNum; i--) {
                 FundHeavy s = (FundHeavy)m_fund.get(i);
 
                 m_m_fund.add(s);
@@ -214,8 +214,8 @@ public class FundHeavyServiceImpl implements FundHeavyService {
         List<FundHeavy> m_m_fund=new ArrayList<FundHeavy>();
         //m_m_fund=m_fund;
         //这里有可能不满十个，甚至一个都没有的情况，
-        if(m_fund.size()-1-10>=0){
-            for (int i = 0; i < 10; i++) {
+        if(m_fund.size()-1-sendNum>=0){
+            for (int i = 0; i < sendNum; i++) {
                 FundHeavy s = (FundHeavy)m_fund.get(i);
 
                 m_m_fund.add(s);
@@ -306,8 +306,8 @@ public class FundHeavyServiceImpl implements FundHeavyService {
         Collections.sort(FundList);//评分排序
         List<FundHeavy> m_m_fund=new ArrayList<FundHeavy>();//打包数据给controller层
         //这里有可能不满十个，甚至一个都没有的情况，
-        if(FundList.size()-1-10>=0){
-            for (int i = 0; i < 10; i++) {
+        if(FundList.size()-1-sendNum>=0){
+            for (int i = 0; i < sendNum; i++) {
                 FundHeavy s = (FundHeavy)FundList.get(i);
 
                 m_m_fund.add(s);
