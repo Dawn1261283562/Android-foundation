@@ -97,6 +97,8 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
 
+
+
         initViews();//初始化控件
         initEvents();//初始化事件
         initData();//初始化数据

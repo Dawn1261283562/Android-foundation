@@ -7,6 +7,8 @@ public class Data extends Application {
 
     public static final String SEARCH_HISTORY = "data";
 
+
+    private long lastLoginTime;
     private String username;
     SharedPreferences sp;
 
@@ -14,10 +16,21 @@ public class Data extends Application {
     public void onCreate() {
         super.onCreate();
 
+        long theLoginTime=System.currentTimeMillis();
+
         sp = getSharedPreferences(SEARCH_HISTORY, 0);
 
-        username=new String();
-        username=sp.getString("username",null);
+        lastLoginTime=sp.getLong("lastLoginTime",theLoginTime);
+
+        if(theLoginTime-lastLoginTime>=3*24*60*60*1000){
+            setUsername(null);
+        }
+        else{
+            username=sp.getString("username",null);
+        }
+
+//        lastLoginTime = theLoginTime;
+        sp.edit().putLong("lastLoginTime",theLoginTime).commit();
     }
 
     public String getUsername() {

@@ -10,11 +10,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.studying.utils.HttpGetRequest;
@@ -35,6 +38,9 @@ public class LoginActivity extends AppCompatActivity {
     EditText editPassword;
     Button signupBut;
     Button loginBut;
+    ImageButton clearTextButton1;
+    ImageButton clearTextButton2;
+
     String flagSuccess = "false";
     private String username;
     Handler mHandler;
@@ -182,12 +188,69 @@ public class LoginActivity extends AppCompatActivity {
 //                closeActivity.run();
             }
         });
+
         signupBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(LoginActivity.this,SignUpActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+        editAccountNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(editAccountNumber.getText().length()>0){
+                    clearTextButton1.setVisibility(View.VISIBLE);
+                }
+                else{
+                    clearTextButton1.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+        editPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(editPassword.getText().length()>0){
+                    clearTextButton2.setVisibility(View.VISIBLE);
+                }
+                else{
+                    clearTextButton2.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+
+        clearTextButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editAccountNumber.setText("");
+            }
+        });
+        clearTextButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editPassword.setText("");
             }
         });
     }
@@ -197,6 +260,8 @@ public class LoginActivity extends AppCompatActivity {
         editPassword=(EditText)findViewById(R.id.edit_password);
         signupBut=(Button)findViewById(R.id.button_signup);
         loginBut=(Button) findViewById(R.id.login_button);
+        clearTextButton1=(ImageButton) findViewById(R.id.login_clear_but1);
+        clearTextButton2=(ImageButton) findViewById(R.id.login_clear_but2);
     }
 
 }
