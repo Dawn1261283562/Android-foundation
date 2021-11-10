@@ -28,6 +28,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int insert(User user) {
+
+
         String sql = "insert into m_user(id,username,password) values(?,?,?)";
         return this.jdbcTemplate.update(
                 sql,

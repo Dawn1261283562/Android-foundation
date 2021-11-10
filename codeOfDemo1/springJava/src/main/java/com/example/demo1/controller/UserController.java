@@ -30,16 +30,18 @@ public class UserController {
 
     @RequestMapping("/insert")
     @ResponseBody
-    public User insert(long id,String password) {
+    public int insert(long id,String passWord) {
         User user = new User();
         //int id = new Random().nextInt(10000);
         user.setId(id);
         user.setUsername( ""+id);
-        user.setPassword(password);
+
+        user.setPassword(passWord);
+        System.out.println(user.getPassword());
 
         int result = this.userService.insert(user);
         System.out.println(result);
-        return user;
+        return result;
     }
 
     @RequestMapping("/deleteByPhone")
@@ -81,6 +83,19 @@ public class UserController {
         boolean user = this.userService.login( userName, passWord);
         //System.out.println(user.toString());
         return user;
+    }
+
+    @RequestMapping("/ifExist")
+    @ResponseBody
+    public boolean ifExist(String userName) {
+        User user = this.userService.getByPhone(userName);
+        System.out.println(user.getUsername());
+        //ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
+
+//        System.out.println( "this"+user_1.getUsername());
+        if(user!=null)return true;
+        else
+        return false;
     }
 
     //    @RequestMapping("/save")

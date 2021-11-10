@@ -40,6 +40,7 @@ public      class Stockinfo extends AppCompatActivity{
     private TextView textView2;
     private ImageView imageview;
     private Stock stockGet;
+    private String type="asdasdasd";
 
 
     @Override
@@ -76,8 +77,7 @@ public      class Stockinfo extends AppCompatActivity{
         System.out.println(stockIdFormal);
         //String url="http://hq.sinajs.cn/list=sz000002";//723
         String url="http://hq.sinajs.cn/list="+stockIdFormal;//723
-        int i=0;
-        initRequest( url,i);
+        initRequest( url);
         initimage(stockIdFormal );
      btn1.setOnClickListener(new OnClickListener() {
       @Override
@@ -116,11 +116,11 @@ public      class Stockinfo extends AppCompatActivity{
        String strURL = "http://image.sinajs.cn/newchart/min/n/"+stockIdFormal+".gif";
        Log.i("883333","false");
        try {
-        Log.i("443333","false");
+
         Bitmap bitmap = getBitmap(strURL);
-        Log.i("553333","false");
+
         imageview.setImageBitmap(bitmap);
-        Log.i("663333","false");
+
        } catch (IOException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
@@ -168,11 +168,10 @@ public      class Stockinfo extends AppCompatActivity{
          return null;
      }
 
-     private void initRequest( String URL,int sinaI ) {
+     private void initRequest( String URL) {
          String url =URL;
-         int i=sinaI;
-         String result;
-         Request sina =(Request) HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
+
+             HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
 
              @Override
              public void onFailure(Call call, IOException e) {
