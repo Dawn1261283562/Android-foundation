@@ -61,7 +61,7 @@ public class PageFragment3 extends androidx.fragment.app.Fragment {
                 textViewUserName1.setText(username);
                 textViewUserName2.setText(username);
 
-                Data data = (Data)getActivity().getApplicationContext();
+                Data data = (Data)getActivity().getApplication();
                 data.setUsername(null);
 
                 Intent intent = new Intent(getActivity(), LoginActivity.class);

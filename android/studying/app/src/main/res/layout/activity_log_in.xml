@@ -34,6 +34,7 @@
         android:hint="账号"
         android:inputType="textWebEmailAddress|textPersonName|phone"
         android:textSize="17sp"
+        android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -50,7 +51,8 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textSize="17sp" />
+        android:textSize="17sp"
+        android:singleLine="true" />
 
     <Button
         android:id="@+id/login_button"
