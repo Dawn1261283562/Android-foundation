@@ -65,7 +65,7 @@ public class PageFragment2 extends androidx.fragment.app.Fragment {
 
     //Request 请求代码
     private void initData() {
-        Data data = (Data)getActivity().getApplicationContext();
+        Data data = (Data)getActivity().getApplication();
         username=data.getUsername();
 
         //为登录按钮设置点击事件
