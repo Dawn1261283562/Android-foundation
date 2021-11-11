@@ -120,7 +120,7 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                             }
-                        }).show();//在按键响应事件中显示此对话框
+                        }).show();
                /* alertDialog.getWindow().setAttributes(getWindow().getAttributes());
                 alertDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);*/
             }
