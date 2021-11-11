@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -96,6 +99,33 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
             getWindow().getDecorView().setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
+
+
+        Data data = (Data)getApplicationContext();
+        if(data.getUsername()!=null){
+            if ((data.getTheLoginTime() - data.getLastLoginTime())/(24*60*60*1000) > 3 ) {
+                data.setUsername(null);
+//            Toast.makeText(this, "长时间未使用，请重新登陆", Toast.LENGTH_LONG).show();
+                /*AlertDialog alertDialog =*/new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("信息提示")
+                        .setMessage("长时间未使用，请重新登陆")
+                        .setPositiveButton("登陆", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        }).show();//在按键响应事件中显示此对话框
+               /* alertDialog.getWindow().setAttributes(getWindow().getAttributes());
+                alertDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);*/
+            }
+        }
+
 
         initViews();//初始化控件
         initEvents();//初始化事件

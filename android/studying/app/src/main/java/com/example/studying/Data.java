@@ -1,12 +1,19 @@
 package com.example.studying;
 
+import android.app.AlertDialog;
 import android.app.Application;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.widget.Toast;
+
 
 public class Data extends Application {
 
     public static final String SEARCH_HISTORY = "data";
 
+
+    private long lastLoginTime;
+    private long theLoginTime;
     private String username;
     SharedPreferences sp;
 
@@ -14,10 +21,22 @@ public class Data extends Application {
     public void onCreate() {
         super.onCreate();
 
+
         sp = getSharedPreferences(SEARCH_HISTORY, 0);
 
-        username=new String();
-        username=sp.getString("username",null);
+        username = sp.getString("username", null);
+        lastLoginTime = sp.getLong("lastLoginTime", theLoginTime);
+        theLoginTime = System.currentTimeMillis();
+
+        sp.edit().putLong("lastLoginTime",theLoginTime).commit();
+    }
+
+    public long getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public long getTheLoginTime() {
+        return theLoginTime;
     }
 
     public String getUsername() {
