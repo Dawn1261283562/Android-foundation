@@ -250,6 +250,18 @@ public class addStockActivity extends AppCompatActivity {
             }
         });
 
+        listView.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                //Drawable drawable=textView.getCompoundDrawables()[2];
+                System.out.println(event.getX());
+                flagForChooseOrSearch=event.getX();
+
+
+                return false;
+            }
+        });
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -270,6 +282,7 @@ public class addStockActivity extends AppCompatActivity {
                         return false;
                     }
                 });
+                System.out.println(flagForChooseOrSearch);
                 if(flagForChooseOrSearch>530){
                     if(fundGeneralList.get(i).getSelectFund()){
                         fundGeneralList.get(i).setSelectFund(false);

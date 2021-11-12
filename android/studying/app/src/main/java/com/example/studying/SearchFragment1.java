@@ -52,6 +52,7 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
     }
 
     private void initDate() {
+
         fundGeneralList1=new ArrayList<>();
         fundAdapter1=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList1);
         listView1.setAdapter(fundAdapter1);
