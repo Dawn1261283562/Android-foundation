@@ -40,6 +40,7 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
     private ArrayList<String> strList1;
     Button deleteAllHisBut1;
     ImageButton helpButton;
+    TextView helpText;
     Group titleGroup;
 
     @Override
@@ -132,6 +133,22 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
                 flowLayout1.setAdapter(flowAdapter1);
             }
         });
+        helpButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()){
+                    case MotionEvent.ACTION_DOWN:{
+                        helpText.setVisibility(View.VISIBLE);
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP:{
+                        helpText.setVisibility(View.GONE);
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     private void initView() {
@@ -140,6 +157,8 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
         layoutInflater1 = LayoutInflater.from(getActivity());
         deleteAllHisBut1=mView.findViewById(R.id.delete_all_history1);
         titleGroup=mView.findViewById(R.id.sear_frag1_titlegroup);
+        helpButton=mView.findViewById(R.id.help_button_sear_frag1);
+        helpText=mView.findViewById(R.id.sear_frag1_helptext);
     }
     public void getsearchHistory1() {
         SharedPreferences sp = getActivity().getApplicationContext().getSharedPreferences(SEARCH_HISTORY, 0);

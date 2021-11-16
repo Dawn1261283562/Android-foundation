@@ -26,6 +26,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:src="@mipmap/icon1_5"/>
 
+
     <com.example.studying.FlowLayout
         android:id="@+id/frag1_history_flow"
         android:layout_width="wrap_content"
@@ -97,6 +98,17 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         android:gravity="center"/>
+    <TextView
+        android:id="@+id/sear_frag1_helptext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/help_button_sear_frag1"
+        app:layout_constraintTop_toTopOf="@id/help_button_sear_frag1"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:padding="10dp"
+        android:text="基金搜索基金搜索基金搜索\n基金搜索基金搜索基金搜索\n基金搜索基金搜索"
+        android:background="@drawable/search_background"/>
 
     <ListView
         android:id="@+id/list_search1"
