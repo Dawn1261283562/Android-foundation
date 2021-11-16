@@ -143,7 +143,7 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
         mFragments.add(new PageFragment3());
 
         //初始化适配器
-        mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+            mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {//从集合中获取对应位置的Fragment
                 return mFragments.get(position);
