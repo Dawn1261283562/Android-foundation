@@ -2,6 +2,7 @@ package com.example.studying;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.app.AlertDialog;
@@ -10,7 +11,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +25,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
@@ -29,6 +33,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.studying.entity.FundHeavy;
 import com.example.studying.entity.User;
 import com.example.studying.utils.HttpGetRequest;
 import com.example.studying.utils.HttpPostRequest;
@@ -80,7 +85,13 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
     private ImageButton mImg2;
     private ImageButton mImg3;
 
+    private PageFragment1 pageFragment1;
+    private PageFragment2 pageFragment2;
+    private PageFragment3 pageFragment3;
+
     private String username;
+    private ArrayList<FundHeavy> fundHeavyList=new ArrayList<FundHeavy>();
+    Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,9 +149,13 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
 
         mFragments = new ArrayList<>();
         //将3个Fragment加入集合中
-        mFragments.add(new PageFragment1());
-        mFragments.add(new PageFragment2());
-        mFragments.add(new PageFragment3());
+        pageFragment2=new PageFragment2();
+        pageFragment1=new PageFragment1();
+        pageFragment3=new PageFragment3();
+
+        mFragments.add(pageFragment1);
+        mFragments.add(pageFragment2);
+        mFragments.add(pageFragment3);
 
         //初始化适配器
             mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -185,6 +200,22 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
 
             }
         });
+
+//        mHandler=new Handler(Looper.getMainLooper()){
+//            @Override
+//            public void handleMessage(@NonNull Message msg) {
+//                super.handleMessage(msg);
+//                switch (msg.what){
+//                    case 1:
+//
+//
+//
+//                        break;
+//                    case 2:
+//
+//                }
+//            }
+//        };
     }
 
     private void initEvents() {
@@ -231,6 +262,7 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
                 break;
             case R.id.tab2:
                 selectTab(1);
+                pageFragment2.fundSlected();
                 break;
             case R.id.tab3:
                 selectTab(2);
@@ -246,6 +278,7 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
                 break;
             case 1:
                 mImg2.setImageResource(R.mipmap.icon1_2);
+
                 break;
             case 2:
                 mImg3.setImageResource(R.mipmap.icon1_2);
@@ -265,6 +298,8 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
+
+
 
     //Request 请求代码
 /*    private void initView() {

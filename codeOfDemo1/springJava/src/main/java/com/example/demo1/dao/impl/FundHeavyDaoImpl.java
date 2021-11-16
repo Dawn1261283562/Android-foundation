@@ -266,6 +266,31 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
         return ans;
     }
 
+    @Override
+    public List<FundHeavy> getFundHeavyById(String id) {
+        String sql="select * from m_fund_heavy where id = ?";
+        FundHeavy result = null;
+        try{
+            result=this.jdbcTemplate.queryForObject(sql, new RowMapper<FundHeavy>() {
+                @Override
+                public FundHeavy mapRow(ResultSet resultSet, int i) throws SQLException {
+                    FundHeavy fundHeavy=new FundHeavy();
+                    fundHeavy.setId(resultSet.getString("id"));
+                    fundHeavy.setName(resultSet.getString("name"));
+
+                    return fundHeavy;
+                }
+            },id);
+        } catch(DataAccessException e){
+            //System.out.println(5555);
+            result=null;
+        }
+        List<FundHeavy> ans=new ArrayList<FundHeavy>();
+        ans.add(result);
+        return ans;
+    }
+
+
     //        String sql = "select * from m_fund_heavy ";//where id  =?or id =?or id =?or id =?
 //        //select * from d_menu where name like concat('%',?,'%')or id =?,s2or id =?
 //        String s1="000001.OF";String s2="000309.OF";String s3="000513.OF";String s4="000893.OF";
