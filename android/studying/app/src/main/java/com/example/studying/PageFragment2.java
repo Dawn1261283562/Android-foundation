@@ -54,9 +54,7 @@ public class PageFragment2 extends androidx.fragment.app.Fragment {
         listView.setAdapter(fundAdapter);
 
         //绑定控件
-        et_username = (EditText) mView.findViewById(R.id.edit_username);
-        et_password = (EditText) mView.findViewById(R.id.edit_pwd);
-        btn_login = (Button) mView.findViewById(R.id.btn_login);
+
         initData();
 
         return mView;
