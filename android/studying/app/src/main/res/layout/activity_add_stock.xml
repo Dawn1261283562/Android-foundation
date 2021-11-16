@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <include layout="@layout/title_layout"
         android:id="@+id/title_in_addstock"></include>
@@ -41,6 +42,13 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/history_text"/>
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/add_stock_titlegroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        app:constraint_referenced_ids="back_view_addstock,textaddstock_1,textaddstock_2,textaddstock_3"/>
     <View
         android:id="@+id/back_view_addstock"
         android:layout_width="match_parent"

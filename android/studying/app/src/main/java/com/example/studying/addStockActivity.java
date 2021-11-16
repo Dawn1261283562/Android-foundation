@@ -36,6 +36,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Group;
 
 import com.example.studying.entity.FundHeavyInfo;
 import com.example.studying.entity.Stock;
@@ -67,6 +68,7 @@ public class addStockActivity extends AppCompatActivity {
     private ImageButton deleteAllHisBut;
     private ImageView searchImageView;
     private ImageButton clearTextButton;
+    Group titleGroup;
 
     private ProgressBar progressBar;
 
@@ -385,6 +387,7 @@ public class addStockActivity extends AppCompatActivity {
         searchBut=findViewById(R.id.search_but1);
         searchImageView=findViewById(R.id.search_icon);
         clearTextButton=findViewById(R.id.clear_icon);
+        titleGroup=findViewById(R.id.add_stock_titlegroup);
 
         progressBar=findViewById(R.id.progressbar);
         listView = findViewById(R.id.list_search3_1_2);
@@ -456,6 +459,12 @@ public class addStockActivity extends AppCompatActivity {
             fundGeneralList.add(fundGeneral1);
         }
 
+        if(fundGeneralList.size()==0){
+            titleGroup.setVisibility(View.INVISIBLE);
+        }
+        else{
+            titleGroup.setVisibility(View.VISIBLE);
+        }
 //        listView.setAdapter(new FundAdapter(addStockActivity.this,R.layout.fund_item,fundGeneralList));
 
         //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
