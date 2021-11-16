@@ -8,10 +8,10 @@ public interface FundCollectionDao {
     /**增**/
     int insert(FundCollection collection);
     /**删**/
-    int deleteByUsernameANdName(int username,String name);
+    int deleteByUsernameANdName(String username,String name);
     /**改**/
     int update(FundCollection collection);
     /**查**/
-    List<FundCollection> getByUser(int username);
+    List<FundCollection> getByUser(String username);
 
 }
