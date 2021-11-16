@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -61,8 +62,11 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
     private LinearLayout searTab3;
     private ListView listView1;
     private List<FundGeneral> fundGeneralList;
-    FundAdapter fundAdapter;
+    private FundAdapter fundAdapter;
     private ArrayList<Stock> stockListNormal;
+    private final int fundShowDefault=6;
+
+    private Button moreFundBut;
 
     Handler mHandler;
     @Override
@@ -73,9 +77,6 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
         initView();
         initEvents();
         initDate();
-        searTab1 = (LinearLayout)mView.findViewById(R.id.sear_tab1);
-        searTab2 = (LinearLayout)mView.findViewById(R.id.sear_tab2);
-        searTab3 = (LinearLayout)mView.findViewById(R.id.sear_tab3);
         return mView;
     }
 
@@ -87,8 +88,18 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 1:
-
                         update(stockListNormal);
+
+                        int totalHeight = 0;
+                        for (int i = 0; i < fundShowDefault; i++) {
+                            View listItem = fundAdapter.getView(i, null, listView1);
+                            listItem.measure(0, 0);
+                            totalHeight += listItem.getMeasuredHeight();
+                        }
+                        ViewGroup.LayoutParams params = listView1.getLayoutParams();
+                        params.height = totalHeight + (listView1.getDividerHeight() * (fundShowDefault - 1));
+//                        ((ViewGroup.MarginLayoutParams) params).setMargins(10, 10, 10, 10);
+                        listView1.setLayoutParams(params);
                     case 2:
 
                 }
@@ -97,6 +108,12 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
         fundGeneralList=new ArrayList<>();
         fundAdapter =new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
         listView1.setAdapter(fundAdapter);
+        if(fundGeneralList.size()==0){
+            listView1.setVisibility(View.GONE);
+        }
+        else{
+            listView1.setVisibility(View.VISIBLE);
+        }
 
         String url = "http://localhost:8080/user/lgoin";
         url = "http://43m486x897.yicp.fun/stock/searchStock?id=平安";
@@ -189,12 +206,51 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
                 fundAdapter.notifyDataSetChanged();
             }
         });
+        moreFundBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(moreFundBut.getText().toString().equals("展开更多热点股票")){
+                    int totalHeight = 0;
+                    for (int i = 0; i < fundAdapter.getCount(); i++) {
+                        View listItem = fundAdapter.getView(i, null, listView1);
+                        listItem.measure(0, 0);
+                        totalHeight += listItem.getMeasuredHeight();
+                    }
+                    ViewGroup.LayoutParams params = listView1.getLayoutParams();
+                    params.height = totalHeight + (listView1.getDividerHeight() * (fundAdapter.getCount() - 1));
+//                        ((ViewGroup.MarginLayoutParams) params).setMargins(10, 10, 10, 10);
+                    listView1.setAdapter(new FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList));
+                    listView1.setLayoutParams(params);
+
+                    moreFundBut.setText("收起");
+                }
+                else{
+                    int totalHeight = 0;
+                    for (int i = 0; i < fundShowDefault; i++) {
+                        View listItem = fundAdapter.getView(i, null, listView1);
+                        listItem.measure(0, 0);
+                        totalHeight += listItem.getMeasuredHeight();
+                    }
+                    ViewGroup.LayoutParams params = listView1.getLayoutParams();
+                    params.height = totalHeight + (listView1.getDividerHeight() * (fundShowDefault - 1));
+//                        ((ViewGroup.MarginLayoutParams) params).setMargins(10, 10, 10, 10);
+                    listView1.setAdapter(new FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList.subList(0,fundShowDefault)));
+                    listView1.setLayoutParams(params);
+
+                    moreFundBut.setText("展开更多热点股票");
+                }
+            }
+        });
 
     }
 
     private void initView() {
-        listView1 = (ListView) mView.findViewById(R.id.list_search1);
+        listView1 = (ListView) mView.findViewById(R.id.page_fragment1_list1);
 
+        searTab1 = (LinearLayout)mView.findViewById(R.id.sear_tab1);
+        searTab2 = (LinearLayout)mView.findViewById(R.id.sear_tab2);
+        searTab3 = (LinearLayout)mView.findViewById(R.id.sear_tab3);
+        moreFundBut=(Button) mView.findViewById(R.id.page_fragment1_button1);
     }
 
     @Override
@@ -250,8 +306,14 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
 
         }
 
-        listView1.setAdapter(new FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList));
+        listView1.setAdapter(new FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList.subList(0,fundShowDefault)));
 
+        if(fundGeneralList.size()==0){
+            listView1.setVisibility(View.GONE);
+        }
+        else{
+            listView1.setVisibility(View.VISIBLE);
+        }
         //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
 //        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
 //

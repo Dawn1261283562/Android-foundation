@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/history_text2"
@@ -35,6 +36,13 @@
         app:layout_constraintTop_toBottomOf="@id/history_text2"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/sear_frag2_titlegroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        app:constraint_referenced_ids="back_view2,te2_1,te2_2,te2_3"/>
     <View
         android:id="@+id/back_view2"
         android:layout_width="match_parent"

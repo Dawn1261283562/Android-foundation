@@ -120,7 +120,7 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                             }
-                        }).show();//在按键响应事件中显示此对话框
+                        }).show();
                /* alertDialog.getWindow().setAttributes(getWindow().getAttributes());
                 alertDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);*/
             }
@@ -143,7 +143,7 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
         mFragments.add(new PageFragment3());
 
         //初始化适配器
-        mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+            mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {//从集合中获取对应位置的Fragment
                 return mFragments.get(position);
