@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <TextView
+            android:id="@+id/Title"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:text="基金行情"></TextView>
+
+        <TextView
+            android:id="@+id/funds_name"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@+id/Title"
+            android:text="text"></TextView>
+
+        <TextView
+            android:id="@+id/code_style"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@+id/funds_name"
+            android:text="text"></TextView>
+
+
+        <TextView
+            android:id="@+id/value_now"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/code_style"
+            android:layout_marginTop="-3dp"
+            android:text="text"></TextView>
+
+        <Button
+            android:id="@+id/Button_01"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/value_now"
+            android:text="累计收益"></Button>
+
+        <Button
+            android:id="@+id/Button_02"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/value_now"
+            android:layout_toEndOf="@id/Button_01"
+            android:text="单位净值"></Button>
+
+        <Button
+            android:id="@+id/Button_03"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/value_now"
+            android:layout_toEndOf="@id/Button_02"
+            android:text="累计净值"></Button>
+
+        <Button
+            android:id="@+id/Button_04"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/value_now"
+            android:layout_toEndOf="@id/Button_03"
+            android:text="净值估算"></Button>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_below="@id/Button_01"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"></ImageView>
+
+
+        <TextView
+            android:id="@+id/title_history"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/imageView"
+            android:layout_marginTop="-3dp"
+            android:text="历史净值"></TextView>
+
+        <ListView
+
+            android:id="@+id/history_view"
+            android:layout_width="match_parent"
+            android:layout_height="125dp"
+            android:layout_below="@id/title_history"
+            android:layout_marginTop="0dp"
+            android:paddingBottom="0dp"></ListView>
+
+        <TextView
+            android:id="@+id/title_heavy"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/history_view"
+            android:layout_marginTop="-3dp"
+            android:text="重仓股"></TextView>
+
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="335dp"
+            android:layout_below="@+id/title_heavy"
+            android:layout_marginTop="0dp"></ListView>
+
+    </RelativeLayout>
+
+
+</ScrollView>
+
