@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -21,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.studying.entity.FundHeavy;
+import com.example.studying.entity.FundHeavyInfo;
 import com.example.studying.entity.Stock;
 import com.example.studying.utils.HttpGetRequest;
 import com.google.gson.Gson;
@@ -296,8 +298,10 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
                     }
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
+
                         ResponseBody data = response.body();
                         String strByJson = response.body().string();
+                        if(response.code()!=200)return;
                         JsonParser parser = new JsonParser();
                         //将JSON的String 转成一个JsonArray对象
                         JsonArray jsonArray = parser.parse(strByJson).getAsJsonArray();
@@ -350,6 +354,35 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
 
 
         });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                FundGeneral fundGeneral = fundGeneralList.get(i);
+                Toast.makeText(getContext(), fundGeneral.getFund2().toString(), Toast.LENGTH_SHORT).show();
+                //Intent intent=new Intent(getActivity(),MainActivity2.class);
+
+                String id=fundGeneral.getFund1().toString();
+
+                String temp1=id.substring(0,6);String temp2=id.substring(7,9);
+                //System.out.println(temp2+temp1);
+                // String id_restructure=temp2+temp1;
+                String id_restructure=temp1;
+                id=id_restructure;
+                //System.out.println(id);
+                FundHeavyInfo temp=new FundHeavyInfo();
+                temp.setId(id);
+                Intent intent=new Intent(getActivity(),fundsinfo.class);
+                intent.putExtra("fundsGet", temp);
+                startActivity(intent);
+
+
+
+
+            }
+        });
+
     }
 
     private void hasSelectedUpdate() {
