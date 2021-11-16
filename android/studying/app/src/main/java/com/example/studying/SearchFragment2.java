@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
 
 import com.example.studying.entity.FundHeavyInfo;
 import com.example.studying.entity.Stock;
@@ -33,6 +34,7 @@ public class SearchFragment2 extends androidx.fragment.app.Fragment {
     private LayoutInflater layoutInflater2;
     private ArrayList<String> strList2;
     ImageButton deleteAllHisBut2;
+    Group titleGroup;
 
     private List<FundGeneral> fundGeneralList;
 
@@ -46,7 +48,6 @@ public class SearchFragment2 extends androidx.fragment.app.Fragment {
         initDate();
 
         getsearchHistory2();//获取历史搜索记录
-        fundSearchResult();//获取持仓搜索结果
         return mView;
     }
 
@@ -155,6 +156,7 @@ public class SearchFragment2 extends androidx.fragment.app.Fragment {
         flowLayout2 = mView.findViewById(R.id.frag2_history_flow);
         layoutInflater2 = LayoutInflater.from(getActivity());
         deleteAllHisBut2=mView.findViewById(R.id.delete_all_history2);
+        titleGroup=mView.findViewById(R.id.sear_frag2_titlegroup);
     }
 
     public void getsearchHistory2() {
@@ -202,14 +204,6 @@ public class SearchFragment2 extends androidx.fragment.app.Fragment {
         }
     }
 
-    private void fundSearchResult() {
-        fundGeneralList.clear();
-        FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
-        fundGeneralList.add(fundGeneral1);
-        FundGeneral fundGeneral2=new FundGeneral("000001.SZ","平安银行平安银行","20.04");
-        fundGeneralList.add(fundGeneral2);
-    }
-
     public void update(ArrayList<Stock> stockList) {
 
         System.out.println(123321);
@@ -225,8 +219,14 @@ public class SearchFragment2 extends androidx.fragment.app.Fragment {
 
         }
 
-        listView.setAdapter(new FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList));
+//        listView.setAdapter(new FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList));
 
+        if(fundGeneralList.size()==0){
+            titleGroup.setVisibility(View.INVISIBLE);
+        }
+        else{
+            titleGroup.setVisibility(View.VISIBLE);
+        }
         //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
 //        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
 //

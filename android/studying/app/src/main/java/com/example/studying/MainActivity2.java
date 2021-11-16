@@ -209,12 +209,16 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 switch (msg.what){
                     case 1:
                         progressBarGone();
-                        searchFragment1.fundSearchResult();
+//                        searchFragment1.fundSearchResult();
                         searchFragment1.update(fundInfoList);
                         break;
                     case 2:
                         progressBarGone();
                         searchFragment2.update(stockListNormal);
+                        break;
+                    case 3:
+                        progressBarGone();
+                        break;
                 }
             }
         };
@@ -471,6 +475,9 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                                     Looper.prepare();
                                     //System.out.println(data);
                                     Toast.makeText(MainActivity2.this, "暂无相关信息", Toast.LENGTH_SHORT).show();
+                                    Message message = new Message();
+                                    message.what = 3;
+                                    mHandler.sendMessage(message);
                                     Looper.loop();
                                 }
                                 System.out.println("这下面是 基金信息的代码、名字、全名、法人公司名、管理者");
@@ -481,15 +488,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                                 System.out.println(fundHeavyInfoBean.getManager());
                                 System.out.println("这上面是 基金信息的代码、名字、全名、法人公司名、管理者");
                             }
-                            //
-             /*       ArrayList<FundHeavyInfo> fundHeavyInfoList = new ArrayList<>();
-                    FundHeavyInfo fundHeavyInfoBean=new FundHeavyInfo();
-                    fundHeavyInfoBean.setLegal_person("aaa");
-                    fundHeavyInfoBean.setName("bbb");
-                    fundHeavyInfoBean.setManager("ccc");
-                    fundHeavyInfoBean.setId("ddd");
-                    fundHeavyInfoBean.setFull_nameame("eee");
-                    fundHeavyInfoList.add(fundHeavyInfoBean);*/
+
                             temp = fundHeavyInfoList;
                             fundInfoList = fundHeavyInfoList;
                             //System.out.println(stockList1);
@@ -508,6 +507,9 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                         else{
                             Looper.prepare();
                             Toast.makeText(MainActivity2.this, "无相关信息", Toast.LENGTH_SHORT).show();
+                            Message message = new Message();
+                            message.what = 3;
+                            mHandler.sendMessage(message);
                             Looper.loop();
                         }
                     }
@@ -597,6 +599,9 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                             else{
                             Looper.prepare();
                             Toast.makeText(MainActivity2.this, "无相关信息", Toast.LENGTH_SHORT).show();
+                            Message message = new Message();
+                            message.what = 3;
+                            mHandler.sendMessage(message);
                             Looper.loop();
                         }
                     }

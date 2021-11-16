@@ -9,12 +9,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
 
 import com.example.studying.entity.FundHeavyInfo;
 
@@ -36,7 +38,10 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
     private FlowLayout.Adapter flowAdapter1;
     private LayoutInflater layoutInflater1;
     private ArrayList<String> strList1;
-    ImageButton deleteAllHisBut1;
+    Button deleteAllHisBut1;
+    ImageButton helpButton;
+    TextView helpText;
+    Group titleGroup;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -128,6 +133,22 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
                 flowLayout1.setAdapter(flowAdapter1);
             }
         });
+        helpButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()){
+                    case MotionEvent.ACTION_DOWN:{
+                        helpText.setVisibility(View.VISIBLE);
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP:{
+                        helpText.setVisibility(View.GONE);
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     private void initView() {
@@ -135,6 +156,9 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
         flowLayout1 = mView.findViewById(R.id.frag1_history_flow);
         layoutInflater1 = LayoutInflater.from(getActivity());
         deleteAllHisBut1=mView.findViewById(R.id.delete_all_history1);
+        titleGroup=mView.findViewById(R.id.sear_frag1_titlegroup);
+        helpButton=mView.findViewById(R.id.help_button_sear_frag1);
+        helpText=mView.findViewById(R.id.sear_frag1_helptext);
     }
     public void getsearchHistory1() {
         SharedPreferences sp = getActivity().getApplicationContext().getSharedPreferences(SEARCH_HISTORY, 0);
@@ -180,7 +204,7 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
         }
     }
 
-    public void fundSearchResult() {
+/*    public void fundSearchResult() {
         fundGeneralList1.clear();
         MainActivity2 activity2=(MainActivity2)getActivity();
         ArrayList<FundHeavyInfo> temp=activity2.getTemp();
@@ -190,14 +214,20 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
                 System.out.println(temp.get(i).getId()+" "+temp.get(i).getName()+" "+temp.get(i).getManager());
                 fundGeneralList1.add(fundGeneral);
             }
-            listView1.setAdapter(new  FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList1));
+//            listView1.setAdapter(new  FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList1));
+            if(fundGeneralList1.size()==0){
+                titleGroup.setVisibility(View.INVISIBLE);
+            }
+            else{
+                titleGroup.setVisibility(View.VISIBLE);
+            }
         }
 
-        /*FundGeneral fundGeneral1=new FundGeneral("22222","平安银行平安银行平安银行平安银行","管理者");
+        *//*FundGeneral fundGeneral1=new FundGeneral("22222","平安银行平安银行平安银行平安银行","管理者");
         fundGeneralList.add(fundGeneral1);
         FundGeneral fundGeneral2=new FundGeneral("000001.SZ","平安银行","管理者");
-        fundGeneralList.add(fundGeneral2);*/
-    }
+        fundGeneralList.add(fundGeneral2);*//*
+    }*/
 
     public void update(ArrayList<FundHeavyInfo> fundInfoList) {
 
@@ -214,8 +244,13 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
 
         }
 
-        listView1.setAdapter(new FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList1));
-
+//        listView1.setAdapter(new FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList1));
+        if(fundGeneralList1.size()==0){
+            titleGroup.setVisibility(View.INVISIBLE);
+        }
+        else{
+            titleGroup.setVisibility(View.VISIBLE);
+        }
         //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
 //        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
 //
