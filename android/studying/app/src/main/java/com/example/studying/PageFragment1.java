@@ -110,9 +110,11 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
         listView1.setAdapter(fundAdapter);
         if(fundGeneralList.size()==0){
             listView1.setVisibility(View.GONE);
+            moreFundBut.setVisibility(View.GONE);
         }
         else{
             listView1.setVisibility(View.VISIBLE);
+            moreFundBut.setVisibility(View.VISIBLE);
         }
 
         String url = "http://localhost:8080/user/lgoin";
@@ -310,9 +312,11 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
 
         if(fundGeneralList.size()==0){
             listView1.setVisibility(View.GONE);
+            moreFundBut.setVisibility(View.GONE);
         }
         else{
             listView1.setVisibility(View.VISIBLE);
+            moreFundBut.setVisibility(View.VISIBLE);
         }
         //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
 //        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);

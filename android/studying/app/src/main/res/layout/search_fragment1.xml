@@ -5,6 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <androidx.constraintlayout.widget.Group
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="history_text1,delete_all_history1"
+        android:visibility="visible"/>
+
     <TextView
         android:id="@+id/history_text1"
         android:layout_width="wrap_content"
