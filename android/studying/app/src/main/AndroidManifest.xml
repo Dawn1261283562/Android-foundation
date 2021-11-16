@@ -51,6 +51,9 @@
         <activity
             android:name=".Stockinfo"
             android:exported="true" />
+        <activity
+            android:name=".fundsinfo"
+            android:exported="true" />
     </application>
 
 </manifest>
