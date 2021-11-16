@@ -2,7 +2,7 @@ package com.example.demo1.entity;
 
 public class FundCollection {
     private int id;
-    private int username;
+    private String username;
     private String name;
 
     public int getId() {
@@ -13,11 +13,11 @@ public class FundCollection {
         this.id = id;
     }
 
-    public int getUsername() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(int username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 

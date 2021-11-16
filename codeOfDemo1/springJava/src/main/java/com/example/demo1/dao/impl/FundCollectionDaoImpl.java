@@ -30,7 +30,7 @@ public class FundCollectionDaoImpl implements FundCollectionDao {
     }
 
     @Override
-    public int deleteByUsernameANdName(int username, String name) {
+    public int deleteByUsernameANdName(String username, String name) {
         String sql = "delete from fund_collection where username= ? and name = ?";
         return this.jdbcTemplate.update(sql,username,name);
     }
@@ -46,14 +46,14 @@ public class FundCollectionDaoImpl implements FundCollectionDao {
     }
 
     @Override
-    public List<FundCollection> getByUser(int username) {
+    public List<FundCollection> getByUser(String username) {
         String sql = "select * from fund_collection where username = ?";
         List<FundCollection> temp=jdbcTemplate.query(sql, new RowMapper<FundCollection>() {
             @Override
             public FundCollection mapRow(ResultSet resultSet, int i) throws SQLException {
                 FundCollection collection = new FundCollection();
                 collection.setId(resultSet.getInt("id"));
-                collection.setUsername(resultSet.getInt("username"));
+                collection.setUsername(resultSet.getString("username"));
                 collection.setName(resultSet.getString("name"));
                 return collection;
             }

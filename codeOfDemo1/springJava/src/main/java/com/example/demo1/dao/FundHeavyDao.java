@@ -24,6 +24,7 @@ public interface FundHeavyDao {
 
     List<String> getIdListByCompany(String company);
 
+    List<FundHeavy> getFundHeavyById(String str);
 //    List<FundHeavy> getById(String id);
     //测试代码
     //FundHeavy getFundHeavy();
