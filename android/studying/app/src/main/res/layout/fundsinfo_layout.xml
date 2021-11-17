@@ -14,12 +14,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+
         <TextView
             android:id="@+id/Title"
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
             android:layout_height="30dp"
             android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp"
             android:text="基金行情"></TextView>
+
+<!--        <ImageView-->
+<!--            android:id="@+id/Collection_image"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="30dp"-->
+
+<!--            android:layout_toRightOf="@+id/Title"></ImageView>-->
+
+        <ImageButton
+            android:id="@+id/Collection_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_toRightOf="@+id/Title" />
 
         <TextView
             android:id="@+id/funds_name"

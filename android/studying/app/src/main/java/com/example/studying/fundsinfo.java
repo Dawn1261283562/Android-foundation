@@ -10,6 +10,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -26,6 +27,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.StrictMode;
 import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,6 +36,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -61,12 +64,11 @@ public      class fundsinfo extends AppCompatActivity{
     private TextView title_heavy;
     private TextView title_;
 
-    private boolean Collection;
-
-    private ImageView imageview;
+    private ImageView imageview,Collection_image;
     ListView listview;
     ListView listview_History;
     private ArrayList<FundHeavy> fundHeavyList=new ArrayList<FundHeavy>();
+    private ArrayList<Stock> stockList=new ArrayList<Stock>();
 
     Handler mHandler;
 
@@ -93,7 +95,7 @@ public      class fundsinfo extends AppCompatActivity{
     public List<String>History_incre=new ArrayList<>();
 
 
-
+    private ImageButton checkComBtn;
 
     private int heavystock_num=10;
     private int history_num=5;
@@ -104,7 +106,9 @@ public      class fundsinfo extends AppCompatActivity{
     private String addressPL="http://43m486x897.yicp.fun/";
     String code="000031";
     String username="15361022831";
+    String fundName="";
 
+    private boolean Collection=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +124,7 @@ public      class fundsinfo extends AppCompatActivity{
         listview=(ListView) this.findViewById(R.id.list_view);
         listview_History=(ListView)this.findViewById(R.id.history_view);
         imageview = (ImageView) this.findViewById(R.id.imageView);
+        Collection_image=(ImageView)this.findViewById(R.id.Collection_image);
         textView_fundsname = (TextView) this.findViewById(R.id.funds_name);
         textcode_style = (TextView) this.findViewById(R.id.code_style);
         textView_value_now = (TextView) this.findViewById(R.id.value_now);
@@ -128,7 +133,7 @@ public      class fundsinfo extends AppCompatActivity{
         title_=(TextView)this.findViewById(R.id.Title);
 
 
-
+        checkComBtn=this.findViewById(R.id.Collection_image);
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects().detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
@@ -138,20 +143,42 @@ public      class fundsinfo extends AppCompatActivity{
         Bundle bundle=intent.getExtras();
         fundsGet= (FundHeavyInfo)bundle.getSerializable("fundsGet");
 
-        String code=fundsGet.getId();
+        code=fundsGet.getId();
+        fundName=fundsGet.getName();
         Data data = (Data)getApplicationContext();
         username=data.getUsername();
 
+        init_info(code);
+        //
+        Collection();
+
+
         System.out.println(fundsGet.getId());
 
+        funds_name(code);
 
-        init_info(code);
+
+
 
 //        init_Collection();
+
+        init_History(code);
+
+
+//        Collection_image.setImageDrawable(getResources().getDrawable(R.drawable.C)); //不会变形
+//        String src="http _bpic.588ku.com_element_origin_min_pic_19_04_10_9dd27c6b5480b2cefd6f7d6a9a5c03f5.jpg&refer=http _bpic.588ku.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg.jpg";
+//        Bitmap bm = BitmapFactory.decodeFile(src);
+//        Collection_image.setImageBitmap(bm);//不会变形
+//        Collection_image.setImageResource(R.id.Collection_image);//不会变形
+//        Collection_image.setImageURI(Uri.fromFile(new File("C://Users/12612/Desktop/collection.jpg")));
+
 
 
 
     }
+
+
+
     //重仓表的适配器类
     class Heavylist extends BaseAdapter {
 
@@ -184,15 +211,22 @@ public      class fundsinfo extends AppCompatActivity{
             TextView t1=v.findViewById(R.id.text1);
             TextView t2=v.findViewById(R.id.text2);
             TextView t3=v.findViewById(R.id.text3);
+
             if(position==0){
                 t1.setText("股票名称");
                 t2.setText("价格");
                 t3.setText("持仓占比");
-            return v;}
+                return v;}
             else
             {
-                t1.setText(fundHeavyList.get(0).get_stock_id()[position-1]);
-                t2.setText(fundHeavyList.get(0).get_stock_all_Type()[position-1]);
+
+                if(Heavy_name.size()<=position-1){
+                    t3.setText(fundHeavyList.get(0).get_stock_ratio()[position-1]);
+                    return v;
+                }
+
+                t1.setText(Heavy_name.get(position-1).toString());
+                t2.setText(Heavy_price.get(position-1).toString());
                 t3.setText(fundHeavyList.get(0).get_stock_ratio()[position-1]);
                 return v;
             }
@@ -255,6 +289,118 @@ public      class fundsinfo extends AppCompatActivity{
     //
 
 
+    private void initEvents() {
+        if(Collection){
+            checkComBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox2));
+        }
+        else checkComBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox1));
+        checkComBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("image_");
+                if(Collection){
+
+                    System.out.println("image_");
+                    checkComBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox1));
+//                    textCompany.setVisibility(View.VISIBLE);
+//                    textCompany.setText("当前搜索公司："+companySelected);
+                    Collection=!Collection;
+                    //删掉
+                    delCollection();
+                }
+                else{
+                    checkComBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox2));
+                    Collection=!Collection;
+
+                    //增加
+                    addCollection();
+
+
+                }
+            }
+        });
+    }
+
+    private void addCollection() {
+        String url="http://43m486x897.yicp.fun/collection/insert?id=0&username="+username+ "&name="+code+".OF";
+        HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Looper.prepare();
+                //Toast.makeText(MainActivity.this, "post请求失败", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+            }
+        });
+
+
+    }
+
+    private void delCollection() {
+        String url="http://43m486x897.yicp.fun/collection/deleteByUsernameANdName?username="+username+ "&name="+code+".OF";
+        HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Looper.prepare();
+                //Toast.makeText(MainActivity.this, "post请求失败", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+            }
+        });
+    }
+
+
+
+
+
+
+    private void Collection() {
+        String url="http://43m486x897.yicp.fun/collection/ifCollect?username="+username+ "&name="+code+".OF";
+
+        HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Looper.prepare();
+                //Toast.makeText(MainActivity.this, "post请求失败", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                ResponseBody data = response.body();
+                String strByJson = response.body().string();
+
+
+                //System.out.println("funds_name");
+
+                if(strByJson.equals("true")){
+                    Collection=true;
+                }
+                else{
+                    Collection=false;
+                }
+
+                Looper.prepare();
+
+                Message message = new Message();
+                message.what = 3;
+                mHandler.sendMessage(message);
+
+                Toast.makeText( fundsinfo.this, strByJson, Toast.LENGTH_SHORT).show();
+                Looper.loop();
+
+
+            }
+        });
+
+
+    }
 
     //初始化基金信息页函数
     private void init_info(String code) {
@@ -267,8 +413,16 @@ public      class fundsinfo extends AppCompatActivity{
                 switch (msg.what){
                     case 1:
                         fundHeavyList.get(0).get_stock_all_Type();
+                        System.out.println(fundHeavyList.get(0)._stock_all_type[0]);
+                        System.out.println(fundHeavyList.get(0).get_stock_all_Type()[0]);
+                        init_heavystock_info();
 
-                        System.out.println(123);
+
+                        break;
+                    case 2:
+                        String res="";
+
+
                         fundsinfo.Heavylist adapter=new fundsinfo.Heavylist();
 
                         listview.setAdapter(adapter);
@@ -291,10 +445,14 @@ public      class fundsinfo extends AppCompatActivity{
 
                             }
                         });
+                        break;
+                    case 3:
+                        initEvents();
+                        //flag
                 }
             }
         };
-        init_History(code);
+
         init_fundsinfo(code);
         initimage(code);
         button_listen();
@@ -383,6 +541,48 @@ public      class fundsinfo extends AppCompatActivity{
 
     //各类局部初始化函数
     //初始化基金信息
+
+    public void funds_name(String code)
+    {
+        String fundsurl="http://fundgz.1234567.com.cn/js/"+code+".js?rt=1463558676006";
+
+
+        HttpGetRequest.sendOkHttpGetRequest(fundsurl, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Looper.prepare();
+                //Toast.makeText(MainActivity.this, "post请求失败", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                ResponseBody data = response.body();
+                String strByJson = response.body().string();
+
+
+                System.out.println("funds_name");
+                System.out.println("funds_name"+strByJson);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        List<String>list=Arrays.asList(strByJson.split(":"));
+                        List<String>list2=Arrays.asList(list.get(8).split(","));
+                        String res=list2.get(0).replace("\"","");
+                        List<String>list3=Arrays.asList(res.split("\\)"));
+                        res=list3.get(0).replace("}","");
+
+
+                        System.out.println("funds_name"+res);
+                        textView_fundsname.setText(fundName);
+
+
+                    }
+
+
+                });
+            }});}
+
     public void init_fundsinfo(String code){
 
         System.out.println(code);
@@ -427,6 +627,13 @@ public      class fundsinfo extends AppCompatActivity{
                     System.out.println("这上面是 基金代码、名字、评分、十股票代码、十股票比例、二号股票比例、热度");
                 }
                 fundHeavyList=userBeanList;
+
+
+
+
+
+
+
                 Looper.prepare();
 
                 Message message = new Message();
@@ -454,20 +661,20 @@ public      class fundsinfo extends AppCompatActivity{
 //                        Log.v("heavy_ratio_5",getHeavy_ratio(9));
 ////                        Log.v("heavy_style",getHeavy_style(3));
 //////                        初始化重仓股信息
-//                        init_heavystock_info();
+
 //////
 //                        init_text(res);
 //
 //
-//                                          }
+//                    }
 
 
     }
 
-//    初始化所有textview1信息
-    public  void init_text(String funds_res){
-        textView_fundsname.setText(Html.fromHtml("<font color=\"#000000\" size=20>"+responce_to_fundsname(funds_res)+"</font>"));
-        textcode_style.setText(code+getHeavy_style(0)+getHeavy_style(1)+getHeavy_style(2)+getHeavy_style(3));
+    //    初始化所有textview1信息
+    public  void init_text(){
+       // textView_fundsname.setText(Html.fromHtml("<font color=\"#000000\" size=20>"+"fundHeavyList.get(0).getName()"+"</font>"));
+        textcode_style.setText(code);
         textView_value_now.setText(getHistory_incre(0)+getHistory_date(0)+getHistory_uni(0));
 
     }
@@ -491,6 +698,7 @@ public      class fundsinfo extends AppCompatActivity{
                     @Override
                     public void run() {
 
+                        init_text();
                         fundsinfo.Historylist adapter_history=new fundsinfo.Historylist();
                         listview_History.setAdapter(adapter_history);
 
@@ -519,7 +727,8 @@ public      class fundsinfo extends AppCompatActivity{
 
         String url=all_url();
 
-        Log.v("all_url_",all_url());
+
+
         HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
 
             @Override
@@ -531,7 +740,18 @@ public      class fundsinfo extends AppCompatActivity{
             public void onResponse(Call call, final Response response) throws IOException {
                 final String res=response.body().string();
 
+
+                //System.out.println(res);
                 setAll_name_price(res);
+                Looper.prepare();
+
+                Message message = new Message();
+                message.what = 2;
+                mHandler.sendMessage(message);
+
+
+                Looper.loop();
+
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -582,13 +802,13 @@ public      class fundsinfo extends AppCompatActivity{
 
 
 
-//各类set函数
+    //各类set函数
 //setAll类函数
 //set所有重仓id
-public void setAll_id(String funds_res){
-    String res=funds_res;
+    public void setAll_id(String funds_res){
+        String res=funds_res;
 
-    Log.v("heacy_id_2",response_to_stock_id(res));
+        Log.v("heacy_id_2",response_to_stock_id(res));
         List<String>list1=Arrays.asList(response_to_stock_id(res).split(",",10));
 
         for(int i=0;i<10;i++)
@@ -596,7 +816,7 @@ public void setAll_id(String funds_res){
             setHeavy_id(i,list1.get(i));
         }
         Log.v("tatata",getHeavy_id(0));
-}
+    }
 
     //set所有重仓name,price
     public void setAll_name_price(String heavyinfo_responce){
@@ -606,6 +826,8 @@ public void setAll_id(String funds_res){
 
         for(int i=0;i<heavystock_num;i++)
         {
+            System.out.println(list.get(i*2));
+            System.out.println(list.get(i*2+1));
             setHeavy_name(i,list.get(i*2));
             setHeavy_price(i,list.get(i*2+1));
         }
@@ -788,11 +1010,24 @@ public void setAll_id(String funds_res){
     //返回一条请求十条重仓股的url
     public String all_url() {
 
-        String all_url= "http://hq.sinajs.cn/list="+stock_id_to_stocklist(Heavy_id.get(0));
+        String id=fundHeavyList.get(0).get_stock_id()[0];
+        String temp1=id.substring(0,6);String temp2=id.substring(7,9);
+        temp2=temp2.toLowerCase();
+        id=temp2+temp1;
+
+        String all_url= "http://hq.sinajs.cn/list="+id;//
         for (int i=1;i<10;i++)
         {
-            all_url=all_url+","+stock_id_to_stocklist(Heavy_id.get(i));
+            String iid=fundHeavyList.get(0).get_stock_id()[i];
+            String tempi1=iid.substring(0,6);String tempi2=iid.substring(7,9);
+            tempi2=tempi2.toLowerCase();
+            iid=tempi2+tempi1;
+//            System.out.print(i);
+//            System.out.print(iid);
+            all_url=all_url+","+iid;
+
         }
+        System.out.print(all_url);
 
         return all_url;
     }
