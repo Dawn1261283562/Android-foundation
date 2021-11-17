@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,8 +34,12 @@ public class SearchFragment2 extends androidx.fragment.app.Fragment {
     private FlowLayout.Adapter flowAdapter2;
     private LayoutInflater layoutInflater2;
     private ArrayList<String> strList2;
-    ImageButton deleteAllHisBut2;
+    Button deleteAllHisBut2;
+    ImageButton helpButton;
+    TextView helpText;
     Group titleGroup;
+    Group titleGroup1;
+    Group titleGroup2;
 
     private List<FundGeneral> fundGeneralList;
 
@@ -94,6 +99,7 @@ public class SearchFragment2 extends androidx.fragment.app.Fragment {
                                 sp.edit().clear().commit();
                             }
                             flowLayout2.setAdapter(flowAdapter2);
+                            changeVisibility1();
                         }
                         else if ((event.getX() < textView.getWidth()-drawable.getIntrinsicWidth()-textView.getPaddingRight())
                                 &&(event.getX() > 0)){
@@ -107,6 +113,7 @@ public class SearchFragment2 extends androidx.fragment.app.Fragment {
             }
         };
         flowLayout2.setAdapter(flowAdapter2);
+        changeVisibility1();
     }
 
     private void initEvents() {
@@ -147,6 +154,26 @@ public class SearchFragment2 extends androidx.fragment.app.Fragment {
                 strList2.clear();
                 sp.edit().clear().commit();
                 flowLayout2.setAdapter(flowAdapter2);
+                changeVisibility1();
+            }
+        });
+        helpButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()){
+                    case MotionEvent.ACTION_DOWN:{
+                        helpText.setVisibility(View.VISIBLE);
+                        helpText.bringToFront();
+                        deleteAllHisBut2.setEnabled(false);
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP:{
+                        helpText.setVisibility(View.GONE);
+                        deleteAllHisBut2.setEnabled(true);
+                        break;
+                    }
+                }
+                return false;
             }
         });
     }
@@ -156,7 +183,11 @@ public class SearchFragment2 extends androidx.fragment.app.Fragment {
         flowLayout2 = mView.findViewById(R.id.frag2_history_flow);
         layoutInflater2 = LayoutInflater.from(getActivity());
         deleteAllHisBut2=mView.findViewById(R.id.delete_all_history2);
+        helpButton=mView.findViewById(R.id.help_button_sear_frag2);
+        helpText=mView.findViewById(R.id.sear_frag2_helptext);
         titleGroup=mView.findViewById(R.id.sear_frag2_titlegroup);
+        titleGroup1=mView.findViewById(R.id.sear_frag2_titlegroup1);
+        titleGroup2=mView.findViewById(R.id.sear_frag2_titlegroup2);
     }
 
     public void getsearchHistory2() {
@@ -171,6 +202,7 @@ public class SearchFragment2 extends androidx.fragment.app.Fragment {
             strList2.add(hisArrays[i]);
         }
         flowLayout2.setAdapter(flowAdapter2);
+        changeVisibility1();
     }
 
     public void saveSearchHistory2(String text){
@@ -204,6 +236,35 @@ public class SearchFragment2 extends androidx.fragment.app.Fragment {
         }
     }
 
+    public void changeVisibility1(){
+        if(fundGeneralList!=null){
+            if(fundGeneralList.size()==0){
+                titleGroup.setVisibility(View.INVISIBLE);
+                titleGroup2.setVisibility(View.VISIBLE);
+                if(flowAdapter2.getCount()==0){
+                    titleGroup1.setVisibility(View.GONE);
+                }
+                else{
+                    titleGroup1.setVisibility(View.VISIBLE);
+                }
+            }else{
+                titleGroup.setVisibility(View.VISIBLE);
+                titleGroup2.setVisibility(View.GONE);
+            }
+        }else {
+            titleGroup.setVisibility(View.INVISIBLE);
+            titleGroup2.setVisibility(View.VISIBLE);
+            if(flowAdapter2.getCount()==0){
+                titleGroup1.setVisibility(View.GONE);
+            }
+            else{
+                titleGroup1.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+    public void clearFundGeneralList(){
+        fundGeneralList.clear();
+    }
     public void update(ArrayList<Stock> stockList) {
 
         System.out.println(123321);
@@ -221,11 +282,19 @@ public class SearchFragment2 extends androidx.fragment.app.Fragment {
 
 //        listView.setAdapter(new FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList));
 
-        if(fundGeneralList.size()==0){
+
+        if(fundGeneralList!=null){
+            if(fundGeneralList.size()==0){
+                titleGroup.setVisibility(View.INVISIBLE);
+                titleGroup2.setVisibility(View.VISIBLE);
+            }else{
+                titleGroup.setVisibility(View.VISIBLE);
+                titleGroup2.setVisibility(View.GONE);
+            }
+        }else {
             titleGroup.setVisibility(View.INVISIBLE);
-        }
-        else{
-            titleGroup.setVisibility(View.VISIBLE);
+            titleGroup2.setVisibility(View.VISIBLE);
+
         }
         //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
 //        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);

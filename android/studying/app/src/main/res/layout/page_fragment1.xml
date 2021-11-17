@@ -76,99 +76,107 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/black"/>-->
-
-    <ScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/pagefrag1_swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingTop="10dp">
-        <LinearLayout
+        android:layout_weight="1">
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:orientation="vertical">
-
+            android:layout_height="match_parent">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:orientation="vertical"
-                android:background="@drawable/search_background">
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/page_fragment1_icon1"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@mipmap/icon1_2" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/page_fragment1_icon1"
-                        android:paddingStart="10dp"
-                        android:text="热点股票"
-                        android:textSize="20sp" />
-                </RelativeLayout>
-
-                <ImageView
-                    android:id="@+id/page_fragment1_image2"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    android:src="@mipmap/pppicture"/>
-
-                <ListView
-                    android:id="@+id/page_fragment1_list1"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:visibility="gone"
-                    tools:visibility="visible"/>
-                <Button
-                    android:id="@+id/page_fragment1_button1"
-                    android:layout_width="match_parent"
-                    android:layout_height="25dp"
-                    android:text="展开更多热点股票"
-                    android:background="@color/transparent"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:padding="10dp"
-                android:orientation="vertical"
-                android:background="@drawable/search_background">
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/page_fragment1_icon2"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@mipmap/icon1_2" />
-
-                    <TextView
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/search_background">
+                    <RelativeLayout
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/page_fragment1_icon1"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@mipmap/icon1_2" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/page_fragment1_icon1"
+                            android:paddingStart="10dp"
+                            android:text="热点股票"
+                            android:textSize="20sp" />
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:id="@+id/page_fragment1_image2"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/page_fragment1_icon2"
-                        android:paddingStart="10dp"
-                        android:text="网页控件吗"
-                        android:textSize="20sp" />
-                </RelativeLayout>
-                <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/pppicture"/>
+
+                    <ListView
+                        android:id="@+id/page_fragment1_list1"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:visibility="gone"
+                        tools:visibility="visible"/>
+                    <Button
+                        android:id="@+id/page_fragment1_button1"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:text="展开更多热点股票"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:background="@color/transparent"/>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:text="hello!"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/search_background">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/page_fragment1_icon2"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@mipmap/icon1_2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/page_fragment1_icon2"
+                            android:paddingStart="10dp"
+                            android:text="网页控件吗"
+                            android:textSize="20sp" />
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:text="hello!"/>
+
+                </LinearLayout>
 
             </LinearLayout>
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        </LinearLayout>
-    </ScrollView>
+
 
 </LinearLayout>
