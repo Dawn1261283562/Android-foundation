@@ -16,6 +16,7 @@ public class FundHeavy implements Serializable {
     //private String[] stock_name = new String[size];
     public String[] _stock_ratio = new String[size];
     public String[] _stock_all_type = new String[size];
+    public String[] stock_all_type = new String[size];
     //因为每只基金有10只股票，可能两只股票有相同的板块，所以用HashSet自动去重
     public int hits = 0;
 
