@@ -188,8 +188,6 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
                         login();
                     }
                 }
-                //设置position对应的集合中的Fragment页面
-                mViewPager.setCurrentItem(position);
                 resetImg();
                 selectTab(position);
             }

@@ -35,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.studying.entity.FundHeavyInfo;
 import com.example.studying.entity.Stock;
@@ -56,6 +57,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public class PageFragment1 extends androidx.fragment.app.Fragment {
+
     private View mView;
     private LinearLayout searTab1;
     private LinearLayout searTab2;
@@ -64,8 +66,9 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
     private List<FundGeneral> fundGeneralList;
     private FundAdapter fundAdapter;
     private ArrayList<Stock> stockListNormal;
-    private final int fundShowDefault=6;
 
+    SwipeRefreshLayout swipeRefreshLayout;
+    private final int fundShowDefault=6;
     private Button moreFundBut;
 
     Handler mHandler;
@@ -100,6 +103,8 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
                         params.height = totalHeight + (listView1.getDividerHeight() * (fundShowDefault - 1));
 //                        ((ViewGroup.MarginLayoutParams) params).setMargins(10, 10, 10, 10);
                         listView1.setLayoutParams(params);
+                        moreFundBut.setText("展开更多热点股票");
+                        swipeRefreshLayout.setRefreshing(false);
                     case 2:
 
                 }
@@ -116,7 +121,124 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
             listView1.setVisibility(View.VISIBLE);
             moreFundBut.setVisibility(View.VISIBLE);
         }
+        requestForHot();
+    }
 
+    private void initEvents() {
+        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                FundGeneral fundGeneral=fundGeneralList.get(i);
+                Toast.makeText(getContext(),fundGeneral.getFund2().toString(),Toast.LENGTH_SHORT).show();
+
+                //Intent intent=new Intent(getActivity(),MainActivity2.class);
+                String regex = "\\d{6}.[a-zA-Z][a-zA-Z]";
+                String id=fundGeneral.getStock().getId().toString();
+                if(id.matches(regex)){
+                    //System.out.println(1233);
+                    String temp1=id.substring(0,6);String temp2=id.substring(7,9);
+                    //System.out.println(temp2+temp1);
+                    String id_restructure=temp2+temp1;
+                    id=id_restructure;
+                    //System.out.println(id);
+                    Intent intent=new Intent(getActivity(),Stockinfo.class);
+                    intent.putExtra("stockGet", fundGeneral.getStock());
+                    startActivity(intent);
+                }
+/*
+                if(fundGeneralList.get(i).getSelectFund()){
+                    fundGeneralList.get(i).setSelectFund(false);
+                }
+                else{
+                    fundGeneralList.get(i).setSelectFund(true);
+                }*/
+                fundAdapter.notifyDataSetChanged();
+            }
+        });
+        moreFundBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(moreFundBut.getText().toString().equals("展开更多热点股票")){
+                    int totalHeight = 0;
+                    for (int i = 0; i < fundAdapter.getCount(); i++) {
+                        View listItem = fundAdapter.getView(i, null, listView1);
+                        listItem.measure(0, 0);
+                        totalHeight += listItem.getMeasuredHeight();
+                    }
+                    ViewGroup.LayoutParams params = listView1.getLayoutParams();
+                    params.height = totalHeight + (listView1.getDividerHeight() * (fundAdapter.getCount() - 1));
+//                        ((ViewGroup.MarginLayoutParams) params).setMargins(10, 10, 10, 10);
+                    listView1.setAdapter(new FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList));
+                    listView1.setLayoutParams(params);
+
+                    moreFundBut.setText("收起");
+                }
+                else{
+                    int totalHeight = 0;
+                    for (int i = 0; i < fundShowDefault; i++) {
+                        View listItem = fundAdapter.getView(i, null, listView1);
+                        listItem.measure(0, 0);
+                        totalHeight += listItem.getMeasuredHeight();
+                    }
+                    ViewGroup.LayoutParams params = listView1.getLayoutParams();
+                    params.height = totalHeight + (listView1.getDividerHeight() * (fundShowDefault - 1));
+//                        ((ViewGroup.MarginLayoutParams) params).setMargins(10, 10, 10, 10);
+                    listView1.setAdapter(new FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList.subList(0,fundShowDefault)));
+                    listView1.setLayoutParams(params);
+
+                    moreFundBut.setText("展开更多热点股票");
+                }
+            }
+        });
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                requestForHot();
+            }
+        });
+    }
+
+    private void initView() {
+        listView1 = (ListView) mView.findViewById(R.id.page_fragment1_list1);
+
+        searTab1 = (LinearLayout)mView.findViewById(R.id.sear_tab1);
+        searTab2 = (LinearLayout)mView.findViewById(R.id.sear_tab2);
+        searTab3 = (LinearLayout)mView.findViewById(R.id.sear_tab3);
+        moreFundBut=(Button) mView.findViewById(R.id.page_fragment1_button1);
+        swipeRefreshLayout=(SwipeRefreshLayout) mView.findViewById(R.id.pagefrag1_swipe_refresh);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        searTab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(),MainActivity2.class);
+                //Intent intent=new Intent(getActivity(),Stockinfo.class);
+                intent.putExtra("i",0);
+                startActivity(intent);
+            }
+        });
+        searTab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(),MainActivity2.class);
+                intent.putExtra("i",1);
+                startActivity(intent);
+            }
+        });
+        searTab3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(),MainActivity2.class);
+                intent.putExtra("i",2);
+                startActivity(intent);
+            }
+        });
+    }
+    private void requestForHot(){
         String url = "http://localhost:8080/user/lgoin";
         url = "http://43m486x897.yicp.fun/stock/searchStock?id=平安";
         url = "http://43m486x897.yicp.fun/stock/getStockListByHot?wantedNum=30";
@@ -171,117 +293,6 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
                     Toast.makeText(getActivity(), "无相关信息", Toast.LENGTH_SHORT).show();
                     Looper.loop();
                 }
-            }
-        });
-
-
-    }
-
-    private void initEvents() {
-        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                FundGeneral fundGeneral=fundGeneralList.get(i);
-                Toast.makeText(getContext(),fundGeneral.getFund2().toString(),Toast.LENGTH_SHORT).show();
-
-                //Intent intent=new Intent(getActivity(),MainActivity2.class);
-                String regex = "\\d{6}.[a-zA-Z][a-zA-Z]";
-                String id=fundGeneral.getStock().getId().toString();
-                if(id.matches(regex)){
-                    //System.out.println(1233);
-                    String temp1=id.substring(0,6);String temp2=id.substring(7,9);
-                    //System.out.println(temp2+temp1);
-                    String id_restructure=temp2+temp1;
-                    id=id_restructure;
-                    //System.out.println(id);
-                    Intent intent=new Intent(getActivity(),Stockinfo.class);
-                    intent.putExtra("stockGet", fundGeneral.getStock());
-                    startActivity(intent);
-                }
-
-                if(fundGeneralList.get(i).getSelectFund()){
-                    fundGeneralList.get(i).setSelectFund(false);
-                }
-                else{
-                    fundGeneralList.get(i).setSelectFund(true);
-                }
-                fundAdapter.notifyDataSetChanged();
-            }
-        });
-        moreFundBut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(moreFundBut.getText().toString().equals("展开更多热点股票")){
-                    int totalHeight = 0;
-                    for (int i = 0; i < fundAdapter.getCount(); i++) {
-                        View listItem = fundAdapter.getView(i, null, listView1);
-                        listItem.measure(0, 0);
-                        totalHeight += listItem.getMeasuredHeight();
-                    }
-                    ViewGroup.LayoutParams params = listView1.getLayoutParams();
-                    params.height = totalHeight + (listView1.getDividerHeight() * (fundAdapter.getCount() - 1));
-//                        ((ViewGroup.MarginLayoutParams) params).setMargins(10, 10, 10, 10);
-                    listView1.setAdapter(new FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList));
-                    listView1.setLayoutParams(params);
-
-                    moreFundBut.setText("收起");
-                }
-                else{
-                    int totalHeight = 0;
-                    for (int i = 0; i < fundShowDefault; i++) {
-                        View listItem = fundAdapter.getView(i, null, listView1);
-                        listItem.measure(0, 0);
-                        totalHeight += listItem.getMeasuredHeight();
-                    }
-                    ViewGroup.LayoutParams params = listView1.getLayoutParams();
-                    params.height = totalHeight + (listView1.getDividerHeight() * (fundShowDefault - 1));
-//                        ((ViewGroup.MarginLayoutParams) params).setMargins(10, 10, 10, 10);
-                    listView1.setAdapter(new FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList.subList(0,fundShowDefault)));
-                    listView1.setLayoutParams(params);
-
-                    moreFundBut.setText("展开更多热点股票");
-                }
-            }
-        });
-
-    }
-
-    private void initView() {
-        listView1 = (ListView) mView.findViewById(R.id.page_fragment1_list1);
-
-        searTab1 = (LinearLayout)mView.findViewById(R.id.sear_tab1);
-        searTab2 = (LinearLayout)mView.findViewById(R.id.sear_tab2);
-        searTab3 = (LinearLayout)mView.findViewById(R.id.sear_tab3);
-        moreFundBut=(Button) mView.findViewById(R.id.page_fragment1_button1);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        searTab1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(getActivity(),MainActivity2.class);
-                //Intent intent=new Intent(getActivity(),Stockinfo.class);
-                intent.putExtra("i",0);
-                startActivity(intent);
-            }
-        });
-        searTab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(getActivity(),MainActivity2.class);
-                intent.putExtra("i",1);
-                startActivity(intent);
-            }
-        });
-        searTab3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(getActivity(),MainActivity2.class);
-                intent.putExtra("i",2);
-                startActivity(intent);
             }
         });
     }
