@@ -104,6 +104,14 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         android:gravity="center"/>
+
+    <ListView
+        android:id="@+id/list_search1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintTop_toBottomOf="@id/back_view1"
+        app:layout_constraintBottom_toBottomOf="parent"/>
     <TextView
         android:id="@+id/sear_frag1_helptext"
         android:layout_width="wrap_content"
@@ -115,12 +123,4 @@
         android:padding="10dp"
         android:text="基金搜索基金搜索基金搜索\n基金搜索基金搜索基金搜索\n基金搜索基金搜索"
         android:background="@drawable/search_background"/>
-
-    <ListView
-        android:id="@+id/list_search1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintVertical_weight="1"
-        app:layout_constraintTop_toBottomOf="@id/back_view1"
-        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
