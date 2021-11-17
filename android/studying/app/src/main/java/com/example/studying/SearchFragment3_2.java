@@ -152,6 +152,7 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
         checkComBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(checkComBtn.getBackground().getConstantState().equals(getResources().getDrawable(R.mipmap.checkbox1).getConstantState())){
                     checkComBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox2));
                     textCompany.setVisibility(View.VISIBLE);
