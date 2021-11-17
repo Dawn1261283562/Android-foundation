@@ -122,6 +122,25 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
 
                 FundGeneral fundGeneral = fundGeneralList1.get(i);
                 Toast.makeText(getContext(), fundGeneral.getFund2().toString(), Toast.LENGTH_SHORT).show();
+                //Intent intent=new Intent(getActivity(),MainActivity2.class);
+
+                String id=fundGeneral.getFundHeavyInfo().getId().toString();
+
+                    String temp1=id.substring(0,6);String temp2=id.substring(7,9);
+                    //System.out.println(temp2+temp1);
+                   // String id_restructure=temp2+temp1;
+                String id_restructure=temp1;
+                    id=id_restructure;
+                    //System.out.println(id);
+                FundHeavyInfo temp=new FundHeavyInfo();
+                temp.setId(id);
+                    Intent intent=new Intent(getActivity(),fundsinfo.class);
+                    intent.putExtra("fundsGet", temp);
+                    startActivity(intent);
+
+
+
+
             }
         });
         deleteAllHisBut1.setOnClickListener(new View.OnClickListener() {
@@ -133,22 +152,8 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
                 flowLayout1.setAdapter(flowAdapter1);
             }
         });
-        helpButton.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch (motionEvent.getAction()){
-                    case MotionEvent.ACTION_DOWN:{
-                        helpText.setVisibility(View.VISIBLE);
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP:{
-                        helpText.setVisibility(View.GONE);
-                        break;
-                    }
-                }
-                return false;
-            }
-        });
+
+
     }
 
     private void initView() {
@@ -156,8 +161,9 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
         flowLayout1 = mView.findViewById(R.id.frag1_history_flow);
         layoutInflater1 = LayoutInflater.from(getActivity());
         deleteAllHisBut1=mView.findViewById(R.id.delete_all_history1);
-        titleGroup=mView.findViewById(R.id.sear_frag1_titlegroup);
-        helpButton=mView.findViewById(R.id.help_button_sear_frag1);
+
+
+
         helpText=mView.findViewById(R.id.sear_frag1_helptext);
     }
     public void getsearchHistory1() {
@@ -248,9 +254,9 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
         if(fundGeneralList1.size()==0){
             titleGroup.setVisibility(View.INVISIBLE);
         }
-        else{
-            titleGroup.setVisibility(View.VISIBLE);
-        }
+//        else{
+//            titleGroup.setVisibility(View.VISIBLE);
+//        }
         //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
 //        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
 //
