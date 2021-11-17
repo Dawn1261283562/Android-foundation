@@ -36,8 +36,12 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
 
     private FlowLayout flowLayout1;
     private FlowLayout.Adapter flowAdapter1;
-    private LayoutInflater layoutInflater1;
     private ArrayList<String> strList1;
+
+    FlowLayout flowLayout2;
+    private FlowLayout.Adapter flowAdapter2;
+    private ArrayList<String> strList2;
+
     Button deleteAllHisBut1;
     ImageButton helpButton;
     TextView helpText;
@@ -50,6 +54,9 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
         if (mView == null) {
             mView = inflater.inflate(R.layout.search_fragment1, container, false);
         }
+
+
+
         initView();
         initEvent();
         initDate();
@@ -64,6 +71,14 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
         fundAdapter1=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList1);
         listView1.setAdapter(fundAdapter1);
         strList1 = new ArrayList<>();
+
+        strList2=new ArrayList<>();
+        strList2.add("华夏成长混合");
+        strList2.add("000001");
+        strList2.add("健康");
+        strList2.add("000005");
+
+
         flowAdapter1=new FlowLayout.Adapter() {
             @Override
             public int getCount() {
@@ -72,6 +87,7 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
 
             @Override
             public View getView(int position, ViewGroup parent) {
+                LayoutInflater layoutInflater1 = LayoutInflater.from(getActivity());
                 View view = layoutInflater1.inflate(R.layout.historysearch_flow_item,parent,false);
                 // 给 View 设置 margin
                 ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(view.getLayoutParams());
@@ -115,7 +131,35 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
                 return view;
             }
         };
+        flowAdapter2=new FlowLayout.Adapter() {
+            @Override
+            public int getCount() {
+                return strList2.size();
+            }
+
+            @Override
+            public View getView(int position, ViewGroup parent) {
+                LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+                View view = layoutInflater.inflate(R.layout.hot_search_item,parent,false);
+                // 给 View 设置 margin
+                ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(view.getLayoutParams());
+                mlp.setMargins(5, 5, 5, 5);
+                view.setLayoutParams(mlp);
+                TextView textView= (TextView)view.findViewById(R.id.flow_text_history);
+                textView.setText(strList2.get(position));
+                textView.setOnTouchListener(new View.OnTouchListener(){
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event){
+                        MainActivity2.editText.setText(strList2.get(position));
+                        MainActivity2.editText.setSelection(strList2.get(position).length());
+                        return false;
+                    }
+                });
+                return view;
+            }
+        };
         flowLayout1.setAdapter(flowAdapter1);
+        flowLayout2.setAdapter(flowAdapter2);
         changeVisibility1();
     }
 
@@ -182,7 +226,7 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
     private void initView() {
         listView1 = (ListView) mView.findViewById(R.id.list_search1);
         flowLayout1 = mView.findViewById(R.id.frag1_history_flow);
-        layoutInflater1 = LayoutInflater.from(getActivity());
+        flowLayout2 = mView.findViewById(R.id.frag1_history_flow2);
         deleteAllHisBut1=mView.findViewById(R.id.delete_all_history1);
 
 
