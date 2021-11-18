@@ -160,7 +160,7 @@ public class StockDaoImpl implements StockDao {
                     stock.setId(resultSet.getString("id"));
                     stock.setName(resultSet.getString("name"));
                     stock.setType(resultSet.getString("type"));
-                    // stock.setPrice(resultSet.getString("price"));
+                    stock.setPrice(resultSet.getString("price"));
                     stock.setHits(resultSet.getInt("hits"));
                     return stock;
                 }

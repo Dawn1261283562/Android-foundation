@@ -172,19 +172,20 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
                 Toast.makeText(getContext(), fundGeneral.getFund2().toString(), Toast.LENGTH_SHORT).show();
                 //Intent intent=new Intent(getActivity(),MainActivity2.class);
 
-                String id=fundGeneral.getFundHeavyInfo().getId().toString();
+                String id=fundGeneral.getFund1().toString();
 
-                    String temp1=id.substring(0,6);String temp2=id.substring(7,9);
-                    //System.out.println(temp2+temp1);
-                   // String id_restructure=temp2+temp1;
+                String temp1=id.substring(0,6);String temp2=id.substring(7,9);
+                //System.out.println(temp2+temp1);
+                // String id_restructure=temp2+temp1;
                 String id_restructure=temp1;
-                    id=id_restructure;
-                    //System.out.println(id);
+                id=id_restructure;
+                //System.out.println(id);
                 FundHeavyInfo temp=new FundHeavyInfo();
                 temp.setId(id);
-                    Intent intent=new Intent(getActivity(),fundsinfo.class);
-                    intent.putExtra("fundsGet", temp);
-                    startActivity(intent);
+                temp.setName(fundGeneral.getFund2().toString());
+                Intent intent=new Intent(getActivity(),fundsinfo.class);
+                intent.putExtra("fundsGet", temp);
+                startActivity(intent);
 
 
 

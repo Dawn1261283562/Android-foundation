@@ -374,10 +374,10 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
                 //System.out.println(id);
                 FundHeavyInfo temp=new FundHeavyInfo();
                 temp.setId(id);
+                temp.setName(fundGeneral.getFund2().toString());
                 Intent intent=new Intent(getActivity(),fundsinfo.class);
                 intent.putExtra("fundsGet", temp);
                 startActivity(intent);
-
 
 
 

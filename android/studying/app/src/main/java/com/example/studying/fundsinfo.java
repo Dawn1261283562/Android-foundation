@@ -225,7 +225,7 @@ public      class fundsinfo extends AppCompatActivity{
                     return v;
                 }
 
-                t1.setText(Heavy_name.get(position-1).toString());
+                t1.setText(Heavy_name.get(position-1).toString()+"\n|"+fundHeavyList.get(0).get_stock_id()[position-1]);
                 t2.setText(Heavy_price.get(position-1).toString());
                 t3.setText(fundHeavyList.get(0).get_stock_ratio()[position-1]);
                 return v;
@@ -271,6 +271,7 @@ public      class fundsinfo extends AppCompatActivity{
                 t1.setText(getHistory_date(position-1));
                 t2.setText(getHistory_uni(position-1));
                 t3.setText(getHistory_cumu(position-1));
+
                 t4.setText(getHistory_incre(position-1));
                 return v;}
             else
@@ -428,6 +429,8 @@ public      class fundsinfo extends AppCompatActivity{
                         listview.setAdapter(adapter);
                         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+
+
                             //参数三：位置，即点击的是第几个Item
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -437,6 +440,16 @@ public      class fundsinfo extends AppCompatActivity{
                                 if(position==0)
                                 {}
                                 else{
+
+                                        Stock tt=new Stock();
+
+                                        tt.setId(fundHeavyList.get(0).get_stock_id()[position-1]);
+                                        Intent intent=new Intent(fundsinfo.this,Stockinfo.class);
+                                        intent.putExtra("stockGet", tt);
+                                        startActivity(intent);
+                                    //}
+
+
 //                                    Intent intent=new Intent(fundsinfo.this,PageFragment1.class);
 //                                    String stock_id=getHeavy_id(position-1);
 //                                    intent.putExtra(stock_id, stock_id);
@@ -908,6 +921,7 @@ public      class fundsinfo extends AppCompatActivity{
             setHistory_date(i,s.get(i*4));
             setHistory_uni(i,s.get(i*4+1));
             setHistory_cumu(i,s.get(i*4+2));
+            if(s.size()<=i*4+3)continue;
             setHistory_incre(i,s.get(i*4+3));
         }
 
@@ -1001,7 +1015,11 @@ public      class fundsinfo extends AppCompatActivity{
     }
 
     public String getHistory_incre(int i) {
+        if(this.History_incre.size()>i)
         return this.History_incre.get(i);
+        else{
+            return "";
+        }
     }
 
     //！！各类get单数据函数
@@ -1141,6 +1159,9 @@ public      class fundsinfo extends AppCompatActivity{
 
             for(int i=0;i<4;i++)
             {
+                //System.out.println(s2.size());System.out.println(2+2*i+16*j);
+                if(s2.size()<=2+2*i+16*j+22)continue;
+                //System.out.println(i);System.out.println(j);
                 List<String>s3=Arrays.asList(s2.get(22+2*i+16*j).split("<",2));
                 if(j<4|i<3) {
                     res = res + s3.get(0) + ",";
