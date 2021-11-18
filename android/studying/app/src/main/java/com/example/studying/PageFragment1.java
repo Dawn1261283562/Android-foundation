@@ -270,11 +270,9 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
                         stockBeanList.add(stockBean);
 
                         System.out.println("这下面是 股票的代码、名字、板块集、股价、热度");
-                        System.out.println(stockBean.getId());
-                        System.out.println(stockBean.getName());
-                        System.out.println(stockBean.getType());
+
                         System.out.println(stockBean.getPrice());
-                        System.out.println(stockBean.getHits());
+
                         System.out.println("这上面是 股票的代码、名字、板块集、股价、热度");
                     }
 
