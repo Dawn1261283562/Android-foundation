@@ -28,6 +28,11 @@
             android:name=".ProrateActivity"
             android:exported="true" />
 
+        <activity
+            android:name=".Historyinfo"
+            android:exported="true" />
+
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />

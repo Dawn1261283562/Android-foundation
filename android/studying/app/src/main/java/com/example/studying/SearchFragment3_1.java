@@ -57,6 +57,8 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
     private Button addBtn;
     private Button searchBtn;
     private Button prorateBtn;
+    private ImageButton helpButton;
+    private TextView helpText;
     private ImageButton checkProBtn;
     private ArrayList<Stock> stockList=new ArrayList<Stock>();
     private List<FundGeneral> fundGeneralList=new ArrayList<>();
@@ -344,6 +346,25 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
         });
 
 
+        helpButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()){
+                    case MotionEvent.ACTION_DOWN:{
+                        helpText.setVisibility(View.VISIBLE);
+                        helpText.bringToFront();
+//                        deleteAllHisBut2.setEnabled(false);
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP:{
+                        helpText.setVisibility(View.GONE);
+//                        deleteAllHisBut2.setEnabled(true);
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -408,7 +429,10 @@ public class SearchFragment3_1 extends androidx.fragment.app.Fragment {
         searchBtn=mView.findViewById(R.id.frag3_1_but2);
         prorateBtn=mView.findViewById(R.id.prorate_but);
         checkProBtn=mView.findViewById(R.id.check_prorate);
+
         listView =  mView.findViewById(R.id.list_search3_1);
+        helpText = mView.findViewById(R.id.sear_frag3_helptext);
+        helpButton =mView.findViewById(R.id.help_button_sear_frag3);
         flowLayout = mView.findViewById(R.id.flowlayout3_1);
         layoutInflater = LayoutInflater.from(getContext());
     }
