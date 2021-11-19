@@ -55,6 +55,7 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public List<Stock> getStockListByHot(int num) {
+        
         return stockDao.getStockListByHot(num);
     }
 }

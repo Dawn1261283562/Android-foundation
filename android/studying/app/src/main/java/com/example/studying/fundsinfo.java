@@ -263,7 +263,7 @@ public      class fundsinfo extends AppCompatActivity{
                     return v;
                 }
 
-                t1.setText(Heavy_name.get(position-1).toString());
+                t1.setText(Heavy_name.get(position-1).toString()+"\n|"+fundHeavyList.get(0).get_stock_id()[position-1]);
                 t2.setText(Heavy_price.get(position-1).toString());
                 t3.setText(fundHeavyList.get(0).get_stock_ratio()[position-1]);
                 return v;
@@ -502,6 +502,8 @@ public      class fundsinfo extends AppCompatActivity{
 
                         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+
+
                             //参数三：位置，即点击的是第几个Item
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -511,6 +513,16 @@ public      class fundsinfo extends AppCompatActivity{
                                 if(position==0)
                                 {}
                                 else{
+
+                                        Stock tt=new Stock();
+
+                                        tt.setId(fundHeavyList.get(0).get_stock_id()[position-1]);
+                                        Intent intent=new Intent(fundsinfo.this,Stockinfo.class);
+                                        intent.putExtra("stockGet", tt);
+                                        startActivity(intent);
+                                    //}
+
+
 //                                    Intent intent=new Intent(fundsinfo.this,PageFragment1.class);
 //                                    String stock_id=getHeavy_id(position-1);
 //                                    intent.putExtra(stock_id, stock_id);
