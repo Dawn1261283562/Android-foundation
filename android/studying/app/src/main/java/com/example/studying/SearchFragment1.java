@@ -55,8 +55,6 @@ public class SearchFragment1 extends androidx.fragment.app.Fragment {
             mView = inflater.inflate(R.layout.search_fragment1, container, false);
         }
 
-
-
         initView();
         initEvent();
         initDate();

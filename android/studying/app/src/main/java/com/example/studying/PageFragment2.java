@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.studying.Data;
 import com.example.studying.entity.FundHeavy;
@@ -46,14 +47,13 @@ public class PageFragment2 extends androidx.fragment.app.Fragment {
 
     private List<FundGeneral> fundGeneralList=new ArrayList<>();
 
-    FundAdapter fundAdapter;
+    FundAdapter2 fundAdapter2;
 
     private String username;
     private ListView listView;
 
     private ArrayList<FundHeavy> fundHeavyList=new ArrayList<FundHeavy>();
 
-    private FlowLayout.Adapter flowAdapter;
 
     Handler mHandler;
 
@@ -67,13 +67,24 @@ public class PageFragment2 extends androidx.fragment.app.Fragment {
         username=data.getUsername();
         //获取到用户选择的基金
 
-        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
+        fundAdapter2=new FundAdapter2(getContext(),R.layout.fund_item2,fundGeneralList);
 
         listView = (ListView) mView.findViewById(R.id.list_fund_selected);
-        listView.setAdapter(fundAdapter);
+        listView.setAdapter(fundAdapter2);
 
-        fundSlected();
+        mHandler=new Handler(Looper.getMainLooper()){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case 1:
 
+                        update(fundHeavyList);
+                    case 2:
+
+                }
+            }
+        };
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -112,6 +123,12 @@ public class PageFragment2 extends androidx.fragment.app.Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        fundSlected();
+    }
+
     //Request 请求代码
     private void initData() {
         Data data = (Data)getActivity().getApplication();
@@ -128,19 +145,6 @@ public class PageFragment2 extends androidx.fragment.app.Fragment {
             username="NULL";
             return ;
         }
-        mHandler=new Handler(Looper.getMainLooper()){
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                super.handleMessage(msg);
-                switch (msg.what){
-                    case 1:
-
-                        update(fundHeavyList);
-                    case 2:
-
-                }
-            }
-        };
 
 
         String url = "http://localhost:8080/user/lgoin";
@@ -221,7 +225,7 @@ public class PageFragment2 extends androidx.fragment.app.Fragment {
 
         }
 
-        listView.setAdapter(new FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList));
+        listView.setAdapter(new FundAdapter2(getActivity(),R.layout.fund_item2,fundGeneralList));
 
         //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
 //        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
