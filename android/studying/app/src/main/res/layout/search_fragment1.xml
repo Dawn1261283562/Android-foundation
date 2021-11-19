@@ -69,6 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:drawableLeft="@mipmap/icon1_5"
         android:text="  清空搜索历史"
+        android:textColor="@color/black"
         android:background="@color/transparent"/>
 
     <TextView

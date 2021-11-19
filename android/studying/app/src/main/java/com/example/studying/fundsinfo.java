@@ -4,13 +4,17 @@ import com.example.studying.entity.FundHeavy;
 import com.example.studying.entity.FundHeavyInfo;
 import com.example.studying.entity.Stock;
 import com.example.studying.utils.HttpGetRequest;
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -19,6 +23,8 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -34,7 +40,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,16 +68,20 @@ import okhttp3.ResponseBody;
 
 public      class fundsinfo extends AppCompatActivity{
 
-    private Button btn1,btn2, btn3,btn4;
 
     private TextView textView_fundsname;
     private TextView textcode_style;
-    private TextView textView_value_now;
+    private TextView textView_value_date;
+    private TextView textView_value_incre;
+    private TextView textView_value_uni;
+
+
+
     private TextView title_history;
     private TextView title_heavy;
     private TextView title_;
 
-    private ImageView imageview,Collection_image;
+    private Button collectionBut;
     ListView listview;
     ListView listview_History;
     private ArrayList<FundHeavy> fundHeavyList=new ArrayList<FundHeavy>();
@@ -94,9 +111,6 @@ public      class fundsinfo extends AppCompatActivity{
     //日涨幅
     public List<String>History_incre=new ArrayList<>();
 
-
-    private ImageButton checkComBtn;
-
     private int heavystock_num=10;
     private int history_num=5;
     private int heavystyle_num=4;
@@ -108,6 +122,7 @@ public      class fundsinfo extends AppCompatActivity{
     String username="15361022831";
     String fundName="";
 
+    private FundsPictureFragment fundsPictureFragment;
     private boolean Collection=true;
 
     @Override
@@ -116,25 +131,44 @@ public      class fundsinfo extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fundsinfo_layout);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
 
-        btn1 = (Button) this.findViewById(R.id.Button_01);
-        btn2 = (Button) this.findViewById(R.id.Button_02);
-        btn3 = (Button) this.findViewById(R.id.Button_03);
-        btn4 = (Button) this.findViewById(R.id.Button_04);
+
+        FragmentManager fm = getSupportFragmentManager();//获得fragment的管理对象
+        FragmentTransaction ft = fm.beginTransaction();
+        fundsPictureFragment = new FundsPictureFragment();//Fragment每次添加都要重新创建，否则因为状态不同会导致问题
+
+        ft.add(R.id.fragment_container, fundsPictureFragment);
+        ft.commit();
+
+
+
         listview=(ListView) this.findViewById(R.id.list_view);
         listview_History=(ListView)this.findViewById(R.id.history_view);
-        imageview = (ImageView) this.findViewById(R.id.imageView);
-        Collection_image=(ImageView)this.findViewById(R.id.Collection_image);
+        collectionBut=this.findViewById(R.id.collection_Button);
         textView_fundsname = (TextView) this.findViewById(R.id.funds_name);
         textcode_style = (TextView) this.findViewById(R.id.code_style);
-        textView_value_now = (TextView) this.findViewById(R.id.value_now);
+        textView_value_date=this.findViewById(R.id.value_date);
+        textView_value_incre=this.findViewById(R.id.value_incre);
+        textView_value_uni=this.findViewById(R.id.value_uni);
+
+
         title_history=(TextView)this.findViewById(R.id.title_history);
         title_heavy=(TextView)this.findViewById(R.id.title_heavy);
-        title_=(TextView)this.findViewById(R.id.Title);
+        title_=(TextView)this.findViewById(R.id.fundsinfo_title);
 
-
-        checkComBtn=this.findViewById(R.id.Collection_image);
-
+        textView_fundsname.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects().detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
 
@@ -158,29 +192,17 @@ public      class fundsinfo extends AppCompatActivity{
         funds_name(code);
 
 
-
-
-//        init_Collection();
-
         init_History(code);
 
 
-//        Collection_image.setImageDrawable(getResources().getDrawable(R.drawable.C)); //不会变形
-//        String src="http _bpic.588ku.com_element_origin_min_pic_19_04_10_9dd27c6b5480b2cefd6f7d6a9a5c03f5.jpg&refer=http _bpic.588ku.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg.jpg";
-//        Bitmap bm = BitmapFactory.decodeFile(src);
-//        Collection_image.setImageBitmap(bm);//不会变形
-//        Collection_image.setImageResource(R.id.Collection_image);//不会变形
-//        Collection_image.setImageURI(Uri.fromFile(new File("C://Users/12612/Desktop/collection.jpg")));
-
-
-
+        Bundle bundle1 = new Bundle();
+        bundle1.putString("code",code);
+        fundsPictureFragment.setArguments(bundle1);
 
     }
 
-
-
     //重仓表的适配器类
-    class Heavylist extends BaseAdapter {
+    class HeavylistAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
@@ -201,10 +223,19 @@ public      class fundsinfo extends AppCompatActivity{
         }
 
         @Override
+        public boolean isEnabled(int position) {
+            if(position==0){
+                return false;
+            }
+            return super.isEnabled(position);
+        }
+
+        @Override
         public long getItemId(int position) {
             return position;
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public View getView(int position, View view, ViewGroup viewGroup) {
             View v=View.inflate(fundsinfo.this,R.layout.listview_textview,null );
@@ -216,7 +247,14 @@ public      class fundsinfo extends AppCompatActivity{
                 t1.setText("股票名称");
                 t2.setText("价格");
                 t3.setText("持仓占比");
-                return v;}
+                t1.setTextColor(getColor(R.color.black));
+                t2.setTextColor(getColor(R.color.black));
+                t3.setTextColor(getColor(R.color.black));
+                t1.setTextSize(16);
+                t2.setTextSize(16);
+                t3.setTextSize(16);
+                return v;
+            }
             else
             {
 
@@ -259,6 +297,15 @@ public      class fundsinfo extends AppCompatActivity{
         }
 
         @Override
+        public boolean isEnabled(int position) {
+            if(position==0){
+                return false;
+            }
+            return super.isEnabled(position);
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.M)
+        @Override
         public View getView(int position, View view, ViewGroup viewGroup) {
             View v=View.inflate(fundsinfo.this,R.layout.history_listview,null );
             TextView t1=v.findViewById(R.id.text1);
@@ -271,6 +318,7 @@ public      class fundsinfo extends AppCompatActivity{
                 t1.setText(getHistory_date(position-1));
                 t2.setText(getHistory_uni(position-1));
                 t3.setText(getHistory_cumu(position-1));
+
                 t4.setText(getHistory_incre(position-1));
                 return v;}
             else
@@ -280,6 +328,14 @@ public      class fundsinfo extends AppCompatActivity{
                 t2.setText("单价净值");
                 t3.setText("累计净值");
                 t4.setText("日涨幅");
+                t1.setTextColor(getColor(R.color.black));
+                t2.setTextColor(getColor(R.color.black));
+                t3.setTextColor(getColor(R.color.black));
+                t4.setTextColor(getColor(R.color.black));
+                t1.setTextSize(16);
+                t2.setTextSize(16);
+                t3.setTextSize(16);
+                t4.setTextSize(16);
 
                 return v;
             }
@@ -291,17 +347,21 @@ public      class fundsinfo extends AppCompatActivity{
 
     private void initEvents() {
         if(Collection){
-            checkComBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox2));
+            collectionBut.setText("已关注");
+            collectionBut.setBackgroundResource(R.drawable.search_background);
         }
-        else checkComBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox1));
-        checkComBtn.setOnClickListener(new View.OnClickListener() {
+        else {
+            collectionBut.setText("关注");
+            collectionBut.setBackgroundResource(R.drawable.searchhistory_background);
+        }
+        collectionBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 System.out.println("image_");
                 if(Collection){
-
                     System.out.println("image_");
-                    checkComBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox1));
+                    collectionBut.setText("关注");
+                    collectionBut.setBackgroundResource(R.drawable.searchhistory_background);
 //                    textCompany.setVisibility(View.VISIBLE);
 //                    textCompany.setText("当前搜索公司："+companySelected);
                     Collection=!Collection;
@@ -309,7 +369,8 @@ public      class fundsinfo extends AppCompatActivity{
                     delCollection();
                 }
                 else{
-                    checkComBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox2));
+                    collectionBut.setText("已关注");
+                    collectionBut.setBackgroundResource(R.drawable.search_background);
                     Collection=!Collection;
 
                     //增加
@@ -407,6 +468,7 @@ public      class fundsinfo extends AppCompatActivity{
 
 
         mHandler=new Handler(Looper.getMainLooper()){
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void handleMessage(@NonNull Message msg) {
                 super.handleMessage(msg);
@@ -423,9 +485,21 @@ public      class fundsinfo extends AppCompatActivity{
                         String res="";
 
 
-                        fundsinfo.Heavylist adapter=new fundsinfo.Heavylist();
+                        fundsinfo.HeavylistAdapter adapter=new fundsinfo.HeavylistAdapter();
+
+                        int totalHeight = 0;
+                        for (int i = 0; i < adapter.getCount(); i++) {
+                            View listItem = adapter.getView(i, null, listview);
+                            listItem.measure(0, 0);
+                            totalHeight += listItem.getMeasuredHeight();
+                        }
+                        ViewGroup.LayoutParams params = listview.getLayoutParams();
+                        params.height = totalHeight + (listview.getDividerHeight() * (adapter.getCount() - 1));
+//                        ((ViewGroup.MarginLayoutParams) params).setMargins(10, 10, 10, 10);
 
                         listview.setAdapter(adapter);
+                        listview.setLayoutParams(params);
+
                         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                             //参数三：位置，即点击的是第几个Item
@@ -454,7 +528,7 @@ public      class fundsinfo extends AppCompatActivity{
         };
 
         init_fundsinfo(code);
-        initimage(code);
+//        initimage(code);
         button_listen();
 
     }
@@ -463,7 +537,7 @@ public      class fundsinfo extends AppCompatActivity{
     //各类监听函数
     //各类button的监听函数
     public void button_listen() {
-        btn1.setOnClickListener(new OnClickListener() {
+        /*btn1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
 
@@ -531,7 +605,7 @@ public      class fundsinfo extends AppCompatActivity{
                     Log.i("333333","false");
                 }
             }
-        });
+        });*/
     }
 
     //！！各类button的监听函数
@@ -673,9 +747,18 @@ public      class fundsinfo extends AppCompatActivity{
 
     //    初始化所有textview1信息
     public  void init_text(){
-       // textView_fundsname.setText(Html.fromHtml("<font color=\"#000000\" size=20>"+"fundHeavyList.get(0).getName()"+"</font>"));
+        // textView_fundsname.setText(Html.fromHtml("<font color=\"#000000\" size=20>"+"fundHeavyList.get(0).getName()"+"</font>"));
         textcode_style.setText(code);
-        textView_value_now.setText(getHistory_incre(0)+getHistory_date(0)+getHistory_uni(0));
+        textView_value_date.setText(getHistory_date(0));
+        textView_value_incre.setText(getHistory_incre(0));
+        textView_value_uni.setText(getHistory_uni(0));
+
+        if(getHistory_incre(0).charAt(0)=='-'){
+            textView_value_incre.setTextColor(android.graphics.Color.parseColor("#D60000"));
+        }
+        else{
+            textView_value_incre.setTextColor(getColor(R.color.teal_700));
+        }
 
     }
     //初始化历史净值信息
@@ -695,13 +778,25 @@ public      class fundsinfo extends AppCompatActivity{
                 setHistory(responce_to_HistoryRecord(res));
 
                 runOnUiThread(new Runnable() {
+                    @RequiresApi(api = Build.VERSION_CODES.M)
                     @Override
                     public void run() {
 
                         init_text();
                         fundsinfo.Historylist adapter_history=new fundsinfo.Historylist();
-                        listview_History.setAdapter(adapter_history);
 
+                        int totalHeight = 0;
+                        for (int i = 0; i < adapter_history.getCount(); i++) {
+                            View listItem = adapter_history.getView(i, null, listview_History);
+                            listItem.measure(0, 0);
+                            totalHeight += listItem.getMeasuredHeight();
+                        }
+                        ViewGroup.LayoutParams params = listview_History.getLayoutParams();
+                        params.height = totalHeight + (listview_History.getDividerHeight() * (adapter_history.getCount() - 1));
+//                        ((ViewGroup.MarginLayoutParams) params).setMargins(10, 10, 10, 10);
+
+                        listview_History.setAdapter(adapter_history);
+                        listview_History.setLayoutParams(params);
 
                     }
                 });
@@ -710,7 +805,7 @@ public      class fundsinfo extends AppCompatActivity{
 
     }
     //初始化图片
-    public void initimage(String code) {
+    /*public void initimage(String code) {
 
         String image_code=code;
         String strURL = "http://j4.dfcfw.com/charts/pic6/"+image_code+".png?v=20211109040103";
@@ -721,7 +816,7 @@ public      class fundsinfo extends AppCompatActivity{
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-    }
+    }*/
     //初始化重仓信息
     public void init_heavystock_info() {
 
@@ -756,8 +851,6 @@ public      class fundsinfo extends AppCompatActivity{
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
-
                     }
                 });
             }
@@ -908,6 +1001,7 @@ public      class fundsinfo extends AppCompatActivity{
             setHistory_date(i,s.get(i*4));
             setHistory_uni(i,s.get(i*4+1));
             setHistory_cumu(i,s.get(i*4+2));
+            if(s.size()<=i*4+3)continue;
             setHistory_incre(i,s.get(i*4+3));
         }
 
@@ -1001,7 +1095,11 @@ public      class fundsinfo extends AppCompatActivity{
     }
 
     public String getHistory_incre(int i) {
-        return this.History_incre.get(i);
+        if(this.History_incre.size()>i)
+            return this.History_incre.get(i);
+        else{
+            return "";
+        }
     }
 
     //！！各类get单数据函数
@@ -1141,6 +1239,9 @@ public      class fundsinfo extends AppCompatActivity{
 
             for(int i=0;i<4;i++)
             {
+                //System.out.println(s2.size());System.out.println(2+2*i+16*j);
+                if(s2.size()<=2+2*i+16*j+22)continue;
+                //System.out.println(i);System.out.println(j);
                 List<String>s3=Arrays.asList(s2.get(22+2*i+16*j).split("<",2));
                 if(j<4|i<3) {
                     res = res + s3.get(0) + ",";

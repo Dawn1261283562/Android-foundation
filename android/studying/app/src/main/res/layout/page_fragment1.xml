@@ -97,7 +97,7 @@
                     android:layout_marginTop="10dp"
                     android:padding="10dp"
                     android:orientation="vertical"
-                    android:background="@drawable/search_background">
+                    android:background="@drawable/searchhistory_background">
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
@@ -142,16 +142,22 @@
                         android:background="@color/transparent"/>
                 </LinearLayout>
 
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:padding="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="15dp"
                     android:orientation="vertical"
-                    android:background="@drawable/search_background">
+                    android:background="@drawable/searchhistory_background">
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
+
                         <ImageView
                             android:id="@+id/page_fragment1_icon2"
                             android:layout_width="25dp"
@@ -163,13 +169,14 @@
                             android:layout_height="wrap_content"
                             android:layout_toRightOf="@id/page_fragment1_icon2"
                             android:paddingStart="10dp"
-                            android:text="网页控件吗"
+                            android:text="基金资讯"
                             android:textSize="20sp" />
                     </RelativeLayout>
-                    <TextView
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/pagefrag1_recycleview"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:text="hello!"/>
+                        android:layout_height="250dp"/>
 
                 </LinearLayout>
 

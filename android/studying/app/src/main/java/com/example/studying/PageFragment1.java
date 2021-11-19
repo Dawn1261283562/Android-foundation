@@ -35,6 +35,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.studying.entity.FundHeavyInfo;
@@ -70,6 +72,7 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     private final int fundShowDefault=6;
     private Button moreFundBut;
+    RecyclerView recyclerView;
 
     Handler mHandler;
     @Override
@@ -80,6 +83,8 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
         initView();
         initEvents();
         initDate();
+
+
         return mView;
     }
 
@@ -206,6 +211,20 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
         searTab3 = (LinearLayout)mView.findViewById(R.id.sear_tab3);
         moreFundBut=(Button) mView.findViewById(R.id.page_fragment1_button1);
         swipeRefreshLayout=(SwipeRefreshLayout) mView.findViewById(R.id.pagefrag1_swipe_refresh);
+        recyclerView=mView.findViewById(R.id.pagefrag1_recycleview);
+        LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+
+        List<String> newsTitleList=new ArrayList<>();
+        newsTitleList.add("比亚迪：拟对子公司增资17亿美元或等值");
+        newsTitleList.add("央行：目前房地产市场风险总体可控 健康发展的整体态势不会改变");
+        newsTitleList.add("央行发布2021年第三季度中国货币政策执行报告");
+        newsTitleList.add("多股本月涨幅已翻番！汽配板块持续飙涨 下周又有零部件新股要上市");
+        newsTitleList.add("13城公布第三批集中供地细则 为防流拍多地降低房企资金门槛");
+
+        newsAdapter newsAdapter=new newsAdapter(newsTitleList);
+        recyclerView.setAdapter(newsAdapter);
     }
 
     @Override

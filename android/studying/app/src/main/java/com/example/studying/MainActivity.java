@@ -8,6 +8,7 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,10 +16,15 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -30,7 +36,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.studying.entity.FundHeavy;
@@ -93,6 +101,8 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
     private ArrayList<FundHeavy> fundHeavyList=new ArrayList<FundHeavy>();
     Handler mHandler;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +120,7 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
             getWindow().getDecorView().setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
+
 
 
         Data data = (Data)getApplicationContext();
@@ -190,6 +201,7 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
                 }
                 resetImg();
                 selectTab(position);
+//                pageFragment2.fundSlected();
             }
 
             @Override
@@ -233,6 +245,17 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
         mImg1 = (ImageButton) findViewById(R.id.tab_img1);
         mImg2 = (ImageButton) findViewById(R.id.tab_img2);
         mImg3 = (ImageButton) findViewById(R.id.tab_img3);
+/*        webView.loadUrl("http://www.baidu.com");
+        webView.loadUrl("http://www.baidu.com");*/
+/*//设置在当前WebView继续加载网页
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                //表示在当前的WebView继续打开网页
+                view.loadUrl(request.getUrl().toString());
+                return true;
+            }
+        });*/
     }
 
     @Override
@@ -260,7 +283,6 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
                 break;
             case R.id.tab2:
                 selectTab(1);
-                pageFragment2.fundSlected();
                 break;
             case R.id.tab3:
                 selectTab(2);
@@ -296,7 +318,6 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
-
 
 
     //Request 请求代码
