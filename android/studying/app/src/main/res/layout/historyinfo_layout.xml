@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <TextView
+            android:id="@+id/Funds_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="华夏能源"
+            android:textSize="26sp"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:id="@+id/Title"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@+id/Funds_name"
+            android:gravity="center"
+            android:text="历史净值"
+            android:textSize="15sp"
+            android:textStyle="bold"></TextView>
+
+        <ListView
+
+            android:id="@+id/history_view"
+            android:layout_width="match_parent"
+            android:layout_height="1000dp"
+            android:layout_below="@+id/Title"
+            android:layout_marginTop="0dp"
+            android:paddingBottom="0dp"
+            ></ListView>
+
+    </RelativeLayout>
+
+
+</ScrollView>
