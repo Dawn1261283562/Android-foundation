@@ -244,7 +244,8 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getActivity(),MainActivity2.class);
-                intent.putExtra("i",1);
+//                Intent intent=new Intent(getActivity(),MainActivity2.class);
+//                intent.putExtra("i",1);
                 startActivity(intent);
             }
         });
