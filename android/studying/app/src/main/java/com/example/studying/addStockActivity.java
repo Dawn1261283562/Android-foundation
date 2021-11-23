@@ -85,6 +85,10 @@ public class addStockActivity extends AppCompatActivity {
     private LayoutInflater layoutInflater;
     private ArrayList<String> strList;
 
+
+    private FlowLayout flowLayout2;
+    private FlowLayout.Adapter flowAdapter2;
+
     private double flagForChooseOrSearch=530;//中间位置
 
     Handler mHandler;
@@ -194,6 +198,49 @@ public class addStockActivity extends AppCompatActivity {
         };
         flowLayout.setAdapter(flowAdapter);
 
+        flowAdapter2=new FlowLayout.Adapter() {
+            @Override
+            public int getCount() {
+                return stockList.size();
+            }
+
+            @Override
+            public View getView(int position, ViewGroup parent) {
+                View view = layoutInflater.inflate(R.layout.flow_item3_1,parent,false);
+                ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(view.getLayoutParams());
+                mlp.setMargins(5, 5, 5, 5);
+                view.setLayoutParams(mlp);
+                TextView textView= (TextView)view.findViewById(R.id.flow_text3_1);
+                textView.setText(stockList.get(position).getName().toString());
+                textView.setOnTouchListener(new View.OnTouchListener(){
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event){
+                        Drawable drawable=textView.getCompoundDrawables()[2];
+                        if ((event.getX() > textView.getWidth()-drawable.getIntrinsicWidth()-textView.getPaddingRight())
+                                &&(event.getX() < textView.getWidth()-textView.getPaddingRight())){
+                            stockList.remove(position);
+                            flowLayout2.setAdapter(flowAdapter2);
+                            if(stockList.size()==0){
+                                flowLayout2.setVisibility(View.GONE);
+                            }
+                            else{
+                                flowLayout2.setVisibility(View.VISIBLE);
+                            }
+                        }
+                        return false;
+                    }
+                });
+                return view;
+            }
+        };
+        flowLayout2.setAdapter(flowAdapter2);
+        if(stockList.size()==0){
+            flowLayout2.setVisibility(View.GONE);
+        }
+        else{
+            flowLayout2.setVisibility(View.VISIBLE);
+        }
+
         mHandler=new Handler(Looper.getMainLooper()){
             @Override
             public void handleMessage(@NonNull Message msg) {
@@ -287,14 +334,21 @@ public class addStockActivity extends AppCompatActivity {
                 System.out.println(flagForChooseOrSearch);
                 if(flagForChooseOrSearch>530){
                     if(fundGeneralList.get(i).getSelectFund()){
-                        fundGeneralList.get(i).setSelectFund(false);
-                        stockList.remove(fundGeneral.getStock());
+                        Toast.makeText(getApplicationContext(),"股票已添加",Toast.LENGTH_SHORT).show();
+                        /*fundGeneralList.get(i).setSelectFund(false);
+                        stockList.remove(fundGeneral.getStock());*/
                         System.out.println(1223);
                     }
                     else{
                         fundGeneralList.get(i).setSelectFund(true);
                         stockList.add(fundGeneral.getStock());
-                        System.out.println(1224);
+                        flowLayout2.setAdapter(flowAdapter2);
+                        if(stockList.size()==0){
+                            flowLayout2.setVisibility(View.GONE);
+                        }
+                        else{
+                            flowLayout2.setVisibility(View.VISIBLE);
+                        }
                         if(stockList!=null) {
                             System.out.println(stockList.size());
                             for(int j=0;j<stockList.size();j++){
@@ -395,6 +449,7 @@ public class addStockActivity extends AppCompatActivity {
         finishAddBut=findViewById(R.id.add_stock_but2);
         deleteAllHisBut=findViewById(R.id.delete_all_history);
         flowLayout = findViewById(R.id.addstock_history_flow);
+        flowLayout2=findViewById(R.id.add_stock_flow);
         layoutInflater = LayoutInflater.from(this);
     }
 

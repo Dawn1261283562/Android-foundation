@@ -216,16 +216,21 @@ public class PageFragment2 extends androidx.fragment.app.Fragment {
         fundGeneralList.clear();
 
         int size = fundInfoList.size();
-        for (int i = 0; i < size; i++) {
-            FundHeavy value = fundInfoList.get(i);
-            FundGeneral fundGeneral1=new FundGeneral((String)value.getId(),(String) value.getName(),i+"");
-            fundGeneral1.setFundHeavy(value);
-            fundGeneralList.add(fundGeneral1);
-
-
+        for (int i = 0; i <= size; i++) {
+            if(i==0){
+                FundGeneral fundGeneralTitle=new FundGeneral("代码","基金名","序号");
+                fundGeneralList.add(fundGeneralTitle);
+            }
+            else{
+                FundHeavy value = fundInfoList.get(i-1);
+                FundGeneral fundGeneral1=new FundGeneral((String)value.getId(),(String) value.getName(),i+"");
+                fundGeneral1.setFundHeavy(value);
+                fundGeneralList.add(fundGeneral1);
+            }
         }
-
-        listView.setAdapter(new FundAdapter2(getActivity(),R.layout.fund_item2,fundGeneralList));
+        fundAdapter2.notifyDataSetChanged();
+//        fundAdapter2=new FundAdapter2(getActivity(),R.layout.fund_item2,fundGeneralList);
+//        listView.setAdapter(fundAdapter2);
 
         //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
 //        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);

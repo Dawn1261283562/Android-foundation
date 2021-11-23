@@ -38,12 +38,12 @@ public class FundAdapter extends ArrayAdapter<FundGeneral> {
         fund2.setText(fundGeneral.getFund2());
         fund3.setText(fundGeneral.getFund3());
 
-        if(fundGeneral.getSelectFund()){
+        /*if(fundGeneral.getSelectFund()){
             view.setBackgroundColor(Color.YELLOW);
         }
         else{
             view.setBackgroundColor(Color.TRANSPARENT);
-        }
+        }*/
 
         return view;
     }
