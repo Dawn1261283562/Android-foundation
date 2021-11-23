@@ -531,6 +531,38 @@ public      class fundsinfo extends AppCompatActivity{
 
                             }
                         });
+                        listview_History.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+
+                            //参数三：位置，即点击的是第几个Item
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                //拿到点击的新闻对应的链接
+
+                                Log.v("click_","click"+position);
+                                if(position==0)
+                                {}
+                                else{
+
+                                    Stock tt=new Stock();
+
+                                    tt.setId(fundHeavyList.get(0).get_stock_id()[position-1]);
+                                    Intent intent=new Intent(fundsinfo.this,Historyinfo.class);
+                                    intent.putExtra("fundsname", fundName);
+                                    intent.putExtra("code", code);
+                                    startActivity(intent);
+                                    //}
+
+
+//                                    Intent intent=new Intent(fundsinfo.this,PageFragment1.class);
+//                                    String stock_id=getHeavy_id(position-1);
+//                                    intent.putExtra(stock_id, stock_id);
+//                                    startActivity(intent);
+                                }
+
+                            }
+                        });
                         break;
                     case 3:
                         initEvents();
@@ -776,7 +808,7 @@ public      class fundsinfo extends AppCompatActivity{
     //初始化历史净值信息
     public void init_History(String code) {
 
-        String hurl= "https://fundf10.eastmoney.com/F10DataApi.aspx?type=lsjz&code="+code+"&page=1&sdate=2020-11-12&edate=2021-11-12&per="+history_num;
+        String hurl= "https://fundf10.eastmoney.com/F10DataApi.aspx?type=lsjz&code="+code+"&page=1&sdate=2020-11-12&edate=2051-11-12&per="+history_num;
         HttpGetRequest.sendOkHttpGetRequest(hurl, new Callback() {
 
             @Override

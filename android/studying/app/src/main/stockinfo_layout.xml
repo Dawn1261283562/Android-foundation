@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fundsinfo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.example.studying.StatusBarView
+        android:id="@+id/title_statusBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/teal_700"/>
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/title_statusBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:textSize="20dp"
+        android:text="基金信息"
+        android:textColor="@color/white"
+        android:background="@color/teal_700"/>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentTop="true"
+            android:text="text"></TextView>
+
+
+        <Button
+            android:id="@+id/Button_01"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/text"
+            android:text="日k"></Button>
+
+        <Button
+            android:id="@+id/Button_02"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/text"
+            android:layout_toEndOf="@id/Button_01"
+            android:text="周k"></Button>
+
+        <Button
+            android:id="@+id/Button_03"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/text"
+            android:layout_toEndOf="@id/Button_02"
+            android:text="分时"></Button>
+
+        <Button
+            android:id="@+id/Button_04"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/text"
+            android:layout_toEndOf="@id/Button_03"
+            android:text="月k"></Button>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_below="@id/Button_01"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"></ImageView>
+
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/imageView"
+            android:layout_marginTop="0dp"
+            android:paddingBottom="0dp"></TextView>
+
+
+    </RelativeLayout>
+</ScrollView>
+</LinearLayout>

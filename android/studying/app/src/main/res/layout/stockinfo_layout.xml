@@ -1,69 +1,278 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollView2"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <RelativeLayout
-        android:orientation="horizontal"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fundsinfo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        xmlns:tools="http://schemas.android.com/tools">
+
+        <com.example.studying.StatusBarView
+            android:id="@+id/title_statusBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/teal_700"/>
 
         <TextView
-            android:id="@+id/text"
+            android:id="@+id/text1"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_alignParentTop="true"
-            android:text="text"></TextView>
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/title_statusBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:textSize="20dp"
+            android:text="基金信息"
+            android:textColor="@color/white"
+            android:background="@color/teal_700"/>
 
-
-        <Button
-            android:id="@+id/Button_01"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/text"
-            android:text="日k"></Button>
-
-        <Button
-            android:id="@+id/Button_02"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/text"
-            android:layout_toEndOf="@id/Button_01"
-            android:text="周k"></Button>
-
-        <Button
-            android:id="@+id/Button_03"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/text"
-            android:layout_toEndOf="@id/Button_02"
-            android:text="分时"></Button>
-
-        <Button
-            android:id="@+id/Button_04"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/text"
-            android:layout_toEndOf="@id/Button_03"
-            android:text="月k"></Button>
-
-        <ImageView
-            android:id="@+id/imageView"
+        <ScrollView
+            android:id="@+id/scrollView2"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_below="@id/Button_01"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="0dp"></ImageView>
+            android:layout_height="700dp">
 
-        <TextView
-            android:id="@+id/text2"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_below="@id/imageView"
-            android:layout_marginTop="0dp"
-            android:paddingBottom="0dp"></TextView>
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
 
-    </RelativeLayout>
-</ScrollView>
+                <TextView
+                    android:id="@+id/text"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    tools:text="华夏成长混合" />
+
+                <TextView
+                    android:id="@+id/code_style"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text"
+                    app:layout_constraintBottom_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent"
+                    tools:text="text" />
+                <TextView
+                    android:id="@+id/aa"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text"
+                    android:layout_toRightOf="@id/text"
+                    tools:text="当前价格:" />
+
+
+                <TextView
+                    android:id="@+id/price_now"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/aa"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+
+
+                    app:layout_constraintBottom_toTopOf="parent"
+
+                    app:layout_constraintTop_toBottomOf="parent"
+                    tools:text="当前价格" />
+
+                <TextView
+                    android:id="@+id/price_beginning"
+                    android:layout_width="120dp"
+                    android:layout_height="25dp"
+                    android:layout_below="@id/code_style"
+
+                    android:textSize="14sp"
+                    tools:text="今日开盘价" />
+                <TextView
+                    android:id="@+id/price_yest"
+                    android:layout_width="120dp"
+                    android:layout_height="25dp"
+
+                    android:layout_below="@id/price_beginning"
+                    tools:text="昨天收盘价"
+
+
+                    />
+
+
+                <TextView
+                    android:id="@+id/h_value"
+                    android:layout_width="120dp"
+                    android:layout_height="25dp"
+                    android:layout_below="@id/code_style"
+                    android:layout_toRightOf="@id/price_beginning"
+                    tools:text="今日最高" />
+
+                <TextView
+                    android:id="@+id/l_value"
+                    android:layout_width="120dp"
+                    android:layout_height="25dp"
+                    android:layout_below="@id/h_value"
+                    android:layout_toRightOf="@id/price_yest"
+
+                    tools:text="今日最低" />
+                <TextView
+                    android:id="@+id/totalvalue"
+                    android:layout_width="2000dp"
+                    android:layout_height="25dp"
+                    android:layout_below="@id/code_style"
+                    android:layout_toRightOf="@id/h_value"
+
+                    tools:text="总值阿女" />
+
+                <TextView
+                    android:id="@+id/totalnum"
+                    android:layout_width="200dp"
+                    android:layout_height="25dp"
+                    android:layout_below="@id/totalvalue"
+                    android:layout_toRightOf="@id/l_value"
+
+                    tools:text="总手数目" />
+
+                <RelativeLayout
+                    android:id="@+id/info_relativeLayout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/totalnum"
+                    android:paddingLeft="15dp"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="7dp"
+                    android:background="@color/white">
+
+                    <ImageView
+                        android:id="@+id/funsinfo_icon1"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@mipmap/icon1_2" />
+
+                    <TextView
+                        android:id="@+id/title_history"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/funsinfo_icon1"
+                        android:paddingStart="10dp"
+                        android:text="K图"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                </RelativeLayout>
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/Stockinfo_tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/info_relativeLayout1">
+
+                    <com.google.android.material.tabs.TabItem
+                        android:id="@+id/Stockinfo_tab1"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="日K"></com.google.android.material.tabs.TabItem>
+
+                    <com.google.android.material.tabs.TabItem
+                        android:id="@+id/Stockinfo_tab2"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="周K"></com.google.android.material.tabs.TabItem>
+
+                    <com.google.android.material.tabs.TabItem
+                        android:id="@+id/Stockinfo_tab3"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="分时"></com.google.android.material.tabs.TabItem>
+
+                    <com.google.android.material.tabs.TabItem
+                        android:id="@+id/Stockinfo_tab4"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="月K">
+
+
+                    </com.google.android.material.tabs.TabItem>
+
+
+                </com.google.android.material.tabs.TabLayout>
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_below="@+id/Stockinfo_tab"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp"></ImageView>
+
+                <RelativeLayout
+                    android:id="@+id/info_relativeLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/imageView"
+                    android:paddingLeft="15dp"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="7dp"
+                    android:background="@color/white">
+
+                    <ImageView
+                        android:id="@+id/funsinfo_icon2"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@mipmap/icon1_2" />
+
+                    <TextView
+                        android:id="@+id/title_history2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/funsinfo_icon2"
+                        android:paddingStart="10dp"
+                        android:text="交易信息"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                </RelativeLayout>
+                <FrameLayout
+                    android:id="@+id/fragment_container"
+                    android:name="com.example.studying.FundsPictureFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/info_relativeLayout2"
+
+                    android:background="@color/white"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/text2"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:layout_below="@id/fragment_container"-->
+<!--                    android:layout_marginTop="0dp"-->
+<!--                    android:paddingBottom="0dp"></TextView>-->
+<!--                <TextView-->
+<!--                    android:id="@+id/text3"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:layout_below="@id/fragment_container"-->
+<!--                    android:layout_marginTop="0dp"-->
+<!--                    android:paddingBottom="0dp"-->
+<!--                    android:layout_toRightOf="@id/text2"></TextView>-->
+
+                <ListView
+                    android:id="@+id/View_bargin"
+                    android:layout_width="match_parent"
+                    android:layout_height="410dp"
+                    android:layout_below="@id/fragment_container"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:background="@color/white"/>
+
+
+            </RelativeLayout>
+        </ScrollView>
+    </LinearLayout>
