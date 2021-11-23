@@ -35,6 +35,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.studying.entity.FundHeavyInfo;
 import com.example.studying.entity.Stock;
@@ -56,6 +59,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public class PageFragment1 extends androidx.fragment.app.Fragment {
+
     private View mView;
     private LinearLayout searTab1;
     private LinearLayout searTab2;
@@ -64,9 +68,11 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
     private List<FundGeneral> fundGeneralList;
     private FundAdapter fundAdapter;
     private ArrayList<Stock> stockListNormal;
-    private final int fundShowDefault=6;
 
+    SwipeRefreshLayout swipeRefreshLayout;
+    private final int fundShowDefault=6;
     private Button moreFundBut;
+    RecyclerView recyclerView;
 
     Handler mHandler;
     @Override
@@ -77,6 +83,8 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
         initView();
         initEvents();
         initDate();
+
+
         return mView;
     }
 
@@ -100,6 +108,8 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
                         params.height = totalHeight + (listView1.getDividerHeight() * (fundShowDefault - 1));
 //                        ((ViewGroup.MarginLayoutParams) params).setMargins(10, 10, 10, 10);
                         listView1.setLayoutParams(params);
+                        moreFundBut.setText("展开更多热点股票");
+                        swipeRefreshLayout.setRefreshing(false);
                     case 2:
 
                 }
@@ -110,69 +120,13 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
         listView1.setAdapter(fundAdapter);
         if(fundGeneralList.size()==0){
             listView1.setVisibility(View.GONE);
+            moreFundBut.setVisibility(View.GONE);
         }
         else{
             listView1.setVisibility(View.VISIBLE);
+            moreFundBut.setVisibility(View.VISIBLE);
         }
-
-        String url = "http://localhost:8080/user/lgoin";
-        url = "http://43m486x897.yicp.fun/stock/searchStock?id=平安";
-        url = "http://43m486x897.yicp.fun/stock/getStockListByHot?wantedNum=30";
-
-        HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Looper.prepare();
-                //Toast.makeText(MainActivity.this, "post请求失败", Toast.LENGTH_SHORT).show();
-                Looper.loop();
-            }
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                ResponseBody data = response.body();
-                if(response.code()==200) {
-                    String strByJson = response.body().string();
-                    JsonParser parser = new JsonParser();
-                    //将JSON的String 转成一个JsonArray对象
-                    JsonArray jsonArray = parser.parse(strByJson).getAsJsonArray();
-
-                    Gson gson = new Gson();
-                    ArrayList<Stock> stockBeanList = new ArrayList<Stock>();
-
-                    System.out.println(strByJson);
-                    //加强for循环遍历JsonArray
-                    for (JsonElement stock : jsonArray) {
-                        //使用GSON，直接转成Bean对象
-                        Stock stockBean = gson.fromJson(stock, Stock.class);
-                        stockBeanList.add(stockBean);
-
-                        System.out.println("这下面是 股票的代码、名字、板块集、股价、热度");
-                        System.out.println(stockBean.getId());
-                        System.out.println(stockBean.getName());
-                        System.out.println(stockBean.getType());
-                        System.out.println(stockBean.getPrice());
-                        System.out.println(stockBean.getHits());
-                        System.out.println("这上面是 股票的代码、名字、板块集、股价、热度");
-                    }
-
-                    stockListNormal=stockBeanList;
-                    Message message = new Message();
-
-                    message.what = 1;
-                    mHandler.sendMessage(message);
-                    Looper.prepare();
-
-                    Toast.makeText(getActivity(), strByJson, Toast.LENGTH_SHORT).show();
-                    Looper.loop();
-                }
-                else{
-                    Looper.prepare();
-                    Toast.makeText(getActivity(), "无相关信息", Toast.LENGTH_SHORT).show();
-                    Looper.loop();
-                }
-            }
-        });
-
-
+        requestForHot();
     }
 
     private void initEvents() {
@@ -196,13 +150,13 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
                     intent.putExtra("stockGet", fundGeneral.getStock());
                     startActivity(intent);
                 }
-
+/*
                 if(fundGeneralList.get(i).getSelectFund()){
                     fundGeneralList.get(i).setSelectFund(false);
                 }
                 else{
                     fundGeneralList.get(i).setSelectFund(true);
-                }
+                }*/
                 fundAdapter.notifyDataSetChanged();
             }
         });
@@ -241,7 +195,12 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
                 }
             }
         });
-
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                requestForHot();
+            }
+        });
     }
 
     private void initView() {
@@ -251,6 +210,21 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
         searTab2 = (LinearLayout)mView.findViewById(R.id.sear_tab2);
         searTab3 = (LinearLayout)mView.findViewById(R.id.sear_tab3);
         moreFundBut=(Button) mView.findViewById(R.id.page_fragment1_button1);
+        swipeRefreshLayout=(SwipeRefreshLayout) mView.findViewById(R.id.pagefrag1_swipe_refresh);
+        recyclerView=mView.findViewById(R.id.pagefrag1_recycleview);
+        LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+
+        List<String> newsTitleList=new ArrayList<>();
+        newsTitleList.add("比亚迪：拟对子公司增资17亿美元或等值");
+        newsTitleList.add("央行：目前房地产市场风险总体可控 健康发展的整体态势不会改变");
+        newsTitleList.add("央行发布2021年第三季度中国货币政策执行报告");
+        newsTitleList.add("多股本月涨幅已翻番！汽配板块持续飙涨 下周又有零部件新股要上市");
+        newsTitleList.add("13城公布第三批集中供地细则 为防流拍多地降低房企资金门槛");
+
+        newsAdapter newsAdapter=new newsAdapter(newsTitleList);
+        recyclerView.setAdapter(newsAdapter);
     }
 
     @Override
@@ -261,7 +235,7 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getActivity(),MainActivity2.class);
-                //Intent intent=new Intent(getActivity(),Stockinfo.class);
+                //Intent intent=new Intent(getActivity(),MainActivity2.class);
                 intent.putExtra("i",0);
                 startActivity(intent);
             }
@@ -270,7 +244,8 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getActivity(),MainActivity2.class);
-                intent.putExtra("i",1);
+//                Intent intent=new Intent(getActivity(),MainActivity2.class);
+//                intent.putExtra("i",1);
                 startActivity(intent);
             }
         });
@@ -280,6 +255,62 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
                 Intent intent=new Intent(getActivity(),MainActivity2.class);
                 intent.putExtra("i",2);
                 startActivity(intent);
+            }
+        });
+    }
+    private void requestForHot(){
+        String url = "http://localhost:8080/user/lgoin";
+        url = "http://43m486x897.yicp.fun/stock/searchStock?id=平安";
+        url = "http://43m486x897.yicp.fun/stock/getStockListByHot?wantedNum=30";
+
+        HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Looper.prepare();
+                //Toast.makeText(MainActivity.this, "post请求失败", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                ResponseBody data = response.body();
+                if(response.code()==200) {
+                    String strByJson = response.body().string();
+                    JsonParser parser = new JsonParser();
+                    //将JSON的String 转成一个JsonArray对象
+                    JsonArray jsonArray = parser.parse(strByJson).getAsJsonArray();
+
+                    Gson gson = new Gson();
+                    ArrayList<Stock> stockBeanList = new ArrayList<Stock>();
+
+                    System.out.println(strByJson);
+                    //加强for循环遍历JsonArray
+                    for (JsonElement stock : jsonArray) {
+                        //使用GSON，直接转成Bean对象
+                        Stock stockBean = gson.fromJson(stock, Stock.class);
+                        stockBeanList.add(stockBean);
+
+                        System.out.println("这下面是 股票的代码、名字、板块集、股价、热度");
+
+                        System.out.println(stockBean.getPrice());
+
+                        System.out.println("这上面是 股票的代码、名字、板块集、股价、热度");
+                    }
+
+                    stockListNormal=stockBeanList;
+                    Message message = new Message();
+
+                    message.what = 1;
+                    mHandler.sendMessage(message);
+                    Looper.prepare();
+
+                    //Toast.makeText(getActivity(), strByJson, Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                }
+                else{
+                    Looper.prepare();
+                    Toast.makeText(getActivity(), "无相关信息", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                }
             }
         });
     }
@@ -310,9 +341,11 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
 
         if(fundGeneralList.size()==0){
             listView1.setVisibility(View.GONE);
+            moreFundBut.setVisibility(View.GONE);
         }
         else{
             listView1.setVisibility(View.VISIBLE);
+            moreFundBut.setVisibility(View.VISIBLE);
         }
         //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
 //        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);

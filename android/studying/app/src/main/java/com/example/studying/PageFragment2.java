@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.studying.Data;
 import com.example.studying.entity.FundHeavy;
@@ -46,16 +47,13 @@ public class PageFragment2 extends androidx.fragment.app.Fragment {
 
     private List<FundGeneral> fundGeneralList=new ArrayList<>();
 
-    private EditText et_username;
-    private EditText et_password;
-    private Button btn_login;
-    FundAdapter fundAdapter;
+    FundAdapter2 fundAdapter2;
+
     private String username;
     private ListView listView;
 
     private ArrayList<FundHeavy> fundHeavyList=new ArrayList<FundHeavy>();
 
-    private FlowLayout.Adapter flowAdapter;
 
     Handler mHandler;
 
@@ -69,13 +67,24 @@ public class PageFragment2 extends androidx.fragment.app.Fragment {
         username=data.getUsername();
         //获取到用户选择的基金
 
-        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
+        fundAdapter2=new FundAdapter2(getContext(),R.layout.fund_item2,fundGeneralList);
 
         listView = (ListView) mView.findViewById(R.id.list_fund_selected);
-        listView.setAdapter(fundAdapter);
+        listView.setAdapter(fundAdapter2);
 
-        fundSlected();
+        mHandler=new Handler(Looper.getMainLooper()){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case 1:
 
+                        update(fundHeavyList);
+                    case 2:
+
+                }
+            }
+        };
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -94,6 +103,7 @@ public class PageFragment2 extends androidx.fragment.app.Fragment {
                 //System.out.println(id);
                 FundHeavyInfo temp=new FundHeavyInfo();
                 temp.setId(id);
+                temp.setName(fundGeneral.getFund2().toString());
                 Intent intent=new Intent(getActivity(),fundsinfo.class);
                 intent.putExtra("fundsGet", temp);
                 startActivity(intent);
@@ -113,11 +123,16 @@ public class PageFragment2 extends androidx.fragment.app.Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        fundSlected();
+    }
+
     //Request 请求代码
     private void initData() {
         Data data = (Data)getActivity().getApplication();
         username=data.getUsername();
-
 
     }
 
@@ -130,24 +145,13 @@ public class PageFragment2 extends androidx.fragment.app.Fragment {
             username="NULL";
             return ;
         }
-        mHandler=new Handler(Looper.getMainLooper()){
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                super.handleMessage(msg);
-                switch (msg.what){
-                    case 1:
 
-                        update(fundHeavyList);
-                    case 2:
-
-                }
-            }
-        };
 
         String url = "http://localhost:8080/user/lgoin";
         url = "http://43m486x897.yicp.fun/stock/searchStock?id=平安";
         url = "http://43m486x897.yicp.fun/stock/getStockListByHot?wantedNum=30";
         url = "http://43m486x897.yicp.fun/collection/getListByUser?username="+username;
+
 
         HttpGetRequest.sendOkHttpGetRequest(url, new Callback() {
             @Override
@@ -193,10 +197,11 @@ public class PageFragment2 extends androidx.fragment.app.Fragment {
                 mHandler.sendMessage(message);
 
                 System.out.println(data);
-                Toast.makeText(getActivity(), strByJson, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), strByJson, Toast.LENGTH_SHORT).show();
                 Looper.loop();
             }
         });
+
     }
 
     @Override
@@ -220,7 +225,7 @@ public class PageFragment2 extends androidx.fragment.app.Fragment {
 
         }
 
-        listView.setAdapter(new FundAdapter(getActivity(),R.layout.fund_item,fundGeneralList));
+        listView.setAdapter(new FundAdapter2(getActivity(),R.layout.fund_item2,fundGeneralList));
 
         //Toast.makeText(getActivity(), "gengaile", Toast.LENGTH_SHORT).show();
 //        FundAdapter fundAdapter=new FundAdapter(getContext(),R.layout.fund_item,fundGeneralList);
@@ -238,53 +243,3 @@ public class PageFragment2 extends androidx.fragment.app.Fragment {
     }
 
 }
-
-//    private EditText et_username;
-//
-//    private EditText et_password;
-//
-//    private Button btn_login;
-//
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//        initView();
-//    }
-//
-//    private void initView() {
-//        //绑定控件
-//        et_username = findViewById(R.id.edit_username);
-//        et_password = findViewById(R.id.edit_pwd);
-//        btn_login = findViewById(R.id.btn_login);
-//
-//        //为登录按钮设置点击事件
-//        btn_login.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String url = "http://加上刚才复制的ip地址:8080/user/lgoin";
-//
-//                //请求传入的参数
-//                RequestBody requestBody = new FormBody.Builder()
-//                        .add("username", et_username.getText().toString())
-//                        .add("password", et_password.getText().toString())
-//                        .build();
-//
-//                HttpPostRequest.okhttpPost(url, requestBody, new Callback() {
-//                    @Override
-//                    public void onFailure(Call call, IOException e) {
-//                        Looper.prepare();
-//                        Toast.makeText(MainActivity.this, "post请求失败", Toast.LENGTH_SHORT).show();
-//                        Looper.loop();
-//                    }
-//
-//                    @Override
-//                    public void onResponse(Call call, Response response) throws IOException {
-//                        Looper.prepare();
-//                        Toast.makeText(MainActivity.this, "成功,用户名为：" + et_username.getText().toString(), Toast.LENGTH_SHORT).show();
-//                        Looper.loop();
-//                    }
-//                });
-//            }
-//        });
-//    }

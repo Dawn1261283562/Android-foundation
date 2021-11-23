@@ -1,123 +1,245 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scrollView2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.example.studying.StatusBarView
+        android:id="@+id/title_statusBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/teal_700"/>
+    <TextView
+        android:id="@+id/fundsinfo_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/title_statusBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:textSize="20dp"
+        android:text="基金行情"
+        android:textColor="@color/white"
+        android:background="@color/teal_700"/>
+
+
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="15dp">
+
+            <TextView
+                android:id="@+id/funds_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:text="华夏成长混合"
+                android:textSize="20sp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/code_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/funds_name"
+                app:layout_constraintLeft_toLeftOf="@id/funds_name"
+                tools:text="text"/>
+
+            <View
+                android:id="@+id/value_view"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@id/code_style"
+                android:background="@color/white"/>
+
+            <TextView
+                android:id="@+id/value_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/funds_name"
+                app:layout_constraintTop_toTopOf="@id/value_view"
+                app:layout_constraintBottom_toTopOf="@id/value_incre_title"
+                tools:text="2021-11-12"/>
+
+            <TextView
+                android:id="@+id/value_incre_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintTop_toBottomOf="@id/value_date"
+                app:layout_constraintBottom_toBottomOf="@id/value_view"
+                app:layout_constraintLeft_toLeftOf="@id/funds_name"
+                android:text="日涨跌"/>
+            <TextView
+                android:id="@+id/value_incre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toTopOf="@id/value_incre_title"
+                app:layout_constraintBottom_toBottomOf="@id/value_incre_title"
+                app:layout_constraintLeft_toRightOf="@id/value_incre_title"
+                android:textSize="18sp"
+                tools:text="-0.39%"
+                tools:textColor="#D60000"/>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:background="@color/colorNavi"
+                app:layout_constraintTop_toTopOf="@id/value_incre_title"
+                app:layout_constraintBottom_toBottomOf="@id/value_incre_title"
+                app:layout_constraintLeft_toRightOf="@id/value_incre"
+                app:layout_constraintRight_toLeftOf="@id/value_uni_title"/>
+            <TextView
+                android:id="@+id/value_uni_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                app:layout_constraintTop_toTopOf="@id/value_incre_title"
+                app:layout_constraintBottom_toBottomOf="@id/value_incre_title"
+                app:layout_constraintLeft_toRightOf="@id/value_incre"
+                android:text="净值[09-17]"/>
+            <TextView
+                android:id="@+id/value_uni"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toTopOf="@id/value_incre_title"
+                app:layout_constraintBottom_toBottomOf="@id/value_incre_title"
+                app:layout_constraintLeft_toRightOf="@id/value_uni_title"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                tools:text="1.2850"/>
+
+
+            <FrameLayout
+                android:id="@+id/fragment_container"
+                android:name="com.example.studying.FundsPictureFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/value_view"
+                android:background="@color/white"/>
+
+            <RelativeLayout
+                android:id="@+id/info_relativeLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/fragment_container"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:paddingLeft="15dp"
+                android:paddingBottom="3dp"
+                android:paddingTop="7dp"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/funsinfo_icon1"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@mipmap/icon1_2" />
+
+                <TextView
+                    android:id="@+id/title_history"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/funsinfo_icon1"
+                    android:paddingStart="10dp"
+                    android:text="历史净值（点进查看更多）"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
+
+
+
+            <ListView
+                android:id="@+id/history_view"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                app:layout_constraintTop_toBottomOf="@id/info_relativeLayout1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:background="@color/white"/>
+
+            <RelativeLayout
+                android:id="@+id/info_relativeLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/history_view"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:paddingBottom="3dp"
+                android:paddingTop="7dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/funsinfo_icon2"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@mipmap/icon1_2" />
+
+                <TextView
+                    android:id="@+id/title_heavy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/funsinfo_icon2"
+                    android:paddingLeft="10dp"
+                    android:text="重仓股"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
+
+            <ListView
+                android:id="@+id/list_view"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                app:layout_constraintTop_toBottomOf="@id/info_relativeLayout2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:background="@color/white"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
 
     <RelativeLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-        <TextView
-            android:id="@+id/Title"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_alignParentTop="true"
-            android:text="基金行情"></TextView>
+        android:layout_height="50dp"
+        android:layout_gravity="bottom">
 
-        <TextView
-            android:id="@+id/funds_name"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_below="@+id/Title"
-            android:text="text"></TextView>
-
-        <TextView
-            android:id="@+id/code_style"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_below="@+id/funds_name"
-            android:text="text"></TextView>
-
-
-        <TextView
-            android:id="@+id/value_now"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/collection_Button"
+            android:layout_width="100dp"
             android:layout_height="40dp"
-            android:layout_below="@+id/code_style"
-            android:layout_marginTop="-3dp"
-            android:text="text"></TextView>
-
-        <Button
-            android:id="@+id/Button_01"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/value_now"
-            android:text="累计收益"></Button>
-
-        <Button
-            android:id="@+id/Button_02"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/value_now"
-            android:layout_toEndOf="@id/Button_01"
-            android:text="单位净值"></Button>
-
-        <Button
-            android:id="@+id/Button_03"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/value_now"
-            android:layout_toEndOf="@id/Button_02"
-            android:text="累计净值"></Button>
-
-        <Button
-            android:id="@+id/Button_04"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/value_now"
-            android:layout_toEndOf="@id/Button_03"
-            android:text="净值估算"></Button>
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_below="@id/Button_01"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="0dp"></ImageView>
-
-
-        <TextView
-            android:id="@+id/title_history"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/imageView"
-            android:layout_marginTop="-3dp"
-            android:text="历史净值"></TextView>
-
-        <ListView
-
-            android:id="@+id/history_view"
-            android:layout_width="match_parent"
-            android:layout_height="125dp"
-            android:layout_below="@id/title_history"
-            android:layout_marginTop="0dp"
-            android:paddingBottom="0dp"></ListView>
-
-        <TextView
-            android:id="@+id/title_heavy"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/history_view"
-            android:layout_marginTop="-3dp"
-            android:text="重仓股"></TextView>
-
-        <ListView
-            android:id="@+id/list_view"
-            android:layout_width="match_parent"
-            android:layout_height="335dp"
-            android:layout_below="@+id/title_heavy"
-            android:layout_marginTop="0dp"></ListView>
+            android:layout_centerInParent="true"
+            tools:text="关注"/>
 
     </RelativeLayout>
-
-
-</ScrollView>
+</LinearLayout>
 

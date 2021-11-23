@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Studying">
         <activity
+            android:name=".WebActivity"
+            android:exported="true" />
+        <activity
             android:name=".SignUpActivity"
             android:exported="true" />
         <activity
@@ -27,6 +30,11 @@
         <activity
             android:name=".ProrateActivity"
             android:exported="true" />
+
+        <activity
+            android:name=".Historyinfo"
+            android:exported="true" />
+
 
         <uses-library
             android:name="org.apache.http.legacy"

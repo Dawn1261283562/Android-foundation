@@ -59,12 +59,51 @@ public class StockController {
         }
         else {
 
-            List<Stock>stockList = null;
-            stockList =stockService.getByOther(id);
+            List<Stock>temp = null;
+            temp =stockService.getByOther(id);
+            for (Stock Str :temp ){
+                String _id=Str.getId();
 
+                if(_id.matches(regex)){
+
+                }
+                else{
+                    continue;
+                }
+                String _temp1=_id.substring(0,6);String _temp2=_id.substring(7,9);
+                //System.out.println(temp2+temp1);
+                String _id_restructure=_temp2+_temp1;
+                _id=_id_restructure;
+                String _url="http://hq.sinajs.cn/list="+_id.toLowerCase();//sz000006
+                HttpMethod _method=HttpMethod.GET;
+                MultiValueMap<String,String> _params=new LinkedMultiValueMap<>();
+
+//        List<FundHeavy>fundHeavy = fundHeavyService.getListAll();
+//        for(int i=0;i<fundHeavy.size();i++){
+//            String s= fundHeavy.get(i).id;
+//            System.out.println(s);
+//        }
+
+                String _data=httpClient.client(_url,_method,_params);
+                String[] _nums = _data.split(",") ;
+                //System.out.println(nums[3]);
+                Stock _stock = new Stock();
+                if(_nums.length>3) {
+                    String tempS = _nums[3];
+                    Str.setPrice(tempS);
+                }
+                String _temp11=_id.substring(0,2);String _temp22=_id.substring(2,8);
+                System.out.println(_temp22+'.'+_temp11);
+                String idRestructure=_temp22+'.'+_temp11;
+                _stock.setId(idRestructure);
+
+                stockService.update(_stock);
+
+
+            }
 
             //stockList.add(stock1);
-            return stockList;
+            return temp;
         }
         String url="http://hq.sinajs.cn/list="+id.toLowerCase();//sz000006
         HttpMethod method=HttpMethod.GET;
@@ -90,12 +129,13 @@ public class StockController {
         stock.setId(id_restructure);
 
         stockService.update(stock);
-        List<Stock>stockList = null;
-        stockList =stockService.getById(stock);
+        List<Stock>temp = null;
+        temp =stockService.getById(stock);
+
 
 
         //stockList.add(stock1);
-        return stockList;
+        return temp;
 
 
 
@@ -213,6 +253,44 @@ public class StockController {
 
     @RequestMapping("/getStockListByHot")
     public List<Stock> getStockListByHot(int wantedNum){
-        return stockService.getStockListByHot(wantedNum);
+        List<Stock> temp=stockService.getStockListByHot(wantedNum);
+
+        for (Stock Str :temp ){
+            String _id=Str.getId();
+            String _temp1=_id.substring(0,6);String _temp2=_id.substring(7,9);
+            //System.out.println(temp2+temp1);
+            String _id_restructure=_temp2+_temp1;
+            _id=_id_restructure;
+            String _url="http://hq.sinajs.cn/list="+_id.toLowerCase();//sz000006
+            HttpMethod method=HttpMethod.GET;
+            MultiValueMap<String,String> params=new LinkedMultiValueMap<>();
+
+//        List<FundHeavy>fundHeavy = fundHeavyService.getListAll();
+//        for(int i=0;i<fundHeavy.size();i++){
+//            String s= fundHeavy.get(i).id;
+//            System.out.println(s);
+//        }
+
+            String data=httpClient.client(_url,method,params);
+            String[] nums = data.split(",") ;
+            //System.out.println(nums[3]);
+            Stock stock = new Stock();
+            if(nums.length>3) {
+                String tempS = nums[3];
+                stock.setPrice(tempS);
+            }
+            String _temp11=_id.substring(0,2);String _temp22=_id.substring(2,8);
+            System.out.println(_temp22+'.'+_temp11);
+            String idRestructure=_temp22+'.'+_temp11;
+            stock.setId(idRestructure);
+
+            stockService.update(stock);
+
+
+        }
+
+
+
+        return temp;
     }
 }

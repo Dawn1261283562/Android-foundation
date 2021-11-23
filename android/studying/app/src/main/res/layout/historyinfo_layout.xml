@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/history"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.example.studying.StatusBarView
+        android:id="@+id/title_statusBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/teal_700"/>
+    <TextView
+        android:id="@+id/history_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/title_statusBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:textSize="20dp"
+        android:text="历史净值"
+        android:textColor="@color/white"
+        android:background="@color/teal_700"/>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <TextView
+            android:id="@+id/Funds_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="华夏能源"
+            android:textSize="26sp"
+            android:textStyle="bold"></TextView>
+
+
+        <ListView
+
+            android:id="@+id/history_view"
+            android:layout_width="match_parent"
+            android:layout_height="1000dp"
+            android:layout_below="@+id/Funds_name"
+            android:layout_marginTop="0dp"
+            android:paddingBottom="0dp"
+            ></ListView>
+
+    </RelativeLayout>
+
+
+</ScrollView>
+</LinearLayout>

@@ -190,9 +190,11 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
             @Override
             public void onPageSelected(int position) {
                 //设置position对应的集合中的Fragment页面
-                mViewPager.setCurrentItem(position);
+//                mViewPager.setCurrentItem(position);
                 resetTab();
                 selectTab(position);
+                progressBarGone();
+
             }
 
             @Override
@@ -269,6 +271,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 }
                 else{
                     clearTextButton.setVisibility(View.INVISIBLE);
+                    changeVisibility();
                 }
             }
         });
@@ -278,9 +281,17 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
             @Override
             public void onClick(View view) {
                 editText.setText("");
-                progressBarGone();
+                changeVisibility();
             }
         });
+    }
+
+    private void changeVisibility(){
+        searchFragment1.clearFundGeneralList();
+        searchFragment1.changeVisibility1();
+        searchFragment2.clearFundGeneralList();
+        searchFragment2.changeVisibility1();
+        progressBarGone();
     }
 
     private void initViews() {
@@ -348,7 +359,6 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 titleTex.setVisibility(View.GONE);
                 if(editText.getText().length()>0)
                     clearTextButton.setVisibility(View.VISIBLE);
-                progressBarGone();
                 initbtn_login4();
                 break;
             case 1:
@@ -362,7 +372,6 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 titleTex.setVisibility(View.GONE);
                 if(editText.getText().length()>0)
                     clearTextButton.setVisibility(View.VISIBLE);
-                progressBarGone();
                 initbtn_login5();
                 break;
             case 2:
@@ -375,7 +384,6 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 searchBut.setVisibility(View.INVISIBLE);
                 searchImageView.setVisibility(View.GONE);
                 clearTextButton.setVisibility(View.GONE);
-                progressBarGone();
                 titleTex.setText("基金筛选");
                 break;
             case 3:
@@ -388,7 +396,6 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                 searchBut.setVisibility(View.INVISIBLE);
                 searchImageView.setVisibility(View.GONE);
                 clearTextButton.setVisibility(View.GONE);
-                progressBarGone();
                 titleTex.setText("基金筛选");
                 break;
         }
@@ -501,7 +508,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                             mHandler.sendMessage(message);
                             Looper.prepare();
                             System.out.println(data);
-                            Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
                         else{
@@ -593,7 +600,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                             mHandler.sendMessage(message);
                             Looper.prepare();
                             stockListNormal=stockBeanList;
-                            Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
                             else{

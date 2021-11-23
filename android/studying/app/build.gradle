@@ -40,5 +40,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.google.code.gson:gson:2.8.4'
+    implementation'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+//    implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
+//    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
 }
 

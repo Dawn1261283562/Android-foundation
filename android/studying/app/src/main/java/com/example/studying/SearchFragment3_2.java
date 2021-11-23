@@ -52,6 +52,8 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
     private Button addBtn;
     private Button searchBtn;
     private Button addCompanyBtn;
+    private ImageButton helpButton;
+    private TextView helpText;
     private  TextView textCompany;
     private ImageButton checkComBtn;
     private FundAdapter fundAdapter;
@@ -152,6 +154,7 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
         checkComBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(checkComBtn.getBackground().getConstantState().equals(getResources().getDrawable(R.mipmap.checkbox1).getConstantState())){
                     checkComBtn.setBackground(getResources().getDrawable(R.mipmap.checkbox2));
                     textCompany.setVisibility(View.VISIBLE);
@@ -164,6 +167,25 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
                 }
             }
         });
+        helpButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()){
+                    case MotionEvent.ACTION_DOWN:{
+                        helpText.setVisibility(View.VISIBLE);
+                        helpText.bringToFront();
+//                        deleteAllHisBut2.setEnabled(false);
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP:{
+                        helpText.setVisibility(View.GONE);
+//                        deleteAllHisBut2.setEnabled(true);
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     private void initViews() {
@@ -174,6 +196,8 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
         textCompany=mView.findViewById(R.id.text_company_name);
         listView= (ListView) mView.findViewById(R.id.list_search3_2);
         flowLayout = (FlowLayout) mView.findViewById(R.id.flowlayout3_2);
+        helpText = mView.findViewById(R.id.sear_frag3_2_helptext);
+        helpButton =mView.findViewById(R.id.help_button_sear_frag3_2);
     }
 
 
@@ -334,7 +358,7 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
 
                         Looper.prepare();
                         System.out.println(data);
-                        Toast.makeText(getActivity(), strByJson, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), strByJson, Toast.LENGTH_SHORT).show();
                         Looper.loop();
                     }
                 });
@@ -373,10 +397,10 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
                 //System.out.println(id);
                 FundHeavyInfo temp=new FundHeavyInfo();
                 temp.setId(id);
+                temp.setName(fundGeneral.getFund2().toString());
                 Intent intent=new Intent(getActivity(),fundsinfo.class);
                 intent.putExtra("fundsGet", temp);
                 startActivity(intent);
-
 
 
 

@@ -1,64 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <include layout="@layout/progressbar"></include>
+
     <Button
         android:id="@+id/frag3_1_but1"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginStart="20dp"
-        app:layout_constraintTop_toTopOf="@id/frag3_1_but2"
+        android:background="@drawable/search_background"
+        android:text="添加心仪股"
+        android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="@id/frag3_1_but2"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:background="@drawable/search_background"
-        android:textSize="15dp"
-        android:text="添加心仪股"/>
+        app:layout_constraintTop_toTopOf="@id/frag3_1_but2" />
+
     <Button
         android:id="@+id/frag3_1_but2"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:background="@drawable/search_background"
+        android:text="刷新"
         android:textSize="15dp"
-        android:text="刷新"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!--    -->
+    <ImageButton
+        android:id="@+id/help_button_sear_frag3"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="20dp"
+        android:background="@mipmap/help_icon"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frag3_1_but2" />
 
+    <!--    -->
+    <!--        tools:visibility="visible"-->
     <ImageButton
         android:id="@+id/check_prorate"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
-        app:layout_constraintTop_toBottomOf="@id/frag3_1_but2"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frag3_1_but2" />
 
     <Button
         android:id="@+id/prorate_but"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        app:layout_constraintTop_toTopOf="@id/check_prorate"
-        app:layout_constraintBottom_toBottomOf="@id/check_prorate"
-        app:layout_constraintLeft_toRightOf="@id/check_prorate"
         android:background="@color/transparent"
         android:paddingRight="50dp"
+        android:text="自选分配比例(这是个按钮)"
         android:textSize="15dp"
-        android:text="自选分配比例(这是个按钮)"/>
+        app:layout_constraintBottom_toBottomOf="@id/check_prorate"
+        app:layout_constraintLeft_toRightOf="@id/check_prorate"
+        app:layout_constraintTop_toTopOf="@id/check_prorate" />
+
+    <TextView
+        android:id="@+id/sear_frag3_helptext"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="544dp"
+        android:background="@drawable/search_background"
+        android:gravity="top"
+        android:padding="10dp"
+        android:singleLine="false"
+        android:text="持仓搜索是根据用户所选择的心仪股的持仓占比给出优选方案"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:visibility="visible" />
 
     <com.example.studying.FlowLayout
         android:id="@+id/flowlayout3_1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        app:layout_constraintTop_toBottomOf="@id/prorate_but"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/prorate_but" />
 
 
     <ListView
@@ -66,6 +98,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/flowlayout3_1"/>
+        app:layout_constraintTop_toBottomOf="@id/flowlayout3_1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
