@@ -234,8 +234,8 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
         searTab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getActivity(),MainActivity2.class);
-                //Intent intent=new Intent(getActivity(),Historyinfo.class);
+                Intent intent=new Intent(getActivity(),Stockinfo.class);
+                //Intent intent=new Intent(getActivity(),MainActivity2.class);
                 intent.putExtra("i",0);
                 startActivity(intent);
             }
@@ -243,8 +243,9 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
         searTab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getActivity(),MainActivity2.class);
-                intent.putExtra("i",1);
+                Intent intent=new Intent(getActivity(),Historyinfo.class);
+//                Intent intent=new Intent(getActivity(),MainActivity2.class);
+//                intent.putExtra("i",1);
                 startActivity(intent);
             }
         });
@@ -302,7 +303,7 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
                     mHandler.sendMessage(message);
                     Looper.prepare();
 
-                    Toast.makeText(getActivity(), strByJson, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), strByJson, Toast.LENGTH_SHORT).show();
                     Looper.loop();
                 }
                 else{

@@ -358,7 +358,7 @@ public class SearchFragment3_2 extends androidx.fragment.app.Fragment {
 
                         Looper.prepare();
                         System.out.println(data);
-                        Toast.makeText(getActivity(), strByJson, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), strByJson, Toast.LENGTH_SHORT).show();
                         Looper.loop();
                     }
                 });

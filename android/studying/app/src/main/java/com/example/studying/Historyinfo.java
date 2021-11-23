@@ -1,5 +1,6 @@
 package com.example.studying;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.studying.entity.FundHeavy;
+import com.example.studying.entity.FundHeavyInfo;
 import com.example.studying.utils.HttpGetRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -36,7 +38,7 @@ import okhttp3.ResponseBody;
 public class Historyinfo extends AddCompanyActivity{
 
     private ListView history_view;
-    private TextView title;
+
     private TextView fundsname;
 
 
@@ -48,7 +50,7 @@ public class Historyinfo extends AddCompanyActivity{
     public List<String>History_cumu=new ArrayList<>();
     //日涨幅
     public List<String>History_incre=new ArrayList<>();
-    private String code="000031";
+    private String code="";
     private int history_num=20;
     Handler mHandler;
     @Override
@@ -57,12 +59,21 @@ public class Historyinfo extends AddCompanyActivity{
 
         setContentView(R.layout.historyinfo_layout);
         history_view = (ListView) this.findViewById(R.id.history_view);
-        title =(TextView)this.findViewById(R.id.Title);
+
         fundsname=(TextView)this.findViewById(R.id.Funds_name);
 
 
-        title.setText("历史净值");
-        fundsname.setText("华夏能源A");
+        Intent intent = this.getIntent();
+        Bundle bundle=intent.getExtras();
+
+        String name=intent.getStringExtra("fundsname");
+        code=intent.getStringExtra("code");
+
+//        String name="asjn";
+//        code="000031";
+
+        Log.v("funds_name_",name+code);
+        fundsname.setText(name);
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects().detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
 
@@ -124,21 +135,19 @@ public class Historyinfo extends AddCompanyActivity{
 //                Log.v("History_boolean",getHistory_incre(position-1).substring(0,1));
 //                Log.v("History.t1","getHistory_date(position-1)");
                 if(getHistory_incre(position-1).substring(0,1).equals("-")) {
-                    t4.setTextColor(Color.parseColor("#cc0000"));//设置颜色
-//                    Log.v("History_boolean",getHistory_incre(position-1).substring(0,1));
-//                    Log.v("History_boolean",false+"");
+                    t4.setTextColor(Color.parseColor("#cc0033"));//设置颜色,暗红
+//                    Log.v("History_boolean",getHistory_incre(position-1).substring(0,1));cc0033
+//                    Log.v("History_boolean",false+"");66cc99
                 }
                 else{
 
 
-                    t4.setTextColor(Color.parseColor("#66ff00"));//设置颜色
+                    t4.setTextColor(Color.parseColor("#66cc99"));//设置颜色，暗绿
                     Log.v("History_boolean",true+"");
                 }
                 
 
-                t1.setTextColor(Color.BLACK);
-                t2.setTextColor(Color.BLACK);
-                t3.setTextColor(Color.BLACK);
+
 
                 t1.setText(getHistory_date(position-1).substring(5));
                 t2.setText(getHistory_uni(position-1));
@@ -183,6 +192,7 @@ public class Historyinfo extends AddCompanyActivity{
 
                         Historyinfo.Historylist adapter_history=new Historyinfo.Historylist();
                         history_view.setAdapter(adapter_history);
+
 
 
                     }

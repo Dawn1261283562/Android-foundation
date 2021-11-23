@@ -634,7 +634,7 @@ public class addStockActivity extends AppCompatActivity {
                             mHandler.sendMessage(message);
 
                             Looper.prepare();
-                            Toast.makeText(addStockActivity.this, strByJson, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(addStockActivity.this, strByJson, Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
                         else{

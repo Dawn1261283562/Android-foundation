@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/teal_700"/>
+        android:background="@color/purple_dark"/>
     <TextView
         android:id="@+id/fundsinfo_title"
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
         android:textSize="20dp"
         android:text="基金行情"
         android:textColor="@color/white"
-        android:background="@color/teal_700"/>
+        android:background="@color/purple_dark"/>
 
 
 
@@ -163,7 +163,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/funsinfo_icon1"
                     android:paddingStart="10dp"
-                    android:text="历史净值"
+                    android:text="历史净值（点进查看更多）"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 

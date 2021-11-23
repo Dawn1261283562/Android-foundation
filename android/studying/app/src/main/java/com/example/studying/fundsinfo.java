@@ -247,9 +247,9 @@ public      class fundsinfo extends AppCompatActivity{
                 t1.setText("股票名称");
                 t2.setText("价格");
                 t3.setText("持仓占比");
-                t1.setTextColor(getColor(R.color.black));
-                t2.setTextColor(getColor(R.color.black));
-                t3.setTextColor(getColor(R.color.black));
+                t1.setTextColor(getResources().getColor(R.color.black));
+                t2.setTextColor(getResources().getColor(R.color.black));
+                t3.setTextColor(getResources().getColor(R.color.black));
                 t1.setTextSize(16);
                 t2.setTextSize(16);
                 t3.setTextSize(16);
@@ -328,10 +328,10 @@ public      class fundsinfo extends AppCompatActivity{
                 t2.setText("单价净值");
                 t3.setText("累计净值");
                 t4.setText("日涨幅");
-                t1.setTextColor(getColor(R.color.black));
-                t2.setTextColor(getColor(R.color.black));
-                t3.setTextColor(getColor(R.color.black));
-                t4.setTextColor(getColor(R.color.black));
+                t1.setTextColor(getResources().getColor(R.color.black));
+                t2.setTextColor(getResources().getColor(R.color.black));
+                t3.setTextColor(getResources().getColor(R.color.black));
+                t4.setTextColor(getResources().getColor(R.color.black));
                 t1.setTextSize(16);
                 t2.setTextSize(16);
                 t3.setTextSize(16);
@@ -520,6 +520,38 @@ public      class fundsinfo extends AppCompatActivity{
                                         Intent intent=new Intent(fundsinfo.this,Stockinfo.class);
                                         intent.putExtra("stockGet", tt);
                                         startActivity(intent);
+                                    //}
+
+
+//                                    Intent intent=new Intent(fundsinfo.this,PageFragment1.class);
+//                                    String stock_id=getHeavy_id(position-1);
+//                                    intent.putExtra(stock_id, stock_id);
+//                                    startActivity(intent);
+                                }
+
+                            }
+                        });
+                        listview_History.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+
+                            //参数三：位置，即点击的是第几个Item
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                //拿到点击的新闻对应的链接
+
+                                Log.v("click_","click"+position);
+                                if(position==0)
+                                {}
+                                else{
+
+                                    Stock tt=new Stock();
+
+                                    tt.setId(fundHeavyList.get(0).get_stock_id()[position-1]);
+                                    Intent intent=new Intent(fundsinfo.this,Historyinfo.class);
+                                    intent.putExtra("fundsname", fundName);
+                                    intent.putExtra("code", code);
+                                    startActivity(intent);
                                     //}
 
 
@@ -727,7 +759,7 @@ public      class fundsinfo extends AppCompatActivity{
                 mHandler.sendMessage(message);
 
                 System.out.println(data);
-                Toast.makeText( fundsinfo.this, strByJson, Toast.LENGTH_SHORT).show();
+                //Toast.makeText( fundsinfo.this, strByJson, Toast.LENGTH_SHORT).show();
                 Looper.loop();
             }
         });
@@ -769,14 +801,14 @@ public      class fundsinfo extends AppCompatActivity{
             textView_value_incre.setTextColor(android.graphics.Color.parseColor("#D60000"));
         }
         else{
-            textView_value_incre.setTextColor(getColor(R.color.teal_700));
+            textView_value_incre.setTextColor(getResources().getColor(R.color.teal_700));
         }
 
     }
     //初始化历史净值信息
     public void init_History(String code) {
 
-        String hurl= "https://fundf10.eastmoney.com/F10DataApi.aspx?type=lsjz&code="+code+"&page=1&sdate=2020-11-12&edate=2021-11-12&per="+history_num;
+        String hurl= "https://fundf10.eastmoney.com/F10DataApi.aspx?type=lsjz&code="+code+"&page=1&sdate=2020-11-12&edate=2051-11-12&per="+history_num;
         HttpGetRequest.sendOkHttpGetRequest(hurl, new Callback() {
 
             @Override

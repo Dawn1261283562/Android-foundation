@@ -197,7 +197,7 @@ public class PageFragment2 extends androidx.fragment.app.Fragment {
                 mHandler.sendMessage(message);
 
                 System.out.println(data);
-                Toast.makeText(getActivity(), strByJson, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), strByJson, Toast.LENGTH_SHORT).show();
                 Looper.loop();
             }
         });

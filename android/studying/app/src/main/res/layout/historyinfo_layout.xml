@@ -1,4 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/history"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.example.studying.StatusBarView
+        android:id="@+id/title_statusBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/purple_dark"/>
+    <TextView
+        android:id="@+id/history_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/title_statusBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:textSize="20dp"
+        android:text="历史净值"
+        android:textColor="@color/white"
+        android:background="@color/purple_dark"/>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scrollView2"
     android:layout_width="match_parent"
@@ -20,22 +49,13 @@
             android:textSize="26sp"
             android:textStyle="bold"></TextView>
 
-        <TextView
-            android:id="@+id/Title"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_below="@+id/Funds_name"
-            android:gravity="center"
-            android:text="历史净值"
-            android:textSize="15sp"
-            android:textStyle="bold"></TextView>
 
         <ListView
 
             android:id="@+id/history_view"
             android:layout_width="match_parent"
-            android:layout_height="1000dp"
-            android:layout_below="@+id/Title"
+            android:layout_height="700dp"
+            android:layout_below="@+id/Funds_name"
             android:layout_marginTop="0dp"
             android:paddingBottom="0dp"
             ></ListView>
@@ -44,3 +64,4 @@
 
 
 </ScrollView>
+</LinearLayout>
