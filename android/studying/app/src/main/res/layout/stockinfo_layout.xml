@@ -266,7 +266,7 @@
                 <ListView
                     android:id="@+id/View_bargin"
                     android:layout_width="match_parent"
-                    android:layout_height="410dp"
+                    android:layout_height="450dp"
                     android:layout_below="@id/fragment_container"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"

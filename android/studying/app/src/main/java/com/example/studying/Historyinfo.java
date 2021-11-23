@@ -69,6 +69,8 @@ public class Historyinfo extends AddCompanyActivity{
         String name=intent.getStringExtra("fundsname");
         code=intent.getStringExtra("code");
 
+//        String name="asjn";
+//        code="000031";
 
         Log.v("funds_name_",name+code);
         fundsname.setText(name);
@@ -133,21 +135,19 @@ public class Historyinfo extends AddCompanyActivity{
 //                Log.v("History_boolean",getHistory_incre(position-1).substring(0,1));
 //                Log.v("History.t1","getHistory_date(position-1)");
                 if(getHistory_incre(position-1).substring(0,1).equals("-")) {
-                    t4.setTextColor(Color.parseColor("#cc0000"));//设置颜色
-//                    Log.v("History_boolean",getHistory_incre(position-1).substring(0,1));
-//                    Log.v("History_boolean",false+"");
+                    t4.setTextColor(Color.parseColor("#cc0033"));//设置颜色,暗红
+//                    Log.v("History_boolean",getHistory_incre(position-1).substring(0,1));cc0033
+//                    Log.v("History_boolean",false+"");66cc99
                 }
                 else{
 
 
-                    t4.setTextColor(Color.parseColor("#66ff00"));//设置颜色
+                    t4.setTextColor(Color.parseColor("#66cc99"));//设置颜色，暗绿
                     Log.v("History_boolean",true+"");
                 }
                 
 
-                t1.setTextColor(Color.BLACK);
-                t2.setTextColor(Color.BLACK);
-                t3.setTextColor(Color.BLACK);
+
 
                 t1.setText(getHistory_date(position-1).substring(5));
                 t2.setText(getHistory_uni(position-1));
