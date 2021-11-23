@@ -176,6 +176,12 @@ public class addTypeActivity extends AppCompatActivity {
                                 &&(event.getX() < textView.getWidth()-textView.getPaddingRight())){
                             selectedTypeList.remove(position);
                             flowLayout.setAdapter(flowAdapter);
+                            if(selectedTypeList.size()==0){
+                                flowLayout.setVisibility(View.GONE);
+                            }
+                            else{
+                                flowLayout.setVisibility(View.VISIBLE);
+                            }
                         }
                         return false;
                     }
@@ -184,6 +190,12 @@ public class addTypeActivity extends AppCompatActivity {
             }
         };
         flowLayout.setAdapter(flowAdapter);
+        if(selectedTypeList.size()==0){
+            flowLayout.setVisibility(View.GONE);
+        }
+        else{
+            flowLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initEvent() {
@@ -249,6 +261,12 @@ public class addTypeActivity extends AppCompatActivity {
                 if(!hasSelect){
                     selectedTypeList.add(typeSelected);
                     flowLayout.setAdapter(flowAdapter);
+                    if(selectedTypeList.size()==0){
+                        flowLayout.setVisibility(View.GONE);
+                    }
+                    else{
+                        flowLayout.setVisibility(View.VISIBLE);
+                    }
                 }
 
             }

@@ -2,6 +2,7 @@ package com.example.studying;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,26 +28,52 @@ public class FundAdapter2 extends ArrayAdapter<FundGeneral> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         fundGeneral=getItem(position);
-        View view= LayoutInflater.from(getContext()).inflate(mResourceId,parent,false);
 
-        TextView fund1=(TextView) view.findViewById(R.id.fund1);
-        TextView fund2=(TextView) view.findViewById(R.id.fund2);
-        TextView fund3=(TextView) view.findViewById(R.id.fund3);
+        View view;
+        ViewHolder viewHolder;
+        if(convertView==null){
+            view=LayoutInflater.from(getContext()).inflate(mResourceId,parent,false);
 
-
-        fund1.setText(fundGeneral.getFund3());
-        fund2.setText(fundGeneral.getFund1());
-        fund3.setText(fundGeneral.getFund2());
-
-        if(fundGeneral.getSelectFund()){
-            view.setBackgroundColor(Color.YELLOW);
+            viewHolder=new ViewHolder();
+            viewHolder.fund1=(TextView) view.findViewById(R.id.fund1);
+            viewHolder.fund2=(TextView) view.findViewById(R.id.fund2);
+            viewHolder.fund3=(TextView) view.findViewById(R.id.fund3);
+            view.setTag(viewHolder);
         }
         else{
-            view.setBackgroundColor(Color.TRANSPARENT);
+            view=convertView;
+            viewHolder=(ViewHolder)view.getTag();
+        }
+
+
+
+        viewHolder.fund1.setText(fundGeneral.getFund3());
+        viewHolder.fund2.setText(fundGeneral.getFund1());
+        viewHolder.fund3.setText(fundGeneral.getFund2());
+
+        if(position==0){
+            viewHolder.fund1.setTextColor(android.graphics.Color.parseColor("#000000"));
+            viewHolder.fund2.setTextColor(android.graphics.Color.parseColor("#000000"));
+            viewHolder.fund3.setTextColor(android.graphics.Color.parseColor("#000000"));
+            viewHolder.fund1.setTextSize(16);
+            viewHolder.fund2.setTextSize(16);
+            viewHolder.fund3.setTextSize(16);
         }
 
         return view;
     }
 
+    @Override
+    public boolean isEnabled(int position) {
+        if(position==0){
+            return false;
+        }
+        return super.isEnabled(position);
+    }
 
+    class ViewHolder{
+        TextView fund1;
+        TextView fund2;
+        TextView fund3;
+    }
 }
