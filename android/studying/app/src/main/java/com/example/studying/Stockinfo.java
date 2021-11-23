@@ -96,7 +96,9 @@ public      class Stockinfo extends AppCompatActivity{
         String stockId=stockGet.getId().toString();
         String temp1=stockId.substring(0,6);
         String temp2=stockId.substring(7,9);
-
+//
+//        String temp1="000031";
+//        String temp2="sz";
 
         temp2=temp2.toLowerCase(Locale.ROOT);
 //        //System.out.println(temp2+temp1);
@@ -362,10 +364,10 @@ public      class Stockinfo extends AppCompatActivity{
                         Double price_now=Double.parseDouble(list.get(3));
                         Double price_yest=Double.parseDouble(list.get(2));
                         if(price_now>price_yest){
-                            text_price_now.setTextColor(Color.parseColor("#7FFF00"));
+                            text_price_now.setTextColor(Color.parseColor("#66cc99"));
                         }
                         else{
-                            text_price_now.setTextColor(Color.parseColor("#EE2C2C"));
+                            text_price_now.setTextColor(Color.parseColor("#cc0033"));
                         }
                         taa.setText("当前价格:");
                         textView.setText( list2.get(1));
@@ -373,10 +375,10 @@ public      class Stockinfo extends AppCompatActivity{
 
 
                         if(Double.parseDouble(list.get(1))>Double.parseDouble(list.get(2))){
-                            text_price_today.setTextColor(Color.parseColor("#7FFF00"));
+                            text_price_today.setTextColor(Color.parseColor("#66cc99"));
                         }
                         else{
-                            text_price_today.setTextColor(Color.parseColor("#EE2C2C"));
+                            text_price_today.setTextColor(Color.parseColor("#cc0033"));
                         }
                         text_price_today.setText("开盘价:"+list.get(1));
                         text_price_yest.setText("收盘价:"+list.get(2));
