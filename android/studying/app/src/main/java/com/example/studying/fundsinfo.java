@@ -247,9 +247,9 @@ public      class fundsinfo extends AppCompatActivity{
                 t1.setText("股票名称");
                 t2.setText("价格");
                 t3.setText("持仓占比");
-//                t1.setTextColor(getColor(R.color.black));
-//                t2.setTextColor(getColor(R.color.black));
-//                t3.setTextColor(getColor(R.color.black));
+                t1.setTextColor(getResources().getColor(R.color.black));
+                t2.setTextColor(getResources().getColor(R.color.black));
+                t3.setTextColor(getResources().getColor(R.color.black));
                 t1.setTextSize(16);
                 t2.setTextSize(16);
                 t3.setTextSize(16);
@@ -328,10 +328,10 @@ public      class fundsinfo extends AppCompatActivity{
                 t2.setText("单价净值");
                 t3.setText("累计净值");
                 t4.setText("日涨幅");
-//                t1.setTextColor(getColor(R.color.black));
-//                t2.setTextColor(getColor(R.color.black));
-//                t3.setTextColor(getColor(R.color.black));
-//                t4.setTextColor(getColor(R.color.black));
+                t1.setTextColor(getResources().getColor(R.color.black));
+                t2.setTextColor(getResources().getColor(R.color.black));
+                t3.setTextColor(getResources().getColor(R.color.black));
+                t4.setTextColor(getResources().getColor(R.color.black));
                 t1.setTextSize(16);
                 t2.setTextSize(16);
                 t3.setTextSize(16);
@@ -759,7 +759,7 @@ public      class fundsinfo extends AppCompatActivity{
                 mHandler.sendMessage(message);
 
                 System.out.println(data);
-                Toast.makeText( fundsinfo.this, strByJson, Toast.LENGTH_SHORT).show();
+                //Toast.makeText( fundsinfo.this, strByJson, Toast.LENGTH_SHORT).show();
                 Looper.loop();
             }
         });
@@ -801,7 +801,7 @@ public      class fundsinfo extends AppCompatActivity{
             textView_value_incre.setTextColor(android.graphics.Color.parseColor("#D60000"));
         }
         else{
-//            textView_value_incre.setTextColor(getColor(R.color.teal_700));
+            textView_value_incre.setTextColor(getResources().getColor(R.color.teal_700));
         }
 
     }

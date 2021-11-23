@@ -252,9 +252,9 @@ public      class Stockinfo extends AppCompatActivity{
                     t1.setText("类别");
                     t2.setText("金额/元");
                     t3.setText("股数/手");
-                    t1.setTextColor(getColor(R.color.black));
-                    t2.setTextColor(getColor(R.color.black));
-                    t3.setTextColor(getColor(R.color.black));
+                    t1.setTextColor(getResources().getColor(R.color.black));
+                    t2.setTextColor(getResources().getColor(R.color.black));
+                    t3.setTextColor(getResources().getColor(R.color.black));
                     t1.setTextSize(16);
                     t2.setTextSize(16);
                     t3.setTextSize(16);
@@ -285,7 +285,8 @@ public      class Stockinfo extends AppCompatActivity{
 
 
 
-                t1.setTextColor(getColor(R.color.black));
+                t1.setTextColor(getResources().getColor(R.color.black));
+//                t1.setTextColor(andriod.graphics.Color.parseColor("#000000"));
                 t1.setTextSize(16);
                 t1.setText(position_to_barginstyle(position));
                 t2.setText(wrapamount(bargin_list.get(9))+"万元");

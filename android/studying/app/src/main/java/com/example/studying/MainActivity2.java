@@ -508,7 +508,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                             mHandler.sendMessage(message);
                             Looper.prepare();
                             System.out.println(data);
-                            Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
                         else{
@@ -600,7 +600,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
                             mHandler.sendMessage(message);
                             Looper.prepare();
                             stockListNormal=stockBeanList;
-                            Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(MainActivity2.this, strByJson, Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
                             else{
