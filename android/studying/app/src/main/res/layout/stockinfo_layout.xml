@@ -152,7 +152,7 @@
                         android:id="@+id/funsinfo_icon1"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@mipmap/icon1_2" />
+                        android:src="@mipmap/found_search" />
 
                     <TextView
                         android:id="@+id/title_history"
@@ -234,7 +234,7 @@
                         android:id="@+id/funsinfo_icon2"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@mipmap/icon1_2" />
+                        android:src="@mipmap/search" />
 
                     <TextView
                         android:id="@+id/title_history2"

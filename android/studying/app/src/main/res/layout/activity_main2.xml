@@ -18,6 +18,7 @@
         app:layout_constraintTop_toBottomOf="@id/title_in_main2"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:background="@color/light_gray"
         android:orientation="horizontal">
 
         <TextView
@@ -47,6 +48,7 @@
         app:layout_constraintTop_toBottomOf="@id/top_Tab1"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:background="@color/light_gray"
         android:orientation="horizontal">
 
         <TextView
