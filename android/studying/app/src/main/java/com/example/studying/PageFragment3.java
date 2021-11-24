@@ -29,7 +29,8 @@ public class PageFragment3 extends androidx.fragment.app.Fragment {
         textViewUserName1=mView.findViewById(R.id.user_name1);
         textViewUserName2=mView.findViewById(R.id.user_name2);
         textViewUserMail=mView.findViewById(R.id.user_mail);
-        //exitBut=mView.findViewById(R.id.exit_button);
+        exitBut=mView.findViewById(R.id.exit_button);
+        initEvent();
 
         return mView;
     }
