@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="@id/history_text"
         app:layout_constraintBottom_toBottomOf="@id/history_text"
         app:layout_constraintRight_toRightOf="parent"
-        android:src="@mipmap/icon1_5"/>
+        android:src="@mipmap/cross"/>
 
     <com.example.studying.FlowLayout
         android:id="@+id/addstock_history_flow"

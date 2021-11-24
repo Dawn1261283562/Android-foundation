@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -92,6 +93,10 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
     private ImageButton mImg1;
     private ImageButton mImg2;
     private ImageButton mImg3;
+
+    private TextView mText1;
+    private TextView mText2;
+    private TextView mText3;
 
     private PageFragment1 pageFragment1;
     private PageFragment2 pageFragment2;
@@ -245,6 +250,11 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
         mImg1 = (ImageButton) findViewById(R.id.tab_img1);
         mImg2 = (ImageButton) findViewById(R.id.tab_img2);
         mImg3 = (ImageButton) findViewById(R.id.tab_img3);
+
+        mText1 = (TextView) findViewById(R.id.tab_text1);
+        mText2 = (TextView) findViewById(R.id.tab_text2);
+        mText3 = (TextView) findViewById(R.id.tab_text3);
+
 /*        webView.loadUrl("http://www.baidu.com");
         webView.loadUrl("http://www.baidu.com");*/
 /*//设置在当前WebView继续加载网页
@@ -294,14 +304,17 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
         //点亮当前点击的tab的图标
         switch (i) {
             case 0:
-                mImg1.setImageResource(R.mipmap.icon1_2);
+                mText1.setTextColor(getResources().getColor(R.color.chosen));
+                mImg1.setImageResource(R.mipmap.found_chosen);
                 break;
             case 1:
-                mImg2.setImageResource(R.mipmap.icon1_2);
+                mText2.setTextColor(getResources().getColor(R.color.chosen));
+                mImg2.setImageResource(R.mipmap.star_chosen);
 
                 break;
             case 2:
-                mImg3.setImageResource(R.mipmap.icon1_2);
+                mText3.setTextColor(getResources().getColor(R.color.chosen));
+                mImg3.setImageResource(R.mipmap.user_chosen);
                 break;
         }
         mViewPager.setCurrentItem(i);
@@ -309,9 +322,13 @@ public class MainActivity extends   FragmentActivity implements View.OnClickList
 
     //设置默认的tab的图标
     private void resetImg() {
-        mImg1.setImageResource(R.mipmap.icon1_1);
-        mImg2.setImageResource(R.mipmap.icon1_1);
-        mImg3.setImageResource(R.mipmap.icon1_1);
+        mImg1.setImageResource(R.mipmap.found_normal);
+        mImg2.setImageResource(R.mipmap.star_normal);
+        mImg3.setImageResource(R.mipmap.user_normal);
+
+        mText1.setTextColor(getResources().getColor(R.color.normal));
+        mText2.setTextColor(getResources().getColor(R.color.normal));
+        mText3.setTextColor(getResources().getColor(R.color.normal));
     }
 
     private void login(){
