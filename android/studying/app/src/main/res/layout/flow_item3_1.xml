@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:drawableRight="@mipmap/cross"
     android:drawablePadding="3dp"
-    android:background="@drawable/search_background"
+    android:background="@drawable/button_circle_shape_3"
     android:padding="5dp"
     android:textColor="#555555"
     android:gravity="center_vertical"
