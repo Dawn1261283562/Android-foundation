@@ -139,7 +139,7 @@ public class addStockActivity extends AppCompatActivity {
         intent2.putExtras(bundle2);
         setResult(Activity.RESULT_OK,intent2);
 
-        fundSearchResult2();
+        fundSearchResult();
         getsearchHistory();
         initbtn_login5();
         //System.out.println(stockList);
@@ -548,6 +548,15 @@ public class addStockActivity extends AppCompatActivity {
         for (int i = 0; i < size; i++) {
             Stock value = stockList1.get(i);
             FundGeneral fundGeneral1=new FundGeneral((String) value.getId(),(String) value.getName(),(String) value.getPrice());
+
+
+            int size2 = stockList.size();
+            for (int j = 0; j < size2; j++) {
+                if(stockList.get(j).getId().equals(value.getId())) {
+                    fundGeneral1.setSelectFund(true);
+                    break;
+                }
+            }
             fundGeneral1.setStock(value);
             fundGeneralList.add(fundGeneral1);
         }
@@ -570,32 +579,7 @@ public class addStockActivity extends AppCompatActivity {
         System.out.println(fundGeneralList.size());
         fundAdapter.notifyDataSetChanged();
     }
-    private void fundSearchResult2() {
-        /*FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
-        fundGeneralList.add(fundGeneral1);*/
 
-        System.out.println(123321);
-        fundGeneralList.clear();
-//        FundGeneral fundGeneral=new FundGeneral("000001.SZ","平安银行","20.04");
-//        fundGeneralList.add(fundGeneral);
-        int size = stockList.size();
-        for (int i = 0; i < size; i++) {
-            Stock value = stockList.get(i);
-            FundGeneral fundGeneral1=new FundGeneral((String) value.getId(),(String) value.getName(),(String) value.getPrice());
-            fundGeneral1.setStock(value);
-            fundGeneral1.setSelectFund(true);
-            fundGeneralList.add(fundGeneral1);
-        }
-
-        if(fundGeneralList.size()==0){
-            titleGroup.setVisibility(View.INVISIBLE);
-        }
-        else{
-            titleGroup.setVisibility(View.VISIBLE);
-        }
-        System.out.println(fundGeneralList.size());
-        fundAdapter.notifyDataSetChanged();
-    }
     private void hasSelectedUpdate() {
         System.out.println(123321);
         int size = stockList.size();
