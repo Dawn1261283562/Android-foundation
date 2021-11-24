@@ -17,6 +17,8 @@ public class Data extends Application {
     private String username;
     SharedPreferences sp;
 
+    private boolean addStockTips;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -29,6 +31,8 @@ public class Data extends Application {
         theLoginTime = System.currentTimeMillis();
 
         sp.edit().putLong("lastLoginTime",theLoginTime).commit();
+
+        addStockTips=false;
     }
 
     public long getLastLoginTime() {
@@ -49,4 +53,11 @@ public class Data extends Application {
         sp.edit().putString("username",this.username).commit();
     }
 
+    public boolean getAddStockTips() {
+        return addStockTips;
+    }
+
+    public void setAddStockTips(boolean addStockTips) {
+        this.addStockTips = addStockTips;
+    }
 }

@@ -212,7 +212,12 @@ public class PageFragment1 extends androidx.fragment.app.Fragment {
         moreFundBut=(Button) mView.findViewById(R.id.page_fragment1_button1);
         swipeRefreshLayout=(SwipeRefreshLayout) mView.findViewById(R.id.pagefrag1_swipe_refresh);
         recyclerView=mView.findViewById(R.id.pagefrag1_recycleview);
-        LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
+        LinearLayoutManager layoutManager=new LinearLayoutManager(getContext()){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         recyclerView.setLayoutManager(layoutManager);
 
 
