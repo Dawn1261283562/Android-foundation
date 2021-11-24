@@ -22,38 +22,68 @@
 
         <LinearLayout
             android:id="@+id/tab1"
+            android:layout_height="50dp"
             style="@style/naviTab">
+
             <ImageButton
                 android:id="@+id/tab_img1"
                 style="@style/naviButton"
-                android:src="@mipmap/icon1_2"/>
+                android:layout_height="25dp"
+                android:layout_marginTop="8dp"
+                android:padding="0dp"
+                android:src="@mipmap/found_normal" />
+
             <TextView
+                android:id="@+id/tab_text1"
                 style="@style/naviText"
-                android:text="@string/tab1"/>
+                android:layout_margin="0dp"
+                android:text="@string/tab1"
+                android:textColor="#76787D"
+                android:textSize="12sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/tab2"
+            android:layout_height="50dp"
             style="@style/naviTab">
+
+
             <ImageButton
                 android:id="@+id/tab_img2"
                 style="@style/naviButton"
-                android:src="@mipmap/icon1_1" />
+                android:layout_height="25dp"
+                android:layout_marginTop="8dp"
+                android:src="@mipmap/star_normal" />
+
             <TextView
+                android:id="@+id/tab_text2"
                 style="@style/naviText"
-                android:text="@string/tab2"/>
+                android:text="@string/tab2"
+                android:textColor="#76787D"
+                android:textSize="12sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/tab3"
+            android:layout_height="50dp"
             style="@style/naviTab">
+
             <ImageButton
                 android:id="@+id/tab_img3"
                 style="@style/naviButton"
-                android:src="@mipmap/icon1_1"/>
+                android:layout_height="25dp"
+                android:layout_marginTop="8dp"
+                android:src="@mipmap/user_normal" />
+
             <TextView
+                android:id="@+id/tab_text3"
                 style="@style/naviText"
-                android:text="@string/tab3"/>
+                android:text="@string/tab3"
+                android:textColor="#76787D"
+                android:textSize="12sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
     </LinearLayout>
