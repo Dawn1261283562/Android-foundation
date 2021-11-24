@@ -7,6 +7,8 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import java.io.IOException;
@@ -27,6 +29,8 @@ import java.util.List;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.studying.entity.Stock;
 import com.example.studying.utils.HttpGetRequest;
@@ -51,10 +55,11 @@ public      class Stockinfo extends AppCompatActivity{
     private ImageView imageview;
     private ListView listView_bargin;
 
+    private StockPictureFragment stockPictureFragment;
     private String barginString;
     private Stock stockGet;
     private String type="asdasdasd";
-    private TabLayout mTabTl;
+
     private int barginnum=11;
 
 
@@ -64,8 +69,29 @@ public      class Stockinfo extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stockinfo_layout);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
 
-        imageview = (ImageView) this.findViewById(R.id.imageView);
+
+        FragmentManager fm = getSupportFragmentManager();//获得fragment的管理对象
+        FragmentTransaction ft = fm.beginTransaction();
+        stockPictureFragment = new StockPictureFragment();//Fragment每次添加都要重新创建，否则因为状态不同会导致问题
+//
+        ft.add(R.id.fragment_container, stockPictureFragment);
+        ft.commit();
+
+
+
         textView=(TextView) this.findViewById(R.id.text);
         text_price_now=(TextView)this.findViewById(R.id.price_now);
         text_price_today=(TextView)this.findViewById(R.id.price_beginning);
@@ -75,7 +101,7 @@ public      class Stockinfo extends AppCompatActivity{
         text_price_total=(TextView)this.findViewById(R.id.totalvalue);
         text_price_num=(TextView)this.findViewById(R.id.totalnum);
         taa=(TextView)this.findViewById(R.id.aa);
-        mTabTl=(TabLayout)this.findViewById(R.id.Stockinfo_tab) ;
+
 
 //        textView2=(TextView) this.findViewById(R.id.text2);
 //        textView3=(TextView) this.findViewById(R.id.text3);
@@ -113,90 +139,10 @@ public      class Stockinfo extends AppCompatActivity{
         initRequest(url);
         textView_code.setText(temp1);
 
-        initimage(stockIdFormal );
 
-        mTabTl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
-                        String strURL0 = "http://image.sinajs.cn/newchart/daily/n/"+stockIdFormal+".gif";
-                        try {
-                            Bitmap bitmap = getBitmap(strURL0);
-                            imageview.setImageBitmap(bitmap);
-                        } catch (IOException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
-                        Log.v("funds_name","funds_name");
-                        break;
-                    case 1:
-                        String strURL1 = "http://image.sinajs.cn/newchart/weekly/n/"+stockIdFormal+".gif";
-                        Log.i("883333","false");
-                        try {
-                            Log.i("443333","false");
-                            Bitmap bitmap = getBitmap(strURL1);
-                            Log.i("553333","false");
-                            imageview.setImageBitmap(bitmap);
-                            Log.i("663333","false");
-                        } catch (IOException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                            Log.i("333333","false");
-                        }
-                        Log.v("funds_name","funds_name2");
-                        break;
-                    case 2:
-                        String strURL2 = "http://image.sinajs.cn/newchart/min/n/"+stockIdFormal+".gif";
-                        Log.i("883333","false");
-                        try {
-
-                            Bitmap bitmap = getBitmap(strURL2);
-
-                            imageview.setImageBitmap(bitmap);
-
-                        } catch (IOException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                            Log.i("333333","false");
-                        }
-                        Log.v("funds_name","funds_name3");
-
-                        break;
-                    case 3:
-                        String strURL5 = "http://image.sinajs.cn/newchart/monthly/n/"+stockIdFormal+".gif";
-                        Log.i("883333","false");
-                        try {
-                            Log.i("443333","false");
-                            Bitmap bitmap = getBitmap(strURL5);
-                            Log.i("553333","false");
-                            imageview.setImageBitmap(bitmap);
-                            Log.i("663333","false");
-                        } catch (IOException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                            Log.i("333333","false");
-                        }
-                        Log.v("funds_name","funds_name");
-                        break;
-
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-
-
-            }
-
-        });
+        Bundle bundle1 = new Bundle();
+        bundle1.putString("code",stockIdFormal);
+        stockPictureFragment.setArguments(bundle1);
 
 
     }
