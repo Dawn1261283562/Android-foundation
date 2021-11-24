@@ -30,14 +30,14 @@ public class FundCollectionController {
         fundCollection.setName(name);//这里插入的是基金的ID
 
         int result = this.fundCollectionService.insert(fundCollection);
-        System.out.println(result);
+        //System.out.println(result);
         return fundCollection;
     }
 
     @RequestMapping("/deleteByUsernameANdName")
     public int deleteByUsernameANdName(String username,String name) {
         int result = this.fundCollectionService.deleteByUsernameANdName(username,name);
-        System.out.println(result);
+        //System.out.println(result);
         return result;
     }
 
@@ -49,7 +49,7 @@ public class FundCollectionController {
 
         for(int i=0;i<w.size();i++){
             FundHeavy wItem= w.get(i);
-            System.out.println(wItem.getId());
+            //System.out.println(wItem.getId());
             //System.out.println(wItem.getName());
             if(Objects.equals(wItem.getId(), name))return true;
         }

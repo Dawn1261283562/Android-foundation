@@ -71,7 +71,7 @@ public class FundHeavyServiceImpl implements FundHeavyService {
             int count=0;
             for(int j=0;j<num;j++){
                 for(int p=0;p<10;p++){
-                    //System.out.print(1);System.out.print(stockIdList);
+                    ////System.out.print(1);//System.out.print(stockIdList);
                     if(Objects.equals(s.get_stock_id()[p], stockIdList[j])){
                         count++;
 
@@ -93,23 +93,23 @@ public class FundHeavyServiceImpl implements FundHeavyService {
             for(int j=0;j<num;j++){
                 for(int p=0;p<10;p++){
                     if(Objects.equals(s.get_stock_id()[p], stockIdList[j])){
-                        //System.out.println(s.score);
+                        ////System.out.println(s.score);
                         double expectRadio=0;
 
                         expectRadio= Double.parseDouble(stockRadioList[j].toString());
-                        //System.out.println(expectRadio);
+                        ////System.out.println(expectRadio);
                         double realRadio =0;
 
                         realRadio= Double.parseDouble(s.get_stock_ratio()[p].toString());
-                        //System.out.println(realRadio);
+                        ////System.out.println(realRadio);
                         double difference=0;
 
                         difference= expectRadio-realRadio;
-                        //System.out.println(difference);
+                        ////System.out.println(difference);
                         double dif=difference*100;//差异值 有+有-
-                        //System.out.println(dif);
+                        ////System.out.println(dif);
                         int theScore=(int)dif;
-                        //System.out.println(theScore);
+                        ////System.out.println(theScore);
                         //取绝对值
                         if(theScore>=0){
                             s.score=(double)(theScore)+s.score;
@@ -198,8 +198,8 @@ public class FundHeavyServiceImpl implements FundHeavyService {
                 for (int p = 0; p < si_size; p++) {
                     String s1 = s.get_stock_all_Type()[p];
                     //boolean status = status;
-//                    System.out.println(s1);
-//                    System.out.println(n1);
+//                    //System.out.println(s1);
+//                    //System.out.println(n1);
                     if(s1==null)continue;
                     if(s1.contains(n1)){
                         s.score++;
@@ -345,7 +345,7 @@ public class FundHeavyServiceImpl implements FundHeavyService {
             String temp1=str.substring(0,6);String temp2=str.substring(7,9);
             temp2=temp2.toUpperCase();
             str=temp1+'.'+temp2;
-            System.out.println(str);
+            //System.out.println(str);
             return fundHeavyDao.getFundHeavyInfoById(str);
             }
         else if(str.matches(regex5)){
@@ -402,7 +402,7 @@ public class FundHeavyServiceImpl implements FundHeavyService {
 //                String temp1=str.substring(0,6);String temp2=str.substring(7,9);
 //                temp2=temp2.toUpperCase();
 //                str=temp1+'.'+temp2;
-//                System.out.println(str);
+//                //System.out.println(str);
 //                return fundHeavyDao.getFundHeavyInfoById(str);
 //                }
 //                else if(str.matches(regex5)){

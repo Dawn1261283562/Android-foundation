@@ -27,7 +27,7 @@
             android:layout_height="65dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            android:background="@mipmap/default_user"
+            android:background="@mipmap/slb"
             android:padding="0dp"
             android:src="@drawable/circle_background"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -181,7 +181,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="服务1"
+                    android:text="基金普通搜索"
                     android:textSize="20dp" />
 
                 <Button
@@ -189,7 +189,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="服务2"
+                    android:text="股票搜索"
                     android:textSize="20dp" />
             </TableRow>
 
@@ -200,14 +200,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="服务3"
+                    android:text="基金持仓筛选"
                     android:textSize="20dp" />
 
                 <Button
+                    android:id="@+id/service4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:textSize="20dp"
+                    android:text="基金板块筛选" />
+
             </TableRow>
+
         </TableLayout>
 
     </LinearLayout>

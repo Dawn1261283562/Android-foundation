@@ -16,6 +16,11 @@ public class PageFragment3 extends androidx.fragment.app.Fragment {
     private TextView textViewUserName1;
     private TextView textViewUserName2;
     private TextView textViewUserMail;
+
+    private Button But1;
+    private Button But2;
+    private Button But3;
+    private Button But4;
     private Button exitBut;
 
     private String username;
@@ -29,6 +34,11 @@ public class PageFragment3 extends androidx.fragment.app.Fragment {
         textViewUserName1=mView.findViewById(R.id.user_name1);
         textViewUserName2=mView.findViewById(R.id.user_name2);
         textViewUserMail=mView.findViewById(R.id.user_mail);
+
+        But1=mView.findViewById(R.id.service1);
+        But2=mView.findViewById(R.id.service2);
+        But3=mView.findViewById(R.id.service3);
+        But4=mView.findViewById(R.id.service4);
         exitBut=mView.findViewById(R.id.exit_button);
         initEvent();
 
@@ -65,6 +75,42 @@ public class PageFragment3 extends androidx.fragment.app.Fragment {
                 data.setUsername(null);
 
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+        But1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Intent intent = new Intent(getActivity(), MainActivity2.class);
+                startActivity(intent);
+            }
+        });
+        But2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Intent intent = new Intent(getActivity(), MainActivity2.class);
+                startActivity(intent);
+            }
+        });
+        But3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Intent intent = new Intent(getActivity(), MainActivity2.class);
+                startActivity(intent);
+            }
+        });
+        But4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Intent intent = new Intent(getActivity(), MainActivity2.class);
                 startActivity(intent);
             }
         });

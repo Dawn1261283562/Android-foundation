@@ -38,7 +38,7 @@ public class StockController {
 
 
             id =formalId;
-            System.out.println(id);
+            //System.out.println(id);
             String temp1=id.substring(0,6);String temp2=id.substring(7,9);
             //System.out.println(temp2+temp1);
             String id_restructure=temp2+temp1;
@@ -93,7 +93,7 @@ public class StockController {
                     Str.setPrice(tempS);
                 }
                 String _temp11=_id.substring(0,2);String _temp22=_id.substring(2,8);
-                System.out.println(_temp22+'.'+_temp11);
+                //System.out.println(_temp22+'.'+_temp11);
                 String idRestructure=_temp22+'.'+_temp11;
                 _stock.setId(idRestructure);
 
@@ -124,7 +124,7 @@ public class StockController {
             stock.setPrice(temp);
         }
         String temp1=id.substring(0,2);String temp2=id.substring(2,8);
-        System.out.println(temp2+'.'+temp1);
+        //System.out.println(temp2+'.'+temp1);
         String id_restructure=temp2+'.'+temp1;
         stock.setId(id_restructure);
 
@@ -167,7 +167,7 @@ public class StockController {
             stock.setPrice(temp);
         }
         String temp1=id.substring(0,2);String temp2=id.substring(2,8);
-        System.out.println(temp2+'.'+temp1);
+        //System.out.println(temp2+'.'+temp1);
         String id_restructure=temp2+'.'+temp1;
         stock.setId(id_restructure);
         List<Stock>stockList = null;
@@ -197,7 +197,7 @@ public class StockController {
         String temp=nums[3];
 
         String temp1=id.substring(0,2);String temp2=id.substring(2,8);
-        System.out.println(temp2+'.'+temp1);
+        //System.out.println(temp2+'.'+temp1);
         String id_restructure=temp2+'.'+temp1;
         stock.setId(id_restructure);
         stock.setPrice(temp);
@@ -234,13 +234,13 @@ public class StockController {
 
                 String temp1 = ret.substring(0, 2);
                 String temp2 = ret.substring(2, 8);
-                System.out.println(temp2 + '.' + temp1);
+                //System.out.println(temp2 + '.' + temp1);
                 String id_restructure = temp2 + '.' + temp1;
                 stock.setId(id_restructure);
                 stock.setPrice(temp);
                 stockService.update(stock);
 
-                System.out.println(data);
+                //System.out.println(data);
             }
             catch (Exception e){
                 System.out.println("无法找到该数据。");
@@ -280,7 +280,7 @@ public class StockController {
                 stock.setPrice(tempS);
             }
             String _temp11=_id.substring(0,2);String _temp22=_id.substring(2,8);
-            System.out.println(_temp22+'.'+_temp11);
+            //System.out.println(_temp22+'.'+_temp11);
             String idRestructure=_temp22+'.'+_temp11;
             stock.setId(idRestructure);
 

@@ -30,8 +30,8 @@ public class FundCollectionServiceImpl implements FundCollectionService{
 
         User user= userDao.getByPhone(String.valueOf(collection.getUsername()));
         String phoneNum=user.getUsername();
-        System.out.println(phoneNum);
-        System.out.println(phoneNum);
+        //System.out.println(phoneNum);
+        //System.out.println(phoneNum);
 
         return fundCollectionDao.insert(collection);
     }
@@ -55,9 +55,9 @@ public class FundCollectionServiceImpl implements FundCollectionService{
 
         for (FundCollection str : temp) {
 
-            //System.out.println(fundHeavyDao.getFundHeavyById(str.getName()));
+            ////System.out.println(fundHeavyDao.getFundHeavyById(str.getName()));
             if(fundHeavyDao.getFundHeavyById(str.getName()).get(0) !=null){
-                System.out.println(str.getName());
+                //System.out.println(str.getName());
                 List<FundHeavy> y=  fundHeavyDao.getFundHeavyById( str.getName());
 
 
@@ -65,7 +65,7 @@ public class FundCollectionServiceImpl implements FundCollectionService{
             }
             else if (fundHeavyDao.getFundHeavyInfoById( str.getName()).get(0) !=null){
                 List<FundHeavyInfo> y1=  fundHeavyDao.getFundHeavyInfoById( str.getName());
-                System.out.println(str.getName());
+                //System.out.println(str.getName());
 
                 List<FundHeavy> y=new ArrayList<FundHeavy>();
                 FundHeavy yt=new FundHeavy();

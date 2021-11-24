@@ -24,12 +24,12 @@ public class StockDaoImpl implements StockDao {
     public Stock getById(String id) {
         //增加热度
 
-        //System.out.println(id);
+        ////System.out.println(id);
         String sql="select * from m_stock where id = ?";
         Stock result = null;
-        //System.out.println(1231231231);
+        ////System.out.println(1231231231);
         try{
-            //System.out.println(1231231231);
+            ////System.out.println(1231231231);
             result=this.jdbcTemplate.queryForObject(sql, new RowMapper<Stock>() {
             @Override
             public Stock mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -43,7 +43,7 @@ public class StockDaoImpl implements StockDao {
             }
         },id);
         } catch(DataAccessException e){
-            //System.out.println(5555);
+            ////System.out.println(5555);
             result=null;
         }
         updateHitsBySearch(result);
@@ -116,12 +116,12 @@ public class StockDaoImpl implements StockDao {
 
     @Override
     public String getFormalId(String id) {
-        //System.out.println(id);
+        ////System.out.println(id);
         String sql="select * from m_stock where id LIKE concat('%',?,'%') ";
         Stock result = null;
-        //System.out.println(1231231231);
+        ////System.out.println(1231231231);
         try{
-            //System.out.println(1231231231);
+            ////System.out.println(1231231231);
             result=this.jdbcTemplate.queryForObject(sql, new RowMapper<Stock>() {
                 @Override
                 public Stock mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -135,7 +135,7 @@ public class StockDaoImpl implements StockDao {
                 }
             },id);
         } catch(DataAccessException e){
-            //System.out.println(5555);
+            ////System.out.println(5555);
             result=null;
         }
 

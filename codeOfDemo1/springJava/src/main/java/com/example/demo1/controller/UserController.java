@@ -37,17 +37,17 @@ public class UserController {
         user.setUsername( ""+id);
 
         user.setPassword(passWord);
-        System.out.println(user.getPassword());
+        ////System.out.println(user.getPassword());
 
         int result = this.userService.insert(user);
-        System.out.println(result);
+        //System.out.println(result);
         return result;
     }
 
     @RequestMapping("/deleteByPhone")
     public void deleteByPhone(String userName) {
         int result = this.userService.deleteByPhone(userName);
-        System.out.println(result);
+        //System.out.println(result);
     }
 
     @RequestMapping("/update")
@@ -62,10 +62,10 @@ public class UserController {
     @ResponseBody
     public User getByPhone(String userName) {
         User user = this.userService.getByPhone(userName);
-        System.out.println(user.getUsername());
+        //System.out.println(user.getUsername());
         //ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
 
-//        System.out.println( "this"+user_1.getUsername());
+//        //System.out.println( "this"+user_1.getUsername());
         return user;
     }
 
@@ -73,7 +73,7 @@ public class UserController {
     @ResponseBody
     public List<User> getListByPhone(String userName) {
         List<User> w = this.userService.getListByPhone(userName);
-        //System.out.println(user.getUsername());
+        ////System.out.println(user.getUsername());
         return w;
     }
 
@@ -81,7 +81,7 @@ public class UserController {
     @ResponseBody
     public boolean login(String userName, String passWord){
         boolean user = this.userService.login( userName, passWord);
-        //System.out.println(user.toString());
+        ////System.out.println(user.toString());
         return user;
     }
 
@@ -89,10 +89,10 @@ public class UserController {
     @ResponseBody
     public boolean ifExist(String userName) {
         User user = this.userService.getByPhone(userName);
-        System.out.println(user.getUsername());
+        //System.out.println(user.getUsername());
         //ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
 
-//        System.out.println( "this"+user_1.getUsername());
+//        //System.out.println( "this"+user_1.getUsername());
         if(user!=null)return true;
         else
         return false;
@@ -108,21 +108,21 @@ public class UserController {
     //        user.setPassword("zhangsan" + id);
     //
     //        int result = this.userService.insert(user);
-    //        System.out.println(result);
+    //        //System.out.println(result);
     //        return user;
     //    }
 
     //    @RequestMapping("/deleteById")
     //    public void deleteById(Integer id) {
     //        int result = this.userService.deleteById(id);
-    //        System.out.println(result);
+    //        //System.out.println(result);
     //    }
 
     //    @RequestMapping("/getById")
     //    @ResponseBody
     //    public User getById(Integer id) {
     //        User user = this.userService.getById(id);
-    //        System.out.println(user.getUsername());
+    //        //System.out.println(user.getUsername());
     //        return user;
     //    }
 

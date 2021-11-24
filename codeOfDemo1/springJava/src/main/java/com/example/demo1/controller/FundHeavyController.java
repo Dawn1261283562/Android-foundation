@@ -126,7 +126,7 @@ public class FundHeavyController {
     @ResponseBody
     public List<FundHeavy>  getListByStockAllType(int num,String[] TypeList) {
 
-        System.out.println(Arrays.toString(TypeList));
+        //System.out.println(Arrays.toString(TypeList));
         List<FundHeavy> result = this.fundHeavyService.getListByStockAllType(num,TypeList);
         //System.out.println(result.id);
         //result=null;
@@ -138,7 +138,7 @@ public class FundHeavyController {
     @ResponseBody
     public List<FundHeavy>  getListByStockAllTypeRadio(int num,String[] TypeList) {
 
-        System.out.println(Arrays.toString(TypeList));
+        //System.out.println(Arrays.toString(TypeList));
         List<FundHeavy> result = this.fundHeavyService.getListByStockAllTypeRadio(num,TypeList);
         //System.out.println(result.id);
         //result=null;

@@ -38,7 +38,7 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
         }
         //FundHeavy fundHeavy=fundHeavyAll.get(0);
         //if(fundHeavy.stock_type.isEmpty());
-        //System.out.println(111);
+        ////System.out.println(111);
         //preprocess();
         return fundHeavyAll;
     }
@@ -79,15 +79,15 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
                 //fundHeavy.set_stock_id_1(resultSet.getString("id"));
                 for (int k = 1; k <= 5; k++) {
                     fundHeavy.set_stock_id(k - 1, resultSet.getString("stock_id_" + k));
-                    //System.out.println( fundHeavy.getStock_id()[k-1]);;
+                    ////System.out.println( fundHeavy.getStock_id()[k-1]);;
                     //这里存名字感觉没什么必要，数据库要不要删名字列有待讨论,删名字列能减少m_fund_heavy的字段数量，当时增加查询的次数
                     fundHeavy.set_Stock_all_type(k - 1, resultSet.getString("stock_type_" + k));
                     String temp=fundHeavy.get_stock_id()[k-1];
-                    //System.out.println(fundHeavy.getStock_id()[k-1]);
+                    ////System.out.println(fundHeavy.getStock_id()[k-1]);
                     fundHeavy.set_stock_ratio(k - 1, resultSet.getString("stock_ratio_" + k));
                     Stock stock=null;//resultSet.getString("stock_id_" + 1)
-                    //System.out.println(43434);
-                    //System.out.println(444444434);
+                    ////System.out.println(43434);
+                    ////System.out.println(444444434);
 //                    if(k==10){
 //                        stock= stockDaoImpl.getById(resultSet.getString("stock_id_" + k));
 //                    }
@@ -95,7 +95,7 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
 //                    else
 //                    fundHeavy.set_stock_type(stockDaoImpl.getById(resultSet.getString("stock_id_" + k)).getType());
                 }
-//                System.out.println(43434);
+//                //System.out.println(43434);
 //                Stock stock=null;
 //                stock=stockDaoImpl.getById("000799.SZ");
                 return fundHeavy;
@@ -113,15 +113,15 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
                 //fundHeavy.set_stock_id_1(resultSet.getString("id"));
                 for (int k = 6; k <= 10; k++) {
                     fundHeavy.set_stock_id(k - 1, resultSet.getString("stock_id_" + k));
-                    //System.out.println( fundHeavy.getStock_id()[k-1]);;
+                    ////System.out.println( fundHeavy.getStock_id()[k-1]);;
                     //这里存名字感觉没什么必要，数据库要不要删名字列有待讨论,删名字列能减少m_fund_heavy的字段数量，当时增加查询的次数
                     fundHeavy.set_Stock_all_type(k - 1, resultSet.getString("stock_type_" + k));
                     String temp=fundHeavy.get_stock_id()[k-1];
-                    //System.out.println(fundHeavy.getStock_id()[k-1]);
+                    ////System.out.println(fundHeavy.getStock_id()[k-1]);
                     fundHeavy.set_stock_ratio(k - 1, resultSet.getString("stock_ratio_" + k));
                     Stock stock=null;//resultSet.getString("stock_id_" + 1)
-                    //System.out.println(43434);
-                    //System.out.println(444444434);
+                    ////System.out.println(43434);
+                    ////System.out.println(444444434);
 //                    if(k==10){
 //                        stock= stockDaoImpl.getById(resultSet.getString("stock_id_" + k));
 //                    }
@@ -129,7 +129,7 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
 //                    else
 //                    fundHeavy.set_stock_type(stockDaoImpl.getById(resultSet.getString("stock_id_" + k)).getType());
                 }
-//                System.out.println(43434);
+//                //System.out.println(43434);
 //                Stock stock=null;
 //                stock=stockDaoImpl.getById("000799.SZ");
                 return fundHeavy;
@@ -141,7 +141,7 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
         int sizeT= fundHeavyAllTemp.size();
         for(int i=0;i<size;i++) {
             FundHeavy fundHeavy = fundHeavyAll.get(i);
-            //System.out.println(43434);
+            ////System.out.println(43434);
             for(int j=0;j<sizeT;j++) {
 
                 FundHeavy t = fundHeavyAllTemp.get(j);
@@ -178,18 +178,18 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
             {
                 FundHeavy fundHeavy=fundHeavyAll.get(i);
                 String temp= fundHeavy.get_stock_id()[j];
-//                System.out.println(fundHeavy.id);
-//                System.out.println(temp);
-//                System.out.println(stockDaoImpl.getById(temp));
+//                //System.out.println(fundHeavy.id);
+//                //System.out.println(temp);
+//                //System.out.println(stockDaoImpl.getById(temp));
                 //if(fundHeavy.stock_type.contains(temp))continue;
                 Stock asd=stockDaoImpl.getById(temp);
                 if(asd==null)continue;
-//                System.out.println(stockDaoImpl.getById(temp).getType());
-//                System.out.println(stockDaoImpl.getById(temp).getType());
-//                System.out.println(stockDaoImpl.getById(temp).getType());
+//                //System.out.println(stockDaoImpl.getById(temp).getType());
+//                //System.out.println(stockDaoImpl.getById(temp).getType());
+//                //System.out.println(stockDaoImpl.getById(temp).getType());
                 //fundHeavy.stock_type.contains(stock_type);
                 //fundHeavy.set_stock_type(asd.getType());
-                //System.out.println(1);
+                ////System.out.println(1);
             }
         }
 
@@ -258,7 +258,7 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
                 }
             },id);
         } catch(DataAccessException e){
-            //System.out.println(5555);
+            ////System.out.println(5555);
             result=null;
         }
         List<FundHeavyInfo> ans=new ArrayList<FundHeavyInfo>();
@@ -282,7 +282,7 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
                 }
             },id);
         } catch(DataAccessException e){
-            //System.out.println(5555);
+            ////System.out.println(5555);
             result=null;
         }
         List<FundHeavy> ans=new ArrayList<FundHeavy>();
@@ -366,7 +366,7 @@ public class FundHeavyDaoImpl implements FundHeavyDao {
 //                }
 //            },id);
 //        } catch(DataAccessException e){
-//            //System.out.println(5555);
+//            ////System.out.println(5555);
 //            result=null;
 //        }
 //        List<FundHeavy> ans=new ArrayList<FundHeavyInfo>();
