@@ -16,9 +16,11 @@
         android:layout_height="40dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="0dp"
-        android:background="@drawable/search_background"
+        android:background="@drawable/button_circle_shape_2"
         android:text="添加心仪股"
         android:textSize="15dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/frag3_1_but2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@id/frag3_1_but2" />
@@ -29,9 +31,11 @@
         android:layout_height="40dp"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/search_background"
+        android:background="@drawable/button_circle_shape_2"
         android:text="刷新"
         android:textSize="15dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <!--    -->
