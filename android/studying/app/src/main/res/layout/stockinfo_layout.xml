@@ -26,7 +26,7 @@
             android:gravity="center"
             android:paddingBottom="10dp"
             android:textSize="20dp"
-            android:text="基金信息"
+            android:text="股票信息"
             android:textColor="@color/white"
             android:background="@color/teal_700"/>
 
@@ -165,57 +165,66 @@
                         android:textSize="18sp" />
 
                 </RelativeLayout>
-
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/Stockinfo_tab"
+                <FrameLayout
+                    android:id="@+id/fragment_container"
+                    android:name="com.example.studying.FundsPictureFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_below="@+id/info_relativeLayout1">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/info_relativeLayout1"
 
-                    <com.google.android.material.tabs.TabItem
-                        android:id="@+id/Stockinfo_tab1"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:text="日K"></com.google.android.material.tabs.TabItem>
+                    android:background="@color/white"/>
 
-                    <com.google.android.material.tabs.TabItem
-                        android:id="@+id/Stockinfo_tab2"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:text="周K"></com.google.android.material.tabs.TabItem>
+<!--                <com.google.android.material.tabs.TabLayout-->
+<!--                    android:id="@+id/Stockinfo_tab"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:layout_below="@+id/info_relativeLayout1">-->
 
-                    <com.google.android.material.tabs.TabItem
-                        android:id="@+id/Stockinfo_tab3"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:text="分时"></com.google.android.material.tabs.TabItem>
+<!--                    <com.google.android.material.tabs.TabItem-->
+<!--                        android:id="@+id/Stockinfo_tab1"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="40dp"-->
+<!--                        android:text="日K"></com.google.android.material.tabs.TabItem>-->
 
-                    <com.google.android.material.tabs.TabItem
-                        android:id="@+id/Stockinfo_tab4"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:text="月K">
+<!--                    <com.google.android.material.tabs.TabItem-->
+<!--                        android:id="@+id/Stockinfo_tab2"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="40dp"-->
+<!--                        android:text="周K"></com.google.android.material.tabs.TabItem>-->
+
+<!--                    <com.google.android.material.tabs.TabItem-->
+<!--                        android:id="@+id/Stockinfo_tab3"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="40dp"-->
+<!--                        android:text="分时"></com.google.android.material.tabs.TabItem>-->
+
+<!--                    <com.google.android.material.tabs.TabItem-->
+<!--                        android:id="@+id/Stockinfo_tab4"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="40dp"-->
+<!--                        android:text="月K">-->
 
 
-                    </com.google.android.material.tabs.TabItem>
+<!--                    </com.google.android.material.tabs.TabItem>-->
 
 
-                </com.google.android.material.tabs.TabLayout>
+<!--                </com.google.android.material.tabs.TabLayout>-->
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:layout_below="@+id/Stockinfo_tab"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginBottom="0dp"></ImageView>
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageView"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="250dp"-->
+<!--                    android:layout_below="@+id/Stockinfo_tab"-->
+<!--                    android:layout_marginTop="0dp"-->
+<!--                    android:layout_marginBottom="0dp"></ImageView>-->
 
                 <RelativeLayout
                     android:id="@+id/info_relativeLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@id/imageView"
+                    android:layout_below="@id/fragment_container"
                     android:paddingLeft="15dp"
                     android:paddingBottom="3dp"
                     android:paddingTop="7dp"
@@ -238,15 +247,7 @@
                         android:textSize="18sp" />
 
                 </RelativeLayout>
-                <FrameLayout
-                    android:id="@+id/fragment_container"
-                    android:name="com.example.studying.FundsPictureFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@id/info_relativeLayout2"
 
-                    android:background="@color/white"/>
 <!--                <TextView-->
 <!--                    android:id="@+id/text2"-->
 <!--                    android:layout_width="wrap_content"-->
@@ -267,7 +268,7 @@
                     android:id="@+id/View_bargin"
                     android:layout_width="match_parent"
                     android:layout_height="450dp"
-                    android:layout_below="@id/fragment_container"
+                    android:layout_below="@id/info_relativeLayout2"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:background="@color/white"/>
