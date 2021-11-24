@@ -136,7 +136,7 @@
                             android:id="@+id/page_fragment1_icon1"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            android:src="@mipmap/icon1_2" />
+                            android:src="@mipmap/icon1_1" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -192,7 +192,7 @@
                             android:id="@+id/page_fragment1_icon2"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            android:src="@mipmap/icon1_2" />
+                            android:src="@mipmap/tags" />
 
                         <TextView
                             android:layout_width="wrap_content"
