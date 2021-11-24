@@ -34,7 +34,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FundsPictureFragment extends androidx.fragment.app.Fragment {
+public class StockPictureFragment extends androidx.fragment.app.Fragment {
 
     private View mView;
 
@@ -49,11 +49,11 @@ public class FundsPictureFragment extends androidx.fragment.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mView == null) {
-            mView = inflater.inflate(R.layout.fundsinfo_tablayout, container, false);
+            mView = inflater.inflate(R.layout.stockinfo_tablayout, container, false);
         }
-        final fundsinfo activity = (fundsinfo) getActivity();
-        mTabTl = (TabLayout) mView.findViewById(R.id.fundsinfo_tab);
-        mContentVp = (ViewPager) mView.findViewById(R.id.fundsinfo_vp);
+        final Stockinfo activity = (Stockinfo) getActivity();
+        mTabTl = (TabLayout) mView.findViewById(R.id.stockinfo_tab);
+        mContentVp = (ViewPager) mView.findViewById(R.id.stockinfo_vp);
 
 
         Bundle bundle=this.getArguments();
@@ -62,13 +62,13 @@ public class FundsPictureFragment extends androidx.fragment.app.Fragment {
             code=bundle.getString("code");
 
         }
-        Log.d("aaaaaaaaaaaaaaa", code);
+
 
         tabIndicators = new ArrayList<>();
-        tabIndicators.add("累计收益");
-        tabIndicators.add("单位净值");
-        tabIndicators.add("净值走势");
-        tabIndicators.add("净值估算");
+        tabIndicators.add("日k");
+        tabIndicators.add("周k");
+        tabIndicators.add("分时");
+        tabIndicators.add("月k");
 
         ImageView imageView1=new ImageView(getActivity());
         ImageView imageView2=new ImageView(getActivity());
@@ -76,7 +76,10 @@ public class FundsPictureFragment extends androidx.fragment.app.Fragment {
         ImageView imageView4=new ImageView(getActivity());
 
 
-        String strURL = "https://j3.dfcfw.com/images/SYL2/"+code+".png?v=163642633545544";
+//        String strURL = "http://image.sinajs.cn/newchart/daily/n/"+code+".gif";
+        //http://j3.dfcfw.com/images/JJJZ1/006030.png
+//        String strURL = "http://j3.dfcfw.com/images/JJJZ1/006030.png";
+               String strURL = "http://image.sinajs.cn/newchart/daily/n/"+code+".gif";
         try {
             Bitmap bitmap = getBitmap(strURL);
             imageView1.setImageBitmap(bitmap);
@@ -84,7 +87,7 @@ public class FundsPictureFragment extends androidx.fragment.app.Fragment {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        strURL = "http://j3.dfcfw.com/images/JJJZ2/"+code+".png";
+        strURL = "http://image.sinajs.cn/newchart/weekly/n/"+code+".gif";
         Log.i("883333","false");
         try {
             Log.i("443333","false");
@@ -98,7 +101,7 @@ public class FundsPictureFragment extends androidx.fragment.app.Fragment {
             e.printStackTrace();
             Log.i("333333","false");
         }
-        strURL = "http://j3.dfcfw.com/images/JJJZ1/"+code+".png";
+        strURL = "http://image.sinajs.cn/newchart/min/n/"+code+".gif";
         Log.i("883333","false");
         try {
             Log.i("443333","false");
@@ -111,7 +114,7 @@ public class FundsPictureFragment extends androidx.fragment.app.Fragment {
             e.printStackTrace();
             Log.i("333333","false");
         }
-        strURL = "http://j4.dfcfw.com/charts/pic6/"+code+".png?v=20211109040103";
+        strURL = "http://image.sinajs.cn/newchart/monthly/n/"+code+".gif";
         Log.i("883333","false");
         try {
             Log.i("443333","false");
