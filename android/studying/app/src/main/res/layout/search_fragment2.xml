@@ -68,7 +68,7 @@
         app:layout_constraintTop_toBottomOf="@id/frag2_history_flow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:drawableLeft="@mipmap/icon1_5"
+        android:drawableLeft="@mipmap/cross"
         android:text="  清空搜索历史"
         android:textColor="@color/black"
         android:background="@color/transparent"/>

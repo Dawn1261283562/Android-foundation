@@ -351,7 +351,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
             case 0:
                 mLir1.setVisibility(View.VISIBLE);
                 mLir2.setVisibility(View.GONE);
-                mTex1.setTextColor(Color.parseColor("#FF0000"));
+                mTex1.setTextColor(Color.parseColor("#3F51B5"));
                 editText.setHint("基金名称");
                 editText.setVisibility(View.VISIBLE);
                 searchBut.setVisibility(View.VISIBLE);
@@ -364,7 +364,7 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
             case 1:
                 mLir1.setVisibility(View.VISIBLE);
                 mLir2.setVisibility(View.GONE);
-                mTex2.setTextColor(Color.parseColor("#FF0000"));
+                mTex2.setTextColor(Color.parseColor("#3F51B5"));
                 editText.setHint("股票名称");
                 editText.setVisibility(View.VISIBLE);
                 searchBut.setVisibility(View.VISIBLE);
@@ -377,8 +377,8 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
             case 2:
                 mLir1.setVisibility(View.GONE);
                 mLir2.setVisibility(View.VISIBLE);
-                mTex3.setTextColor(Color.parseColor("#FF0000"));
-                mTex4.setTextColor(Color.parseColor("#FF0000"));
+                mTex3.setTextColor(Color.parseColor("#3F51B5"));
+                mTex4.setTextColor(Color.parseColor("#3F51B5"));
                 titleTex.setVisibility(View.VISIBLE);
                 editText.setVisibility(View.INVISIBLE);
                 searchBut.setVisibility(View.INVISIBLE);
@@ -389,8 +389,8 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
             case 3:
                 mLir1.setVisibility(View.GONE);
                 mLir2.setVisibility(View.VISIBLE);
-                mTex3.setTextColor(Color.parseColor("#FF0000"));
-                mTex5.setTextColor(Color.parseColor("#FF0000"));
+                mTex3.setTextColor(Color.parseColor("#3F51B5"));
+                mTex5.setTextColor(Color.parseColor("#3F51B5"));
                 titleTex.setVisibility(View.VISIBLE);
                 editText.setVisibility(View.INVISIBLE);
                 searchBut.setVisibility(View.INVISIBLE);
@@ -405,11 +405,11 @@ public class MainActivity2 extends FragmentActivity implements View.OnClickListe
 
     //设置默认的tab的图标
     private void resetTab() {
-        mTex1.setTextColor(Color.parseColor("#000000"));
-        mTex2.setTextColor(Color.parseColor("#000000"));
-        mTex3.setTextColor(Color.parseColor("#000000"));
-        mTex4.setTextColor(Color.parseColor("#000000"));
-        mTex5.setTextColor(Color.parseColor("#000000"));
+        mTex1.setTextColor(Color.parseColor("#76787D"));
+        mTex2.setTextColor(Color.parseColor("#76787D"));
+        mTex3.setTextColor(Color.parseColor("#76787D"));
+        mTex4.setTextColor(Color.parseColor("#76787D"));
+        mTex5.setTextColor(Color.parseColor("#76787D"));
     }
 
     public  void clickBack(View view){

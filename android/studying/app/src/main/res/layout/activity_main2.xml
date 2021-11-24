@@ -19,18 +19,24 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:orientation="horizontal">
+
         <TextView
             android:id="@+id/top_tab1"
             style="@style/topTabText"
-            android:text="@string/sear_tab1"/>
+            android:text="@string/sear_tab1"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/top_tab2"
             style="@style/topTabText"
-            android:text="@string/sear_tab2"/>
+            android:text="@string/sear_tab2"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/top_tab3"
             style="@style/topTabText"
-            android:text="@string/sear_tab3"/>
+            android:text="@string/sear_tab3"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -42,14 +48,18 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:orientation="horizontal">
+
         <TextView
             android:id="@+id/top_tab4"
             style="@style/topTabText"
-            android:text="持仓搜索"/>
+            android:text="持仓搜索"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/top_tab5"
             style="@style/topTabText"
-            android:text="板块搜索"/>
+            android:text="板块搜索"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <androidx.viewpager.widget.ViewPager
