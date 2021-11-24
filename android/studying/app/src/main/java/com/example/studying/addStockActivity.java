@@ -3,8 +3,10 @@
 package com.example.studying;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -37,6 +39,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Group;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.studying.entity.FundHeavyInfo;
 import com.example.studying.entity.Stock;
@@ -69,6 +73,10 @@ public class addStockActivity extends AppCompatActivity {
     private ImageView searchImageView;
     private ImageButton clearTextButton;
     Group titleGroup;
+    Group tipsGroup1;
+    Group tipsGroup2;
+    Button tipsButton1;
+    Button tipsButton2;
 
     private ProgressBar progressBar;
 
@@ -90,7 +98,6 @@ public class addStockActivity extends AppCompatActivity {
     private FlowLayout.Adapter flowAdapter2;
 
     private double flagForChooseOrSearch=530;//中间位置
-
     Handler mHandler;
 
     @Override
@@ -119,6 +126,8 @@ public class addStockActivity extends AppCompatActivity {
             }
         }*/
         if(stockList==null)stockList=new ArrayList<Stock>();
+
+
         initViews();
         initEvents();
         initData();
@@ -130,10 +139,12 @@ public class addStockActivity extends AppCompatActivity {
         intent2.putExtras(bundle2);
         setResult(Activity.RESULT_OK,intent2);
 
-        fundSearchResult();
+        fundSearchResult2();
         getsearchHistory();
         initbtn_login5();
         //System.out.println(stockList);
+
+
 
     }
 
@@ -219,6 +230,7 @@ public class addStockActivity extends AppCompatActivity {
                         if ((event.getX() > textView.getWidth()-drawable.getIntrinsicWidth()-textView.getPaddingRight())
                                 &&(event.getX() < textView.getWidth()-textView.getPaddingRight())){
                             stockList.remove(position);
+                            fundGeneralList.get(position).setSelectFund(false);
                             flowLayout2.setAdapter(flowAdapter2);
                             if(stockList.size()==0){
                                 flowLayout2.setVisibility(View.GONE);
@@ -250,6 +262,13 @@ public class addStockActivity extends AppCompatActivity {
                         progressBar.setVisibility(View.GONE);
                         fundSearchResult();
                         hasSelectedUpdate();
+
+                        Data data = (Data)getApplicationContext();
+                        if (!data.getAddStockTips()) {
+                            tipsGroup1.setVisibility(View.VISIBLE);
+                            listView.setEnabled(false);
+                            data.setAddStockTips(true);
+                        }
                 }
             }
         };
@@ -434,6 +453,21 @@ public class addStockActivity extends AppCompatActivity {
                 flowLayout.setAdapter(flowAdapter);
             }
         });
+        tipsButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tipsGroup1.setVisibility(View.INVISIBLE);
+                tipsGroup2.setVisibility(View.VISIBLE);
+            }
+        });
+        tipsButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tipsGroup1.setVisibility(View.GONE);
+                tipsGroup2.setVisibility(View.GONE);
+                listView.setEnabled(true);
+            }
+        });
     }
 
     private void initViews() {
@@ -442,6 +476,10 @@ public class addStockActivity extends AppCompatActivity {
         searchImageView=findViewById(R.id.search_icon);
         clearTextButton=findViewById(R.id.clear_icon);
         titleGroup=findViewById(R.id.add_stock_titlegroup);
+        tipsGroup1=findViewById(R.id.add_stock_tipsgroup1);
+        tipsGroup2=findViewById(R.id.add_stock_tipsgroup2);
+        tipsButton1=findViewById(R.id.tips_button1);
+        tipsButton2=findViewById(R.id.tips_button2);
 
         progressBar=findViewById(R.id.progressbar);
         listView = findViewById(R.id.list_search3_1_2);
@@ -532,7 +570,32 @@ public class addStockActivity extends AppCompatActivity {
         System.out.println(fundGeneralList.size());
         fundAdapter.notifyDataSetChanged();
     }
+    private void fundSearchResult2() {
+        /*FundGeneral fundGeneral1=new FundGeneral("000001.SZ","平安银行","20.04");
+        fundGeneralList.add(fundGeneral1);*/
 
+        System.out.println(123321);
+        fundGeneralList.clear();
+//        FundGeneral fundGeneral=new FundGeneral("000001.SZ","平安银行","20.04");
+//        fundGeneralList.add(fundGeneral);
+        int size = stockList.size();
+        for (int i = 0; i < size; i++) {
+            Stock value = stockList.get(i);
+            FundGeneral fundGeneral1=new FundGeneral((String) value.getId(),(String) value.getName(),(String) value.getPrice());
+            fundGeneral1.setStock(value);
+            fundGeneral1.setSelectFund(true);
+            fundGeneralList.add(fundGeneral1);
+        }
+
+        if(fundGeneralList.size()==0){
+            titleGroup.setVisibility(View.INVISIBLE);
+        }
+        else{
+            titleGroup.setVisibility(View.VISIBLE);
+        }
+        System.out.println(fundGeneralList.size());
+        fundAdapter.notifyDataSetChanged();
+    }
     private void hasSelectedUpdate() {
         System.out.println(123321);
         int size = stockList.size();
