@@ -14,7 +14,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@color/teal_700"/>
+            android:background="@color/purple_dark"/>
 
         <TextView
             android:id="@+id/text1"
@@ -28,7 +28,7 @@
             android:textSize="20dp"
             android:text="股票信息"
             android:textColor="@color/white"
-            android:background="@color/teal_700"/>
+            android:background="@color/purple_dark"/>
 
         <ScrollView
             android:id="@+id/scrollView2"
